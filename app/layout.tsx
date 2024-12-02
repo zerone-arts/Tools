@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 import BgImage from "@/components/layout/BgImage";
+import Ui from "@/components/layout/Ui";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -19,6 +20,7 @@ export default function RootLayout({
       <body className=" bg-black ">
         {children}
         <BgImage />
+        <Ui />
       </body>
     </html>
   );
