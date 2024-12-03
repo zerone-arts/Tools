@@ -17,10 +17,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ko">
-      <body className=" bg-black ">
-        {children}
+      <body className=" bg-black relative">
+        <div className="flex">
+          <Ui />
+          {children}
+        </div>
         <BgImage />
-        <Ui />
       </body>
     </html>
   );

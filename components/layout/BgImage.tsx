@@ -5,11 +5,10 @@ export default function BgImage() {
     <Image
       src={img}
       alt="test"
-      layout="fill"
-      objectFit="cover"
       sizes="100vw"
-      fill={true}
-      className="-z-10 opacity-20 duration-500 ease-out"
+      fill
+      className="absolute w-full h-screen -z-10 opacity-20 duration-500 ease-out object-cover"
+      priority
     />
   );
 }

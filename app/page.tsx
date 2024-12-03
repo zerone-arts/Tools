@@ -1,9 +1,9 @@
 export default function Home() {
   return (
     <div
-      className={`absolute right-0 w-[calc(100%-50px)] h-screen bg-white duration-500 ease-out`}
+      className={`absolute w-full h-screen duration-500 ease-out flex flex-col items-center justify-center`}
     >
-      배경
+      <div className="text-white w-10 h-10">Login</div>
     </div>
   );
 }
