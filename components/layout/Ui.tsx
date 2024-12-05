@@ -26,7 +26,7 @@ export default function Ui() {
 
   return (
     <div
-      className={`z-10 relative group p-1 w-[80px] hover:w-[200px] h-screen  duration-500 ease-out flex  item-center  `}
+      className={`z-10 relative group p-1 w-[80px] hover:w-[200px] h-screen  duration-500 ease-out flex  item-center flex-shrink-0 `}
     >
       <div className="absolute h-screen -ml-3">
         <div className="mt-3 flex ml-[14px] ">
@@ -84,8 +84,10 @@ export default function Ui() {
         <div className="mt-3 flex ml-[14px] ">
           <div
             className={`w-9 h-9 flex justify-center items-center rounded-sm font-bold duration-300  ${
-              selectMenu === "/" ? "bg-white text-black" : "text-white"
-            }   ${hover === "/" ? "bg-gray-300 text-black" : "text-white"}`}
+              selectMenu === "/" || hover === "/"
+                ? "text-black bg-white "
+                : "text-white"
+            } `}
             onMouseOver={() => setHover("/")}
             onMouseLeave={() => setHover("")}
           >
@@ -95,11 +97,13 @@ export default function Ui() {
 
         <ul className="mt-5  ml-[14px] flex flex-col  justify-center gap-5 ">
           <li
-            className={`w-9 h-9 flex justify-center items-center rounded-sm duration-300 text-white  ${
-              selectMenu === "/memo" ? "bg-white text-black" : "text-white"
+            className={`w-9 h-9 flex justify-center items-center rounded-sm duration-300  ${
+              selectMenu === "/memo" || hover === "/memo"
+                ? "text-black bg-white"
+                : "text-white"
             }
             
-            ${hover === "/memo" ? "bg-gray-300 text-black" : "text-white"}`}
+            `}
             onMouseOver={() => setHover("/memo")}
             onMouseLeave={() => setHover("")}
           >
@@ -123,11 +127,11 @@ export default function Ui() {
             </Link>
           </li>
           <li
-            className={`w-9 h-9 flex justify-center items-center rounded-sm duration-300 text-white  ${
-              selectMenu === "/calendar" ? "bg-white text-black" : "text-white"
-            } ${
-              hover === "/calendar" ? "bg-gray-300 text-black" : "text-white"
-            }`}
+            className={`w-9 h-9 flex justify-center items-center rounded-sm duration-300   ${
+              selectMenu === "/calendar" || hover === "/calendar"
+                ? "bg-white text-black"
+                : "text-white"
+            } `}
             onMouseOver={() => setHover("/calendar")}
             onMouseLeave={() => setHover("")}
           >
@@ -151,11 +155,11 @@ export default function Ui() {
             </Link>
           </li>
           <li
-            className={`w-9 h-9 flex justify-center items-center rounded-sm duration-300 text-white  ${
-              selectMenu === "/weather" ? "bg-white text-black" : "text-white"
-            } ${
-              hover === "/weather" ? "bg-gray-300 text-black" : "text-white"
-            }`}
+            className={`w-9 h-9 flex justify-center items-center rounded-sm duration-300   ${
+              selectMenu === "/weather" || hover === "/weather"
+                ? "bg-white text-black"
+                : "text-white"
+            } `}
             onMouseOver={() => setHover("/weather")}
             onMouseLeave={() => setHover("")}
           >
@@ -179,13 +183,11 @@ export default function Ui() {
             </Link>
           </li>
           <li
-            className={`w-9 h-9 flex justify-center items-center rounded-sm duration-300 text-white  ${
-              selectMenu === "/calculator"
+            className={`w-9 h-9 flex justify-center items-center rounded-sm duration-300  ${
+              selectMenu === "/calculator" || hover === "/calculator"
                 ? "bg-white text-black"
                 : "text-white"
-            } ${
-              hover === "/calculator" ? "bg-gray-300 text-black" : "text-white"
-            }`}
+            } `}
             onMouseOver={() => setHover("/calculator")}
             onMouseLeave={() => setHover("")}
           >
@@ -212,11 +214,11 @@ export default function Ui() {
 
         <div className="absolute  ml-[14px] bottom-4 w-full flex flex-col gap-3 ">
           <div
-            className={`w-9 h-9 flex justify-center items-center rounded-sm duration-300 text-white 0  ${
-              selectMenu === "/setting" ? "bg-white text-black " : "text-white"
-            } ${
-              hover === "/setting" ? "bg-gray-300 text-black" : "text-white"
-            }`}
+            className={`w-9 h-9 flex justify-center items-center rounded-sm duration-300  ${
+              selectMenu === "/setting" || hover === "/setting"
+                ? "bg-white text-black "
+                : "text-white"
+            } `}
             onMouseOver={() => setHover("/setting")}
             onMouseLeave={() => setHover("")}
           >

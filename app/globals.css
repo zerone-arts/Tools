@@ -1,3 +1,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+body {
+  list-style: none;
+  color: black;
+  min-width: 400px;
+}
