@@ -2,6 +2,7 @@
 import { useState } from "react";
 
 const month = [
+  "All Month",
   "January",
   "February",
   "March",
@@ -18,6 +19,7 @@ const month = [
 
 export default function MonthGroup() {
   const [active, setActive] = useState(false);
+  const [selectMonth, setSelectMonth] = useState(0);
   return (
     <button
       className={`
@@ -41,7 +43,7 @@ export default function MonthGroup() {
           Group by:
         </span>
         <span className="font-light text-black pl-1 text-[10px] sm:text-xs">
-          All Month
+          {month[selectMonth]}
         </span>
         <span className="text-gray-600 pl-2 ">
           <svg
@@ -62,9 +64,15 @@ export default function MonthGroup() {
       </div>
       <div className="w-[150px] h-[180px] absolute top-[45px] overflow-y-scroll right-0">
         <ul className="pr-4   font-light text-black  text-[10px] text-right flex flex-col gap-2  sm:text-xs  ">
-          {month.map((item) => {
+          {month.map((item, index) => {
             return (
-              <li key={item} className="text-gray-400 hover:text-black">
+              <li
+                key={item}
+                className={`hover:text-black ${
+                  index === selectMonth ? "text-black" : "text-gray-400"
+                }`}
+                onClick={() => setSelectMonth(index)}
+              >
                 {item}
               </li>
             );

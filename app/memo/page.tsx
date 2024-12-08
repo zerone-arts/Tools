@@ -1,5 +1,8 @@
+"use client";
+
 import MemoContent from "@/components/memo/MemoContent";
 import MonthGroup from "@/components/memo/ui/MonthGroup";
+import { useState } from "react";
 
 const DUMMY_DATA = [
   {
@@ -8,27 +11,47 @@ const DUMMY_DATA = [
     content: "dummyData Content !!",
     date: "2024-12-5",
   },
-  // {
-  //   id: 2,
-  //   title: "Hellow white",
-  //   content: "dummyData Content !!",
-  //   date: "2024-12-4",
-  // },
-  // {
-  //   id: 3,
-  //   title: "Hellow yellow",
-  //   content: "dummyData Content !!",
-  //   date: "2024-12-3",
-  // },
+  {
+    id: 2,
+    title: "hellow white",
+    content: "dummyData Content !!",
+    date: "2024-12-4",
+  },
+  {
+    id: 3,
+    title: "Hellow yellow",
+    content: "dummyData Content !!",
+    date: "2024-12-3",
+  },
+  {
+    id: 4,
+    title: "Hellow Green",
+    content: "dummyData Content !!",
+    date: "2024-12-5",
+  },
+  {
+    id: 5,
+    title: "Hellow Pupple",
+    content: "dummyData Content !!",
+    date: "2024-12-4",
+  },
+  {
+    id: 6,
+    title: "Hellow Grat",
+    content: "dummyData Content !!",
+    date: "2024-12-3",
+  },
 ];
 
 export default function MemoPage() {
+  const [search, setSearch] = useState("");
+  console.log(search);
   return (
     <div className="w-full h-screen rounded-xl flex flex-col ">
       <div className=" w-full h-[170px] flex flex-col bg-gray-100 gap-2 z-10 ">
         <div className="p-1 pt-5 flex items-center justify-between ">
           <div className="text-xl pl-10 ">Memo</div>
-          <div className="flex gap-4 pr-3">
+          <div className="flex gap-4 pr-3 w-9 sm:w-[120px]">
             <button
               className="w-9 sm:w-[120px] h-[40px] border-2 
           rounded-lg text-sm flex items-center 
@@ -67,14 +90,14 @@ export default function MemoPage() {
               className="w-full h-[40px] bg-gray-200 rounded-lg pl-8 placeholder:text-gray-400 text-xs focus:outline-none"
               type="text"
               placeholder="Search..."
-              // onChange={(e) => console.log(e.target.value)}
+              onChange={(e) => setSearch(e.target.value)}
             />
           </div>
           <MonthGroup />
         </div>
       </div>
-      <div className="w-full bg-gray-200 h-full border-t-2 border-gray-500 border-opacity-10 overflow-scroll">
-        <MemoContent content={DUMMY_DATA} />
+      <div className="z-10 relative w-full bg-gray-200 h-full border-t-2 border-gray-500 border-opacity-10 overflow-scroll ">
+        <MemoContent content={DUMMY_DATA} searchValue={search} />
       </div>
     </div>
   );
