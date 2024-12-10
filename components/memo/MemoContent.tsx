@@ -1,31 +1,111 @@
 "use Client";
 
+import { useEffect, useState } from "react";
+
 export default function MemoContent({
   content,
   searchValue,
+  setDeletePopUp,
+  count,
+  setCount,
+  updateHandle,
+  createBtn,
+  setCreateBtn,
 }: {
   content: any;
   searchValue: any;
+  setDeletePopUp: any;
+  count: any;
+  setCount: any;
+  updateHandle: any;
+  createBtn: any;
+  setCreateBtn: any;
 }) {
+  const [toggle, setToggle] = useState(false);
+  const [upDate, setUpDate] = useState(false);
+  const [title, setTitle] = useState("");
+  const [text, setText] = useState("");
+
+  const onUpDateHandle = () => {
+    setToggle(false);
+    setUpDate(true);
+  };
+
+  const onSaveHandle = () => {
+    setToggle(false);
+    setUpDate(false);
+
+    updateHandle(title, text);
+
+    setTitle("");
+    setText("");
+  };
+
+  const onCancelHandle = () => {
+    setToggle(false);
+    setUpDate(false);
+
+    setTitle("");
+    setText("");
+  };
+
+  const toggleHandle = (id: number) => {
+    toggle ? setToggle(false) : setToggle(true);
+
+    setCount(id);
+
+    console.log(id);
+  };
+
+  useEffect(() => {
+    if (createBtn) {
+      toggleHandle(content.length - 1);
+      onUpDateHandle();
+    }
+  }, [createBtn]);
+
   return (
-    <div className="w-full  p-4 flex gap-9 flex-wrap justify-center ">
+    <div className="flex flex-wrap justify-center w-full p-4 gap-9 ">
       {content
+        .slice(0)
+        .reverse()
         .filter(
           (data: any) =>
-            data.title.toLowerCase().includes(searchValue.toLowerCase()) ||
-            data.content.toLowerCase().includes(searchValue.toLowerCase())
+            data?.title.toLowerCase().includes(searchValue.toLowerCase()) ||
+            data?.text.toLowerCase().includes(searchValue.toLowerCase())
         )
         .map((item: any, index: number) => {
           return (
             <li
-              key={index}
+              key={item.id}
               className="relative bg-white w-[270px] h-[200px] rounded-xl flex flex-col p-2 "
             >
-              <div className="flex justify-between  px-2 py-1">
-                <div className="font-bold">{item.title}</div>
-                <div className="group flex  relative mr-6">
-                  <div className="flex justify-center items-center gap-1 group-hover:opacity-100 opacity-0 absolute mt-1  duration-300 z-10 ">
-                    <button className="opacity-60 hover:opacity-100">
+              <div className="relative flex justify-between px-2 py-1">
+                {upDate && count === item.id ? (
+                  <input
+                    className="font-bold outline-none "
+                    placeholder={
+                      item.title === "" ? "제목을 입력해주세요." : item.title
+                    }
+                    onChange={(e) => {
+                      setTitle(e.target.value);
+                    }}
+                  ></input>
+                ) : (
+                  <div className="font-bold h-[30px]">{item.title}</div>
+                )}
+                <div className="relative flex justify-end   w-[100px] ">
+                  <div
+                    className={`flex justify-center items-center gap-1  absolute duration-300  mt-1  mr-7 ${
+                      toggle && item.id === count
+                        ? "opacity-100"
+                        : "opacity-0 pointer-events-none"
+                    }`}
+                  >
+                    <button
+                      className="opacity-60 hover:opacity-100"
+                      onClick={onUpDateHandle}
+                    >
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         fill="none"
@@ -41,7 +121,10 @@ export default function MemoContent({
                         />
                       </svg>
                     </button>
-                    <button className="opacity-60 hover:opacity-100">
+                    <button
+                      className="opacity-60 hover:opacity-100"
+                      onClick={() => setDeletePopUp(true)}
+                    >
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         fill="none"
@@ -58,33 +141,88 @@ export default function MemoContent({
                       </svg>
                     </button>
                   </div>
-                  <div className="group-hover:opacity-0 duration-100 pointer-events: none; absolute ml-2">
-                    <span>
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        strokeWidth={1.5}
-                        stroke="currentColor"
-                        className="size-6"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          d="M6.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM12.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM18.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z"
-                        />
-                      </svg>
-                    </span>
-                  </div>
+                  <button
+                    className=" duration-300 pointer-events: none; absolute ml-2 opacity-50 hover:opacity-100 "
+                    onClick={() => toggleHandle(item.id)}
+                  >
+                    {toggle && item.id === count ? (
+                      <span className="relative top-1">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          strokeWidth={3}
+                          stroke="currentColor"
+                          className="size-4"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            d="m8.25 4.5 7.5 7.5-7.5 7.5"
+                          />
+                        </svg>
+                      </span>
+                    ) : (
+                      <span>
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          strokeWidth={1.5}
+                          stroke="currentColor"
+                          className="size-6"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            d="M6.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM12.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM18.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z"
+                          />
+                        </svg>
+                      </span>
+                    )}
+                  </button>
                 </div>
               </div>
               <div className="mx-1  my-3 border-[1px] border-gray-200" />
-              <div className="mx-1 h-[90px] text-sm overflow-scroll">
-                {item.content}
-              </div>
-              <div className="absolute bottom-1 right-3 text-xs text-right text-gray-400">
+              {upDate && item.id === count ? (
+                <textarea
+                  className="mx-1 h-[90px] text-sm overflow-scroll bg-gray-100 outline-none resize-none rounded-md"
+                  onChange={(e) => {
+                    setText(e.target.value);
+                  }}
+                />
+              ) : (
+                <div className="mx-1 h-[90px] text-sm overflow-scroll">
+                  {item.text}
+                </div>
+              )}
+              <div className="absolute text-xs text-right text-gray-400 bottom-1 right-3">
                 {item.date}
               </div>
+              <button
+                className={` absolute left-3 text-xs text-right text-indigo-500 font-bold bottom-1 bg-gray-100 p-1 rounded-md   border-2 border-indigo-500 duration-300
+                  ${
+                    upDate && item.id === count
+                      ? "opaicty-50 hover:opacity-100 "
+                      : "opacity-0 pointer-events-none"
+                  }
+                  `}
+                onClick={onSaveHandle}
+              >
+                Save
+              </button>
+              <button
+                className={` absolute left-[60px] text-xs text-right text-indigo-500 font-bold bottom-1 bg-gray-100 p-1 rounded-md   border-2 border-indigo-500 duration-300
+                  ${
+                    upDate && item.id === count
+                      ? "opaicty-50 hover:opacity-100 "
+                      : "opacity-0 pointer-events-none"
+                  }
+                  `}
+                onClick={onCancelHandle}
+              >
+                Cancel
+              </button>
             </li>
           );
         })}
