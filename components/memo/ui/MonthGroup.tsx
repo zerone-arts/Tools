@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 const month = [
   "All Month",
@@ -17,18 +17,39 @@ const month = [
   "December",
 ];
 
-export default function MonthGroup() {
+export default function MonthGroup({
+  selectMonth,
+  setSelectMonth,
+}: {
+  selectMonth: any;
+  setSelectMonth: any;
+}) {
   const [active, setActive] = useState(false);
-  const [selectMonth, setSelectMonth] = useState(0);
+
+  const monthRef = useRef<HTMLButtonElement>(null);
+
+  useEffect(() => {
+    // 특정 영역 외 클릭 시 발생하는 이벤트
+    function handleFocus(e: MouseEvent) {
+      if (monthRef.current && !monthRef.current?.contains(e.target as Node)) {
+        // input 체크 해제
+        setActive(false);
+      }
+    }
+
+    // 이벤트 리스너에 handleFocus 함수 등록
+    document.addEventListener("mouseup", handleFocus);
+    return () => {
+      document.removeEventListener("mouseup", handleFocus);
+    };
+  }, [monthRef]);
   return (
     <button
       className={`
       relative
-      h-[40px] 
   w-[80px] sm:opacity-100 sm:w-[150px]
   rounded-lg flex items-center text-xs
   justify-center bg-gray-200 text-gray-400 
-
   duration-300
   group
   overflow-y-hidden
@@ -37,6 +58,7 @@ export default function MonthGroup() {
 
   `}
       onClick={() => (active ? setActive(false) : setActive(true))}
+      ref={monthRef}
     >
       <div className="flex justify-center items-center absolute top-[0px] h-[40px]">
         <span className="opacity-0 w-0 sm:opacity-100 sm:w-[60px]">
@@ -62,7 +84,9 @@ export default function MonthGroup() {
           </svg>
         </span>
       </div>
-      <div className="w-[150px] h-[180px] absolute top-[45px] overflow-y-scroll right-0">
+      <div
+        className={`w-[150px] h-[180px] absolute top-[45px] overflow-y-scroll right-0 `}
+      >
         <ul className="pr-4   font-light text-black  text-[10px] text-right flex flex-col gap-2  sm:text-xs  ">
           {month.map((item, index) => {
             return (

@@ -11,6 +11,7 @@ export default function MemoContent({
   updateHandle,
   createBtn,
   setCreateBtn,
+  selectMonth,
 }: {
   content: any;
   searchValue: any;
@@ -20,6 +21,7 @@ export default function MemoContent({
   updateHandle: any;
   createBtn: any;
   setCreateBtn: any;
+  selectMonth: any;
 }) {
   const [toggle, setToggle] = useState(false);
   const [upDate, setUpDate] = useState(false);
@@ -27,6 +29,10 @@ export default function MemoContent({
   const [text, setText] = useState("");
 
   const onUpDateHandle = () => {
+    if (!createBtn) {
+      setTitle(content.title);
+      setText(content.text);
+    }
     setToggle(false);
     setUpDate(true);
   };
@@ -54,12 +60,12 @@ export default function MemoContent({
 
     setCount(id);
 
-    console.log(id);
+    onCancelHandle();
   };
 
   useEffect(() => {
     if (createBtn) {
-      toggleHandle(content.length - 1);
+      toggleHandle(content.length);
       onUpDateHandle();
     }
   }, [createBtn]);
@@ -67,8 +73,11 @@ export default function MemoContent({
   return (
     <div className="flex flex-wrap justify-center w-full p-4 gap-9 ">
       {content
-        .slice(0)
-        .reverse()
+        .filter((data: any) =>
+          selectMonth === 0
+            ? data
+            : data?.created_at.substring(5, 7) == selectMonth
+        )
         .filter(
           (data: any) =>
             data?.title.toLowerCase().includes(searchValue.toLowerCase()) ||
@@ -87,6 +96,7 @@ export default function MemoContent({
                     placeholder={
                       item.title === "" ? "제목을 입력해주세요." : item.title
                     }
+                    defaultValue={item.title}
                     onChange={(e) => {
                       setTitle(e.target.value);
                     }}
@@ -187,17 +197,18 @@ export default function MemoContent({
               {upDate && item.id === count ? (
                 <textarea
                   className="mx-1 h-[90px] text-sm overflow-scroll bg-gray-100 outline-none resize-none rounded-md"
+                  defaultValue={item.text}
                   onChange={(e) => {
                     setText(e.target.value);
                   }}
-                />
+                ></textarea>
               ) : (
                 <div className="mx-1 h-[90px] text-sm overflow-scroll">
                   {item.text}
                 </div>
               )}
               <div className="absolute text-xs text-right text-gray-400 bottom-1 right-3">
-                {item.date}
+                {item.created_at.substr(0, 10)}
               </div>
               <button
                 className={` absolute left-3 text-xs text-right text-indigo-500 font-bold bottom-1 bg-gray-100 p-1 rounded-md   border-2 border-indigo-500 duration-300

@@ -18,7 +18,7 @@ export default function RootLayout({
   return (
     <html lang="ko">
       <body className=" bg-black relative w-full overflow-hidden">
-        <div className="flex">
+        <div className="relative flex">
           <Ui />
           {children}
         </div>

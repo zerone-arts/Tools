@@ -3,15 +3,10 @@
 import MemoContent from "@/components/memo/MemoContent";
 
 import MonthGroup from "@/components/memo/ui/MonthGroup";
+import { Database } from "@/types_db";
+import { supabase } from "@/utils/supabase";
 
-import { useState } from "react";
-
-interface List {
-  id: number;
-  title: string;
-  text: string;
-  date: string;
-}
+import { useEffect, useState } from "react";
 
 let TestList = [
   {
@@ -56,50 +51,92 @@ export default function MemoPage() {
   const [search, setSearch] = useState("");
   const [deletePopUp, setDeletePopUp] = useState(false);
   const [count, setCount] = useState(null);
-  const [list, setList] = useState<List[]>(TestList);
+  const [list, setList] = useState<
+    Database["public"]["Tables"]["rotionTable"]["Row"][]
+  >([]);
   const [createBtn, setCreateBtn] = useState(false);
+  const [selectMonth, setSelectMonth] = useState(0);
 
-  const deleteHandle = () => {
+  const deleteHandle = async () => {
     setDeletePopUp(false);
 
     if (count !== null) {
       // console.log(`${count}가 삭제 되었습니다.`);
       // list.splice(count, 1);
 
-      setList(list.filter((item, index) => index !== count));
+      // setList(list.filter((item, index) => index !== count));
+
+      const { data, error } = await supabase
+        .from("rotionTable")
+        .delete()
+        .eq("id", count);
+      if (error) {
+        console.log(error);
+      }
+      fetchList();
     }
   };
 
-  const updateHandle = (titleValue: string, textValue: string) => {
+  const updateHandle = async (titleValue: string, textValue: string) => {
     if (count !== null) {
-      const upDateList: any = list.map((item, idx) => {
-        if (count === idx) {
-          return { ...item, title: titleValue, text: textValue };
-        } else {
-          return { ...item };
+      if (createBtn) {
+        const { data, error } = await supabase.from("rotionTable").insert({
+          title: titleValue,
+          text: textValue,
+        });
+
+        if (error) {
+          console.log(error);
         }
-      });
-      setList(upDateList);
+
+        setCreateBtn(false);
+        fetchList();
+      } else {
+        const { data, error } = await supabase
+          .from("rotionTable")
+          .update({
+            title: titleValue,
+            text: textValue,
+          })
+          .eq("id", count);
+        if (error) {
+          console.log(error);
+        }
+
+        fetchList();
+      }
     }
   };
+
+  console.log(createBtn);
 
   const createContentHandle = () => {
-    let today = new Date();
-    let year = today.getFullYear();
-    let month = ("0" + (today.getMonth() + 1)).slice(-2);
-    let day = ("0" + today.getDate()).slice(-2);
-    let NowDate = year + "-" + month + "-" + day;
-
+    setSelectMonth(0);
     setList((prevList) => [
+      { id: list.length + 1, title: "", text: "", created_at: "New" },
       ...prevList,
-      { id: list.length, title: "", text: "", date: NowDate },
     ]);
-
     setCreateBtn(true);
   };
 
+  const fetchList = async () => {
+    const { data, error } = await supabase.from("rotionTable").select("*");
+    if (error) {
+      return;
+    }
+    console.log(data[2]);
+    let filter = data.sort((a: any, b: any) => {
+      return b.created_at.substring(5, 7) - a.created_at.substring(5, 7);
+    });
+    setList(data);
+  };
+
+  useEffect(() => {
+    fetchList();
+  }, []);
+
   return (
-    <div className="relative flex flex-col w-full h-screen rounded-xl ">
+    <div className={`relative flex flex-col w-full h-screen rounded-xl `}>
       <div className=" w-full h-[170px] flex flex-col bg-gray-100 gap-2 z-10 ">
         <div className="flex items-center justify-between p-1 pt-5 ">
           <div className="pl-10 text-xl ">Memo</div>
@@ -121,7 +158,7 @@ export default function MemoPage() {
             </button>
           </div>
         </div>
-        <div className="absolute right-0 flex justify-end h-full gap-4 p-1 pr-4 top-20">
+        <div className="absolute right-0 flex justify-end h-[50px] gap-4 p-1 pr-4 top-20">
           <div className="w-[200px] h-[40px] ">
             <span className="absolute flex items-center justify-center text-gray-400 w-9 h-9">
               <svg
@@ -146,10 +183,13 @@ export default function MemoPage() {
               onChange={(e) => setSearch(e.target.value)}
             />
           </div>
-          <MonthGroup />
+          <MonthGroup
+            selectMonth={selectMonth}
+            setSelectMonth={setSelectMonth}
+          />
         </div>
       </div>
-      <div className="relative z-10 w-full h-full overflow-scroll bg-gray-200 border-t-2 border-gray-500 border-opacity-10 ">
+      <div className="relative z-8 w-full h-full overflow-scroll bg-gray-200 border-t-2 border-gray-500 border-opacity-10 ">
         <MemoContent
           content={list}
           searchValue={search}
@@ -159,6 +199,7 @@ export default function MemoPage() {
           updateHandle={updateHandle}
           createBtn={createBtn}
           setCreateBtn={setCreateBtn}
+          selectMonth={selectMonth}
         />
       </div>
       <div
