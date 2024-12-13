@@ -1,6 +1,6 @@
 "use Client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export default function MemoContent({
   content,
@@ -10,8 +10,8 @@ export default function MemoContent({
   setCount,
   updateHandle,
   createBtn,
-  setCreateBtn,
   selectMonth,
+  cancelHandle,
 }: {
   content: any;
   searchValue: any;
@@ -20,8 +20,8 @@ export default function MemoContent({
   setCount: any;
   updateHandle: any;
   createBtn: any;
-  setCreateBtn: any;
   selectMonth: any;
+  cancelHandle: any;
 }) {
   const [toggle, setToggle] = useState(false);
   const [upDate, setUpDate] = useState(false);
@@ -53,25 +53,27 @@ export default function MemoContent({
 
     setTitle("");
     setText("");
+
+    cancelHandle();
   };
 
   const toggleHandle = (id: number) => {
-    toggle ? setToggle(false) : setToggle(true);
-
     setCount(id);
 
-    onCancelHandle();
+    toggle ? setToggle(false) : setToggle(true);
+
+    // onCancelHandle();
   };
 
   useEffect(() => {
     if (createBtn) {
-      toggleHandle(content.length);
+      toggleHandle(content.length + 499);
       onUpDateHandle();
     }
   }, [createBtn]);
 
   return (
-    <div className="flex flex-wrap justify-center w-full p-4 gap-9 ">
+    <div className="flex flex-wrap justify-center w-full p-4 gap-9  ">
       {content
         .filter((data: any) =>
           selectMonth === 0
@@ -87,12 +89,12 @@ export default function MemoContent({
           return (
             <li
               key={item.id}
-              className="relative bg-white w-[270px] h-[200px] rounded-xl flex flex-col p-2 "
+              className="relative bg-white w-[270px] h-[200px] rounded-xl flex flex-col p-2 shadow-md dark:bg-black/30 dark:border dark:text-gray-400"
             >
               <div className="relative flex justify-between px-2 py-1">
                 {upDate && count === item.id ? (
                   <input
-                    className="font-bold outline-none "
+                    className="font-bold outline-none rounded-md pl-1 dark:bg-white/0 dark:border placeholder:text-xs"
                     placeholder={
                       item.title === "" ? "제목을 입력해주세요." : item.title
                     }
@@ -152,7 +154,7 @@ export default function MemoContent({
                     </button>
                   </div>
                   <button
-                    className=" duration-300 pointer-events: none; absolute ml-2 opacity-50 hover:opacity-100 "
+                    className=" duration-300 pointer-events: none; absolute ml-2 opacity-50 hover:opacity-100  dark:opacity-100"
                     onClick={() => toggleHandle(item.id)}
                   >
                     {toggle && item.id === count ? (
@@ -193,10 +195,10 @@ export default function MemoContent({
                   </button>
                 </div>
               </div>
-              <div className="mx-1  my-3 border-[1px] border-gray-200" />
+              <div className="mx-1  my-3 border-[1px] border-gray-200 dark:border-gray-400" />
               {upDate && item.id === count ? (
                 <textarea
-                  className="mx-1 h-[90px] text-sm overflow-scroll bg-gray-100 outline-none resize-none rounded-md"
+                  className="mx-1 h-[90px] text-sm overflow-scroll bg-gray-100 outline-none resize-none rounded-md  dark:border dark:bg-gray-100/0"
                   defaultValue={item.text}
                   onChange={(e) => {
                     setText(e.target.value);
@@ -211,7 +213,7 @@ export default function MemoContent({
                 {item.created_at.substr(0, 10)}
               </div>
               <button
-                className={` absolute left-3 text-xs text-right text-indigo-500 font-bold bottom-1 bg-gray-100 p-1 rounded-md   border-2 border-indigo-500 duration-300
+                className={` absolute left-3 text-xs text-right text-indigo-500 font-bold bottom-1 bg-gray-100 p-1 rounded-md   border-2 border-indigo-500 duration-300 dark:bg-gray-100/0 dark:text-indigo-300 dark:border-indigo-300
                   ${
                     upDate && item.id === count
                       ? "opaicty-50 hover:opacity-100 "
@@ -223,7 +225,7 @@ export default function MemoContent({
                 Save
               </button>
               <button
-                className={` absolute left-[60px] text-xs text-right text-indigo-500 font-bold bottom-1 bg-gray-100 p-1 rounded-md   border-2 border-indigo-500 duration-300
+                className={` absolute left-[60px] text-xs text-right text-indigo-500 font-bold bottom-1 bg-gray-100 p-1 rounded-md   border-2 border-indigo-500 duration-300 dark:bg-gray-100/0 dark:text-indigo-300 dark:border-indigo-300
                   ${
                     upDate && item.id === count
                       ? "opaicty-50 hover:opacity-100 "

@@ -4,6 +4,7 @@ import "./globals.css";
 
 import BgImage from "@/components/layout/BgImage";
 import Ui from "@/components/layout/Ui";
+import { cookies } from "next/headers";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -16,7 +17,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="ko">
+    <html lang="ko" className="">
       <body className=" bg-black relative w-full overflow-hidden">
         <div className="relative flex">
           <Ui />

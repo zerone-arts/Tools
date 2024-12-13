@@ -75,6 +75,7 @@ export default function MemoPage() {
       }
       fetchList();
     }
+    setCount(null);
   };
 
   const updateHandle = async (titleValue: string, textValue: string) => {
@@ -108,15 +109,21 @@ export default function MemoPage() {
     }
   };
 
-  console.log(createBtn);
-
   const createContentHandle = () => {
-    setSelectMonth(0);
-    setList((prevList) => [
-      { id: list.length + 1, title: "", text: "", created_at: "New" },
-      ...prevList,
-    ]);
-    setCreateBtn(true);
+    if (!createBtn) {
+      setSelectMonth(0);
+      setList((prevList) => [
+        { id: list.length + 500, title: "", text: "", created_at: "New" },
+        ...prevList,
+      ]);
+      setCreateBtn(true);
+    }
+  };
+
+  const cancelHandle = () => {
+    setList(list.filter((list) => list.created_at !== "New"));
+    setCreateBtn(false);
+    setCount(null);
   };
 
   const fetchList = async () => {
@@ -124,11 +131,15 @@ export default function MemoPage() {
     if (error) {
       return;
     }
-    console.log(data[2]);
+    console.log(new Date(data[2].created_at));
+
     let filter = data.sort((a: any, b: any) => {
-      return b.created_at.substring(5, 7) - a.created_at.substring(5, 7);
+      // return b.created_at.substring(5, 7) - a.created_at.substring(5, 7);
+      let aDate: any = new Date(a.created_at);
+      let bDate: any = new Date(b.created_at);
+      return bDate - aDate;
     });
-    setList(data);
+    setList(filter);
   };
 
   useEffect(() => {
@@ -137,15 +148,17 @@ export default function MemoPage() {
 
   return (
     <div className={`relative flex flex-col w-full h-screen rounded-xl `}>
-      <div className=" w-full h-[170px] flex flex-col bg-gray-100 gap-2 z-10 ">
+      <div className=" w-full h-[170px] flex flex-col bg-gray-100 gap-2 z-10 dark:bg-gray-100/0">
         <div className="flex items-center justify-between p-1 pt-5 ">
-          <div className="pl-10 text-xl ">Memo</div>
+          <div className="pl-10 text-xl dark:text-white">Memo</div>
           <div className="flex gap-4 pr-3 w-9 sm:w-[120px]">
             <button
               className="w-9 sm:w-[120px] h-[40px] border-2 
           rounded-lg text-sm flex items-center 
           justify-center border-indigo-400
           text-indigo-700
+
+          dark:text-indigo-400
           duration-300
         
           "
@@ -177,19 +190,25 @@ export default function MemoPage() {
               </svg>
             </span>
             <input
-              className="w-full h-[40px] bg-gray-200 rounded-lg pl-8 placeholder:text-gray-400 text-xs focus:outline-none"
+              className="w-full h-[40px] bg-gray-200 rounded-lg pl-8 placeholder:text-gray-400 text-xs focus:outline-none dark:bg-gray-200/0 dark:border dark:text-gray-400"
               type="text"
               placeholder="Search..."
               onChange={(e) => setSearch(e.target.value)}
+              onClick={cancelHandle}
             />
           </div>
           <MonthGroup
             selectMonth={selectMonth}
             setSelectMonth={setSelectMonth}
+            cancelHandle={cancelHandle}
           />
         </div>
       </div>
-      <div className="relative z-8 w-full h-full overflow-scroll bg-gray-200 border-t-2 border-gray-500 border-opacity-10 ">
+      <div
+        className="relative z-8 w-full h-full overflow-scroll bg-gray-200 border-t-2 border-gray-500 border-opacity-10 
+      dark:bg-gray-200/0 dark:border-opacity-80
+      "
+      >
         <MemoContent
           content={list}
           searchValue={search}
@@ -198,8 +217,8 @@ export default function MemoPage() {
           setCount={setCount}
           updateHandle={updateHandle}
           createBtn={createBtn}
-          setCreateBtn={setCreateBtn}
           selectMonth={selectMonth}
+          cancelHandle={cancelHandle}
         />
       </div>
       <div
@@ -207,22 +226,22 @@ export default function MemoPage() {
           deletePopUp
             ? "z-20 opacity-100"
             : "-z-20 opacity-0 pointer-events-none"
-        } absolute w-full h-screen top-0 z-20 flex items-center justify-center bg-black bg-opacity-50`}
+        } absolute w-full h-screen top-0 z-20 flex items-center justify-center bg-black bg-opacity-50 dark:bg-opacity-80 `}
       >
         <div
           className="w-[270px] h-[100px] bg-gray-200 rounded-2xl border-4 border-indigo-400
-           text-indigo-700 flex flex-col items-center justify-center gap-2"
+           text-indigo-700 flex flex-col items-center justify-center gap-2 dark:bg-black dark:text-gray-300"
         >
           <h1>정말 이 메모를 삭제하시겠습니까?</h1>
           <div className="h-3 flex gap-[40px]">
             <button
-              className="m-1 duration-300 opacity-50 hover:text-red-500 hover:opacity-100"
+              className="m-1 duration-300 opacity-50 hover:text-red-500 hover:opacity-100 dark:opacity-80"
               onClick={deleteHandle}
             >
               삭제
             </button>
             <button
-              className="m-1 duration-300 opacity-50 hover:text-indigo-700 hover:opacity-100"
+              className="m-1 duration-300 opacity-50 hover:text-indigo-700 hover:opacity-100 dark:opacity-80"
               onClick={() => setDeletePopUp(false)}
             >
               취소
