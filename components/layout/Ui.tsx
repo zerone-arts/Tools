@@ -5,6 +5,8 @@ import profileImg from "@/public/image/bg/Spiderman.jpeg";
 import Image from "next/image";
 import { useParams, usePathname, useSearchParams } from "next/navigation";
 import Link from "next/link";
+import ThemeButton from "../memo/ui/ThemeButton";
+import ThemeButtonText from "../memo/ui/ThemeButtonText";
 
 const category = [
   "/",
@@ -12,6 +14,7 @@ const category = [
   "/calendar",
   "/weather",
   "/calculator",
+  "/theme",
   "/setting",
 ];
 
@@ -70,7 +73,7 @@ export default function Ui() {
           </li>
         </ul>
 
-        <div className="absolute  ml-[14px] bottom-[67px] w-full flex flex-col gap-3 ">
+        <div className="absolute  ml-[14px] bottom-[112px] w-full flex flex-col gap-3 ">
           <div
             className={`w-[2px] h-9 flex justify-center items-center rounded-sm font-bold duration-300  ${
               selectMenu === "/setting" ? " opacity-100" : "opacity-0"
@@ -246,6 +249,8 @@ export default function Ui() {
               </span>
             </Link>
           </div>
+          <ThemeButton hover={hover} setHover={setHover} />
+
           <div className="w-8 h-8 flex justify-center items-center rounded-full duration-300 text-white overflow-hidden">
             <Image
               src={profileImg}
@@ -307,6 +312,9 @@ export default function Ui() {
           >
             <Link href="setting">Setting</Link>
           </div>
+
+          <ThemeButtonText setHover={setHover} />
+
           <div className="w-[100px] h-9 flex  items-center  duration-300 text-gray-200">
             ZERONE
           </div>

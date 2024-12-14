@@ -89,12 +89,12 @@ export default function MemoContent({
           return (
             <li
               key={item.id}
-              className="relative bg-white w-[270px] h-[200px] rounded-xl flex flex-col p-2 shadow-md dark:bg-black/30 dark:border dark:text-gray-400"
+              className="relative bg-white w-[270px] h-[200px] rounded-xl flex flex-col p-2 shadow-md dark:bg-gray-700  dark:text-gray-200"
             >
               <div className="relative flex justify-between px-2 py-1">
                 {upDate && count === item.id ? (
                   <input
-                    className="font-bold outline-none rounded-md pl-1 dark:bg-white/0 dark:border placeholder:text-xs"
+                    className="font-bold outline-none rounded-md pl-1  placeholder:text-xs dark:text-gray-400 dark:bg-gray-700 "
                     placeholder={
                       item.title === "" ? "제목을 입력해주세요." : item.title
                     }
@@ -195,10 +195,10 @@ export default function MemoContent({
                   </button>
                 </div>
               </div>
-              <div className="mx-1  my-3 border-[1px] border-gray-200 dark:border-gray-400" />
+              <div className="mx-1  my-3 border-[1px] dark:border-gray-500" />
               {upDate && item.id === count ? (
                 <textarea
-                  className="mx-1 h-[90px] text-sm overflow-scroll bg-gray-100 outline-none resize-none rounded-md  dark:border dark:bg-gray-100/0"
+                  className="mx-1 h-[90px] text-sm overflow-scroll bg-gray-100 outline-none resize-none rounded-md   dark:text-gray-400 dark:bg-gray-700"
                   defaultValue={item.text}
                   onChange={(e) => {
                     setText(e.target.value);

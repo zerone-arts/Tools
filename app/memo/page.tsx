@@ -148,7 +148,7 @@ export default function MemoPage() {
 
   return (
     <div className={`relative flex flex-col w-full h-screen rounded-xl `}>
-      <div className=" w-full h-[170px] flex flex-col bg-gray-100 gap-2 z-10 dark:bg-gray-100/0">
+      <div className=" w-full h-[170px] flex flex-col bg-gray-100 gap-2 z-10 dark:bg-gray-800">
         <div className="flex items-center justify-between p-1 pt-5 ">
           <div className="pl-10 text-xl dark:text-white">Memo</div>
           <div className="flex gap-4 pr-3 w-9 sm:w-[120px]">
@@ -206,7 +206,7 @@ export default function MemoPage() {
       </div>
       <div
         className="relative z-8 w-full h-full overflow-scroll bg-gray-200 border-t-2 border-gray-500 border-opacity-10 
-      dark:bg-gray-200/0 dark:border-opacity-80
+      dark:bg-gray-800 dark:border-opacity-80
       "
       >
         <MemoContent

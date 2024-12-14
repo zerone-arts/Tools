@@ -70,7 +70,7 @@ export default function MonthGroup({
         <span className="opacity-0 w-0 sm:opacity-100 sm:w-[60px] text-gray-400 ">
           Group by:
         </span>
-        <span className="font-light text-black pl-1 text-[10px] sm:text-xs dark:text-white">
+        <span className="font-light text-black pl-1 text-[10px] sm:text-xs  dark:text-white">
           {month[selectMonth]}
         </span>
         <span className="text-gray-600 pl-2 dark:text-gray-100">
@@ -101,7 +101,7 @@ export default function MonthGroup({
                 className={`hover:text-black ${
                   index === selectMonth
                     ? "text-black dark:text-white"
-                    : "text-gray-400 dark:text-gray-400"
+                    : "text-gray-400 dark:text-gray-400 dark:hover:text-white"
                 }`}
                 onClick={() => setSelectMonth(index)}
               >
