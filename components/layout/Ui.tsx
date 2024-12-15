@@ -21,6 +21,7 @@ const category = [
 export default function Ui() {
   const [selectMenu, setSelectMenu] = useState("");
   const [hover, setHover] = useState("");
+  const [themeMode, setThemeMode] = useState("");
   const path = usePathname();
 
   useEffect(() => {
@@ -249,7 +250,12 @@ export default function Ui() {
               </span>
             </Link>
           </div>
-          <ThemeButton hover={hover} setHover={setHover} />
+          <ThemeButton
+            hover={hover}
+            setHover={setHover}
+            themeMode={themeMode}
+            setThemeMode={setThemeMode}
+          />
 
           <div className="w-8 h-8 flex justify-center items-center rounded-full duration-300 text-white overflow-hidden">
             <Image
@@ -313,7 +319,11 @@ export default function Ui() {
             <Link href="setting">Setting</Link>
           </div>
 
-          <ThemeButtonText setHover={setHover} />
+          <ThemeButtonText
+            setHover={setHover}
+            themeMode={themeMode}
+            setThemeMode={setThemeMode}
+          />
 
           <div className="w-[100px] h-9 flex  items-center  duration-300 text-gray-200">
             ZERONE

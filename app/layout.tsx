@@ -4,7 +4,7 @@ import "./globals.css";
 
 import BgImage from "@/components/layout/BgImage";
 import Ui from "@/components/layout/Ui";
-import { cookies } from "next/headers";
+import { ThemeProvider } from "@/components/layout/ThemeProvider";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -17,13 +17,15 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="ko" className="">
+    <html lang="ko" suppressHydrationWarning>
       <body className=" bg-black relative w-full overflow-hidden">
-        <div className="relative flex">
-          <Ui />
-          {children}
-        </div>
-        <BgImage />
+        <ThemeProvider attribute="class">
+          <div className="relative flex">
+            <Ui />
+            {children}
+          </div>
+          <BgImage />
+        </ThemeProvider>
       </body>
     </html>
   );
