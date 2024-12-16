@@ -148,9 +148,11 @@ export default function MemoPage() {
 
   return (
     <div className={`relative flex flex-col w-full h-screen rounded-xl `}>
-      <div className=" w-full h-[170px] flex flex-col bg-gray-100 gap-2 z-10 dark:bg-gray-800">
+      <div className=" w-full h-[170px] flex flex-col bg-gray-100 gap-2 z-10 dark:bg-black/40">
         <div className="flex items-center justify-between p-1 pt-5 ">
-          <div className="pl-10 text-xl dark:text-white">Memo</div>
+          <div className="pl-10 text-xl font-medium dark:text-gray-200">
+            Memo
+          </div>
           <div className="flex gap-4 pr-3 w-9 sm:w-[120px]">
             <button
               className="w-9 sm:w-[120px] h-[40px] border-2 
@@ -190,7 +192,7 @@ export default function MemoPage() {
               </svg>
             </span>
             <input
-              className="w-full h-[40px] bg-gray-200 rounded-lg pl-8 placeholder:text-gray-400 text-xs focus:outline-none dark:bg-gray-200/0 dark:border dark:text-gray-400"
+              className="w-full h-[40px] bg-gray-200 rounded-lg pl-8 placeholder:text-gray-400 text-xs focus:outline-none dark:bg-gray-200/0  dark:dark:bg-zinc-900 dark:text-gray-400"
               type="text"
               placeholder="Search..."
               onChange={(e) => setSearch(e.target.value)}
@@ -206,7 +208,7 @@ export default function MemoPage() {
       </div>
       <div
         className="relative z-8 w-full h-full overflow-scroll bg-gray-200 border-t-2 border-gray-500 border-opacity-10 
-      dark:bg-gray-800 dark:border-opacity-80
+      dark:bg-black/40 dark:border-opacity-80 
       "
       >
         <MemoContent
@@ -226,7 +228,7 @@ export default function MemoPage() {
           deletePopUp
             ? "z-20 opacity-100"
             : "-z-20 opacity-0 pointer-events-none"
-        } absolute w-full h-screen top-0 z-20 flex items-center justify-center bg-black bg-opacity-50 dark:bg-opacity-80 `}
+        } absolute w-full h-screen top-0 z-20 flex items-center justify-center bg-black bg-opacity-50 dark:bg-opacity-80  `}
       >
         <div
           className="w-[270px] h-[100px] bg-gray-200 rounded-2xl border-4 border-indigo-400

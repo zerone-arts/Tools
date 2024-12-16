@@ -5,8 +5,8 @@ import profileImg from "@/public/image/bg/Spiderman.jpeg";
 import Image from "next/image";
 import { useParams, usePathname, useSearchParams } from "next/navigation";
 import Link from "next/link";
-import ThemeButton from "../memo/ui/ThemeButton";
-import ThemeButtonText from "../memo/ui/ThemeButtonText";
+import ThemeButton from "./ThemeButton";
+import ThemeButtonText from "./ThemeButtonText";
 
 const category = [
   "/",
@@ -19,24 +19,19 @@ const category = [
 ];
 
 export default function Ui() {
-  const [selectMenu, setSelectMenu] = useState("");
   const [hover, setHover] = useState("");
   const [themeMode, setThemeMode] = useState("");
   const path = usePathname();
 
-  useEffect(() => {
-    setSelectMenu(path);
-  }, [path]);
-
   return (
     <div
-      className={`z-10 relative group p-1 w-[80px] hover:w-[200px] h-screen  duration-500 ease-out flex  item-center flex-shrink-0 `}
+      className={`z-10 relative  group p-1 w-[80px] hover:w-[200px] h-screen  duration-500 ease-out flex  item-center flex-shrink-0 `}
     >
       <div className="absolute h-screen -ml-3">
         <div className="mt-3 flex ml-[14px] ">
           <div
             className={`w-[2px] h-9 flex justify-center items-center rounded-sm font-bold duration-300  ${
-              selectMenu === "/" ? " opacity-100" : "opacity-0"
+              path === "/" ? " opacity-100" : "opacity-0"
             } `}
           >
             <div className="bg-white w-[2px] h-7 rounded-sm"></div>
@@ -46,28 +41,28 @@ export default function Ui() {
         <ul className="mt-5  ml-[14px] flex flex-col  justify-center gap-5 ">
           <li
             className={`w-[2px] h-9 flex justify-center items-center rounded-sm font-bold duration-300  ${
-              selectMenu === "/memo" ? " opacity-100" : "opacity-0"
+              path === "/memo" ? " opacity-100" : "opacity-0"
             }`}
           >
             <div className="bg-white w-[2px] h-7 rounded-sm"></div>
           </li>
           <li
             className={`w-[2px] h-9 flex justify-center items-center rounded-sm font-bold duration-300  ${
-              selectMenu === "/calendar" ? " opacity-100" : "opacity-0"
+              path === "/calendar" ? " opacity-100" : "opacity-0"
             }`}
           >
             <div className="bg-white w-[2px] h-7 rounded-sm"></div>
           </li>
           <li
             className={`w-[2px] h-9 flex justify-center items-center rounded-sm font-bold duration-300  ${
-              selectMenu === "/weather" ? " opacity-100" : "opacity-0"
+              path === "/weather" ? " opacity-100" : "opacity-0"
             }`}
           >
             <div className="bg-white w-[2px] h-7 rounded-sm"></div>
           </li>
           <li
             className={`w-[2px] h-9 flex justify-center items-center rounded-sm font-bold duration-300  ${
-              selectMenu === "/calculator" ? " opacity-100" : "opacity-0"
+              path === "/calculator" ? " opacity-100" : "opacity-0"
             }`}
           >
             <div className="bg-white w-[2px] h-7 rounded-sm"></div>
@@ -77,7 +72,7 @@ export default function Ui() {
         <div className="absolute  ml-[14px] bottom-[112px] w-full flex flex-col gap-3 ">
           <div
             className={`w-[2px] h-9 flex justify-center items-center rounded-sm font-bold duration-300  ${
-              selectMenu === "/setting" ? " opacity-100" : "opacity-0"
+              path === "/setting" ? " opacity-100" : "opacity-0"
             }`}
           >
             <div className="bg-white w-[2px] h-7 rounded-sm"></div>
@@ -88,7 +83,7 @@ export default function Ui() {
         <div className="mt-3 flex ml-[14px] ">
           <div
             className={`w-9 h-9 flex justify-center items-center rounded-sm font-bold duration-300  ${
-              selectMenu === "/" || hover === "/"
+              path === "/" || hover === "/"
                 ? "text-black bg-white "
                 : "text-white"
             } `}
@@ -102,7 +97,7 @@ export default function Ui() {
         <ul className="mt-5  ml-[14px] flex flex-col  justify-center gap-5 ">
           <li
             className={`w-9 h-9 flex justify-center items-center rounded-sm duration-300  ${
-              selectMenu === "/memo" || hover === "/memo"
+              path === "/memo" || hover === "/memo"
                 ? "text-black bg-white"
                 : "text-white"
             }
@@ -132,7 +127,7 @@ export default function Ui() {
           </li>
           <li
             className={`w-9 h-9 flex justify-center items-center rounded-sm duration-300   ${
-              selectMenu === "/calendar" || hover === "/calendar"
+              path === "/calendar" || hover === "/calendar"
                 ? "bg-white text-black"
                 : "text-white"
             } `}
@@ -160,7 +155,7 @@ export default function Ui() {
           </li>
           <li
             className={`w-9 h-9 flex justify-center items-center rounded-sm duration-300   ${
-              selectMenu === "/weather" || hover === "/weather"
+              path === "/weather" || hover === "/weather"
                 ? "bg-white text-black"
                 : "text-white"
             } `}
@@ -188,7 +183,7 @@ export default function Ui() {
           </li>
           <li
             className={`w-9 h-9 flex justify-center items-center rounded-sm duration-300  ${
-              selectMenu === "/calculator" || hover === "/calculator"
+              path === "/calculator" || hover === "/calculator"
                 ? "bg-white text-black"
                 : "text-white"
             } `}
@@ -219,7 +214,7 @@ export default function Ui() {
         <div className="absolute  ml-[14px] bottom-4 w-full flex flex-col gap-3 ">
           <div
             className={`w-9 h-9 flex justify-center items-center rounded-sm duration-300  ${
-              selectMenu === "/setting" || hover === "/setting"
+              path === "/setting" || hover === "/setting"
                 ? "bg-white text-black "
                 : "text-white"
             } `}
@@ -268,7 +263,7 @@ export default function Ui() {
           </div>
         </div>
       </div>
-      <div className="absolute ml-[50px] h-screen opacity-0 group-hover:opacity-100 duration-300 text-sm font-light">
+      <div className="absolute ml-[50px] h-screen opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto duration-300 text-sm font-light">
         <div className="mt-3 flex ml-[14px] ">
           <div
             className={`w-[100px] h-9 flex items-center rounded-sm  duration-300 text-gray-200 `}

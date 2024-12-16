@@ -89,7 +89,7 @@ export default function MemoContent({
           return (
             <li
               key={item.id}
-              className="relative bg-white w-[270px] h-[200px] rounded-xl flex flex-col p-2 shadow-md dark:bg-gray-700  dark:text-gray-200"
+              className="relative bg-white w-[270px] h-[200px] rounded-xl flex flex-col p-2 shadow-md dark:bg-zinc-900  dark:text-gray-200/85"
             >
               <div className="relative flex justify-between px-2 py-1">
                 {upDate && count === item.id ? (

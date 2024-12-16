@@ -66,7 +66,7 @@ export default function MonthGroup({
       )}
       ref={monthRef}
     >
-      <div className="flex justify-center items-center absolute top-[0px] h-[40px]">
+      <div className="flex justify-center items-center absolute top-[0px] h-[40px] ">
         <span className="opacity-0 w-0 sm:opacity-100 sm:w-[60px] text-gray-400 ">
           Group by:
         </span>
@@ -91,9 +91,9 @@ export default function MonthGroup({
         </span>
       </div>
       <div
-        className={`w-[150px] h-[180px] absolute top-[45px] overflow-y-scroll right-0 `}
+        className={`w-[150px] h-full absolute top-[45px] overflow-y-scroll right-0 bg-black `}
       >
-        <ul className="pr-4   font-light text-black  text-[10px] text-right flex flex-col gap-2  sm:text-xs  ">
+        <ul className="pr-4  font-light text-black  text-[10px] text-right flex flex-col gap-2  sm:text-xs  ">
           {month.map((item, index) => {
             return (
               <li
