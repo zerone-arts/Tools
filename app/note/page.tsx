@@ -1,8 +1,8 @@
 "use client";
 
-import MemoContent from "@/components/memo/MemoContent";
+import NoteContent from "@/components/note/NoteContent";
 
-import MonthGroup from "@/components/memo/ui/MonthGroup";
+import MonthGroup from "@/components/note/ui/MonthGroup";
 import { Database } from "@/types_db";
 import { supabase } from "@/utils/supabase";
 
@@ -47,7 +47,7 @@ let TestList = [
   },
 ];
 
-export default function MemoPage() {
+export default function NotePage() {
   const [search, setSearch] = useState("");
   const [deletePopUp, setDeletePopUp] = useState(false);
   const [count, setCount] = useState(null);
@@ -147,13 +147,13 @@ export default function MemoPage() {
   }, []);
 
   return (
-    <div className={`relative flex flex-col w-full h-screen rounded-xl `}>
+    <div className={`relative flex flex-col  h-screen rounded-xl `}>
       <div className=" w-full h-[170px] flex flex-col bg-gray-100 gap-2 z-10 dark:bg-black/40">
         <div className="flex items-center justify-between p-1 pt-5 ">
           <div className="pl-10 text-xl font-medium dark:text-gray-200">
-            Memo
+            Note
           </div>
-          <div className="flex gap-4 pr-3 w-9 sm:w-[120px]">
+          <div className="flex gap-4 pr-3  sm:w-[120px]">
             <button
               className="w-9 sm:w-[120px] h-[40px] border-2 
           rounded-lg text-sm flex items-center 
@@ -168,7 +168,7 @@ export default function MemoPage() {
             >
               +
               <span className="opacity-0 w-0 sm:opacity-100 sm:w-[80px] whitespace-nowrap duration-300">
-                New Memo
+                New Note
               </span>
             </button>
           </div>
@@ -211,7 +211,7 @@ export default function MemoPage() {
       dark:bg-black/40 dark:border-opacity-80 
       "
       >
-        <MemoContent
+        <NoteContent
           content={list}
           searchValue={search}
           setDeletePopUp={setDeletePopUp}

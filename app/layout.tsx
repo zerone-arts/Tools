@@ -18,7 +18,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ko" suppressHydrationWarning>
-      <body className=" bg-black relative w-full overflow-hidden">
+      <body className=" bg-black relative w-full h-screen overflow-hidden">
         <ThemeProvider attribute="class">
           <div className="relative flex">
             <Ui />

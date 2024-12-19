@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 
-export default function MemoContent({
+export default function NoteContent({
   content,
   searchValue,
   setDeletePopUp,

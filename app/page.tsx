@@ -1,7 +1,7 @@
 export default function Home() {
   return (
     <div
-      className={`absolute w-full h-screen duration-500 ease-out flex flex-col items-center justify-center`}
+      className={`absolute w-full h-screen duration-500 ease-out flex flex-col items-center justify-center overflow-hidden`}
     >
       <div className="text-white w-10 h-10">Login</div>
     </div>

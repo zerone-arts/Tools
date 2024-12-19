@@ -10,7 +10,7 @@ import ThemeButtonText from "./ThemeButtonText";
 
 const category = [
   "/",
-  "/memo",
+  "/note",
   "/calendar",
   "/weather",
   "/calculator",
@@ -41,7 +41,7 @@ export default function Ui() {
         <ul className="mt-5  ml-[14px] flex flex-col  justify-center gap-5 ">
           <li
             className={`w-[2px] h-9 flex justify-center items-center rounded-sm font-bold duration-300  ${
-              path === "/memo" ? " opacity-100" : "opacity-0"
+              path === "/note" ? " opacity-100" : "opacity-0"
             }`}
           >
             <div className="bg-white w-[2px] h-7 rounded-sm"></div>
@@ -97,16 +97,16 @@ export default function Ui() {
         <ul className="mt-5  ml-[14px] flex flex-col  justify-center gap-5 ">
           <li
             className={`w-9 h-9 flex justify-center items-center rounded-sm duration-300  ${
-              path === "/memo" || hover === "/memo"
+              path === "/note" || hover === "/note"
                 ? "text-black bg-white"
                 : "text-white"
             }
             
             `}
-            onMouseOver={() => setHover("/memo")}
+            onMouseOver={() => setHover("/note")}
             onMouseLeave={() => setHover("")}
           >
-            <Link href="/memo">
+            <Link href="/note">
               <span>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -277,10 +277,10 @@ export default function Ui() {
         <ul className="mt-5  ml-[14px] flex flex-col  justify-center gap-5 ">
           <li
             className={`w-[100px] h-9 flex  items-center rounded-sm duration-300 text-gray-200 `}
-            onMouseOver={() => setHover("/memo")}
+            onMouseOver={() => setHover("/note")}
             onMouseLeave={() => setHover("")}
           >
-            <Link href="/memo">Memo</Link>
+            <Link href="/note">Note</Link>
           </li>
           <li
             className={`w-[100px] h-9 flex  items-center rounded-sm duration-300 text-gray-200`}
