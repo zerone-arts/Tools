@@ -6,7 +6,7 @@ export default function DayWeather({
   WeathersDay: WeathersDayType[];
 }) {
   return (
-    <div className="bg-gray-200 w-[250px] h-[230px] rounded-xl dark:bg-zinc-900 p-4 flex flex-col  ">
+    <div className="w-[250px] h-[230px] rounded-xl dark:bg-zinc-900 p-4 flex flex-col text-gray-200 border border-white/40 dark:border-none">
       <h1 className="font-semibold">Day</h1>
       <div className="p-0 h-full overflow-scroll flex flex-col gap-4 mt-2 ">
         <ul className="flex flex-col pl-3">

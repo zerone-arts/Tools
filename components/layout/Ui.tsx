@@ -23,6 +23,8 @@ export default function Ui() {
   const [themeMode, setThemeMode] = useState("");
   const path = usePathname();
 
+  useEffect(() => {}, [path]);
+
   return (
     <div
       className={`z-10 relative  group p-1 w-[80px] hover:w-[200px] h-screen  duration-500 ease-out flex  item-center flex-shrink-0 `}

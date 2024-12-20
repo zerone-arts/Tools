@@ -104,14 +104,16 @@ export const weatherIconHandle = (weather: string) => {
 
 export default function WeatherPage() {
   return (
-    <div className="w-full bg-white dark:dark:bg-black/40 dark:text-gray-100">
+    <div className="relative w-full dark:dark:bg-black/40 dark:text-gray-100 max-sm:h-screen max-sm:overflow-scroll">
       <WeatherUi />
-      <div className="p-7 flex gap-7">
-        <PresentWeather />
-        <TimeWeather WeathersToday={WeathersToday} />
-      </div>
-      <div className="pl-7 pt-2">
-        <DayWeather WeathersDay={WeathersDay} />
+      <div className="h-full max-sm:mt-[40px]">
+        <div className=" p-7  flex gap-7  max-sm:justify-center">
+          <PresentWeather />
+        </div>
+        <div className="p-7 pt-2 max-sm:h-[500px] flex max-sm:items-center gap-7 max-sm:flex-col max-sm:gap-7 max-sm:pt-0">
+          <TimeWeather WeathersToday={WeathersToday} />
+          <DayWeather WeathersDay={WeathersDay} />
+        </div>
       </div>
     </div>
   );

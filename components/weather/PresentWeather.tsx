@@ -1,6 +1,6 @@
 export default function PresentWeather({}) {
   return (
-    <div className="bg-gray-200 w-[250px] h-[230px] rounded-xl p-5 flex  flex-col gap-2 dark:bg-zinc-900">
+    <div className=" w-[250px] h-[230px] rounded-xl  flex flex-col gap-2 text-gray-200 dark:bg-zinc-900 p-10 dark:p-5 transition-all  max-sm:justify-center max-sm:items-center dark:max-sm:justify-normal dark:max-sm:items-start">
       <div>
         <h2 className="font-bold">Present</h2>
       </div>
