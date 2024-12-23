@@ -25,7 +25,7 @@ export default function DayWeather({
                 </div>
                 <div className="flex items-center gap-1">
                   <p className="text-[10px]">{item.highTemp}˚</p>
-                  <p className="text-[9px] text-gray-500">{item.lowTemp}˚</p>
+                  <p className="text-[9px] text-gray-400">{item.lowTemp}˚</p>
                 </div>
                 <div>
                   <p className="text-[10px] ml-[50px]">{item.day}</p>

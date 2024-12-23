@@ -36,30 +36,29 @@ export default function WeatherUi() {
           />
         </div>
         <button
-          className=" w-[110px] h-[40px]  rounded-3xl  flex items-center justify-between p-4 border-2  border-indigo-500 text-indigo-400
+          className=" w-[110px] h-[40px]  rounded-3xl  flex items-center justify-between p-4 border-2  border-indigo-500 text-indigo-400 
         transition-all
         max-sm:w-[30px]    max-sm:h-[30px] max-sm:p-1 
         "
         >
-          <div>
-            <span className="">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="20"
-                height="20"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                className="feather feather-map-pin max-sm:scale-[0.7]"
-              >
-                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
-                <circle cx="12" cy="10" r="3"></circle>
-              </svg>
-            </span>
-          </div>
+          <span className="">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className="feather feather-map-pin max-sm:scale-[0.7]"
+            >
+              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+              <circle cx="12" cy="10" r="3"></circle>
+            </svg>
+          </span>
+
           <p className="text-sm pr-1 max-sm:opacity-0 transition-all">
             내 위치
           </p>

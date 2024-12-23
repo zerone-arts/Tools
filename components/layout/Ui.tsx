@@ -27,7 +27,7 @@ export default function Ui() {
 
   return (
     <div
-      className={`z-10 relative  group p-1 w-[80px] hover:w-[200px] h-screen  duration-500 ease-out flex  item-center flex-shrink-0 `}
+      className={`z-10 relative  group p-1 w-[80px] sm:hover:w-[200px] h-screen  duration-500 ease-out flex  item-center flex-shrink-0 `}
     >
       <div className="absolute h-screen -ml-3">
         <div className="mt-3 flex ml-[14px] ">
@@ -265,7 +265,7 @@ export default function Ui() {
           </div>
         </div>
       </div>
-      <div className="absolute ml-[50px] h-screen opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto duration-300 text-sm font-light">
+      <div className="absolute ml-[50px] h-screen opacity-0 pointer-events-none sm:group-hover:opacity-100 group-hover:pointer-events-auto duration-300 text-sm font-light">
         <div className="mt-3 flex ml-[14px] ">
           <div
             className={`w-[100px] h-9 flex items-center rounded-sm  duration-300 text-gray-200 `}
