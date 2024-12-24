@@ -2,6 +2,7 @@ import DayWeather from "@/components/weather/DayWeather";
 import PresentWeather from "@/components/weather/PresentWeather";
 import TimeWeather from "@/components/weather/TimeWeather";
 import WeatherUi from "@/components/weather/WeatherUi";
+import { getWeather } from "../api/weather/route";
 
 export type WeathersTodayType = {
   id: number;
@@ -102,7 +103,10 @@ export const weatherIconHandle = (weather: string) => {
   return weatherIcon?.icon;
 };
 
-export default function WeatherPage() {
+export default async function WeatherPage() {
+  const weathers = await getWeather();
+  console.log(weathers.main.temp);
+
   return (
     <div className="relative w-full dark:dark:bg-black/40 dark:text-gray-100 max-sm:h-screen max-sm:overflow-scroll">
       <WeatherUi />
