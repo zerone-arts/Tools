@@ -1,4 +1,4 @@
-import { weatherIconHandle, WeathersDayType } from "@/app/weather/page";
+import { WEATHERICON, WeathersDayType } from "@/app/weather/page";
 
 export default function DayWeather({
   WeathersDay,
@@ -16,10 +16,10 @@ export default function DayWeather({
                 key={item.id}
                 className="w-full h-[35px]  flex items-center gap-2"
               >
-                <div className="text-sm scale-[0.7]">
+                <div className="text-sm scale-[0.5]">
                   <span
                     dangerouslySetInnerHTML={{
-                      __html: weatherIconHandle(item.weather)!,
+                      __html: WEATHERICON[0].icon,
                     }}
                   />
                 </div>

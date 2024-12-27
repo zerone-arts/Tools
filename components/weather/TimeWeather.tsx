@@ -1,5 +1,5 @@
 "use client";
-import { weatherIconHandle, WeathersTodayType } from "@/app/weather/page";
+import { WEATHERICON, WeathersTodayType } from "@/app/weather/page";
 import { useEffect, useState } from "react";
 
 const LYRIC = [
@@ -67,10 +67,10 @@ export default function TimeWeather({
                   <span>{item.time}</span>
                   <span> {item.time < 18 ? "AM" : "PM"}</span>
                 </div>
-                <div>
+                <div className="scale-[0.7]">
                   <span
                     dangerouslySetInnerHTML={{
-                      __html: weatherIconHandle(item.weather)!,
+                      __html: WEATHERICON[0].icon,
                     }}
                   />
                 </div>
@@ -108,7 +108,7 @@ export default function TimeWeather({
                   : "opacity-0 "
               }`}
             >
-              <p className={``}>{item.lyric}</p>
+              <p>{item.lyric}</p>
             </li>
           ))}
         </ul>
@@ -122,7 +122,7 @@ export default function TimeWeather({
                   : "opacity-0 "
               }`}
             >
-              <p className={``}>{item.lyricKR}</p>
+              <p>{item.lyricKR}</p>
             </li>
           ))}
         </ul>
