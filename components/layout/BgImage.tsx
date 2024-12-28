@@ -1,5 +1,5 @@
 import Image from "next/image";
-import img from "@/public/image/bg/spider2.png";
+import img from "@/public/assets/image/bg/spider2.png";
 export default function BgImage() {
   return (
     <Image

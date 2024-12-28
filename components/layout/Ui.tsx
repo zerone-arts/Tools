@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import profileImg from "@/public/image/bg/Spiderman.jpeg";
+import profileImg from "@/public/assets/image/bg/Spiderman.jpeg";
 import Image from "next/image";
 import { useParams, usePathname, useSearchParams } from "next/navigation";
 import Link from "next/link";

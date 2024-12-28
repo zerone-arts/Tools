@@ -1,5 +1,5 @@
 "use client";
-import { WEATHERICON, WeathersTodayType } from "@/app/weather/page";
+import { WeathersTodayType } from "@/app/weather/page";
 import { useEffect, useState } from "react";
 
 const LYRIC = [
@@ -61,18 +61,18 @@ export default function TimeWeather({
             return (
               <li
                 key={idx}
-                className="bg-zinc-700/80  w-[70px] rounded-lg flex flex-col justify-center items-center gap-1 dark:bg-zinc-700 flex-shrink-0"
+                className="bg-zinc-700/80  w-[70px] rounded-lg flex flex-col justify-center items-center dark:bg-zinc-700 flex-shrink-0"
               >
                 <div className="flex gap-1 text-[10px] font-semibold">
                   <span>{item.time}</span>
                   <span> {item.time < 18 ? "AM" : "PM"}</span>
                 </div>
                 <div className="scale-[0.7]">
-                  <span
+                  {/* <span
                     dangerouslySetInnerHTML={{
                       __html: WEATHERICON[0].icon,
                     }}
-                  />
+                  /> */}
                 </div>
                 <div className="flex text-[12px]">
                   {item.temp}
