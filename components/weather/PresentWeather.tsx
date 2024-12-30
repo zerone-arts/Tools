@@ -4,17 +4,21 @@ import { getDate } from "@/app/weather/page";
 import Image from "next/image";
 
 export default function PresentWeather({ weathers }: { weathers: any }) {
-  const date = getDate(weathers.dt);
-  let iconUrl = require(`@/public/assets/image/icon/${weathers.weather[0].icon}.png`);
+  const date = getDate(weathers.dt * 1000);
+  let icon = weathers.weather ? weathers.weather[0].icon : "01d";
+  let temp = weathers.main ? weathers.main.temp : "?";
+  let description = weathers.weather ? weathers.weather[0].description : "";
+
+  let iconUrl = require(`@/public/assets/image/icon/${icon}.png`);
 
   return (
-    <div className=" w-[250px] h-[230px] rounded-xl  flex flex-col gap-2 text-gray-200 dark:bg-zinc-900 p-10 dark:p-5 transition-all  max-sm:justify-center max-sm:items-center dark:max-sm:justify-normal dark:max-sm:items-start">
+    <div className=" w-[250px] h-[230px] rounded-xl  flex flex-col gap-2 text-gray-200   max-sm:pt-3 dark:bg-zinc-900 p-10 dark:p-5 transition-all  max-sm:justify-center max-sm:items-center dark:max-sm:justify-normal dark:max-sm:items-start">
       <div>
         <h2 className="font-bold">Present</h2>
       </div>
       <div className="flex items-center">
         <h1 className="text-[60px] flex">
-          {Math.floor(weathers.main.temp)}
+          {Math.floor(temp)}
           <span className="text-sm mt-3 font-bold">&#8451;</span>
         </h1>
         <div className="">
@@ -23,7 +27,7 @@ export default function PresentWeather({ weathers }: { weathers: any }) {
             width="500"
             height="500"
             src={iconUrl}
-            alt={weathers.weather[0].description}
+            alt={description}
           />
         </div>
       </div>

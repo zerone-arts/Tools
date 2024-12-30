@@ -1,5 +1,7 @@
 "use client";
-import { WeathersTodayType } from "@/app/weather/page";
+
+import Image from "next/image";
+
 import { useEffect, useState } from "react";
 
 const LYRIC = [
@@ -35,47 +37,80 @@ const LYRIC = [
   },
 ];
 
-export default function TimeWeather({
-  WeathersToday,
-}: {
-  WeathersToday: WeathersTodayType[];
-}) {
+let time = [
+  1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22,
+  23, 24,
+];
+
+export default function TimeWeather({ forecast }: { forecast: any }) {
   const [currentTime, setCurrentTime] = useState(new Date().getHours());
+  const [timeArr, setTimeArr] = useState("");
+  const filteredTimeData = forecast.list?.filter(
+    (_: any, index: any) => index < 12
+  );
+
+  const changeTimeHandle = () => {
+    let indexItem = time.indexOf(currentTime);
+    let timeFiltered: any = time.slice(indexItem + 1);
+    let afterTimes = time.slice(0, 12 - timeFiltered.length);
+    let resultTimes = timeFiltered.concat(afterTimes);
+
+    setTimeArr(resultTimes);
+  };
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentTime(new Date().getHours());
-    }, 5000);
-
-    return () => clearInterval(interval);
+    changeTimeHandle();
   }, []);
 
   return (
-    <div className=" w-[250px] h-[230px] rounded-xl flex-grow flex-col b  dark:bg-zinc-900 flex p-2 justify-center max-sm:flex-grow-0 text-gray-200 max-sm:border border-white/50 dark:border-none">
-      <div className="w-full overflow-scroll flex flex-col gap-[6px] ">
-        <div className="pl-2">
-          <h1 className="font-semibold max-sm:mb-1">Today</h1>
+    <div className=" w-[250px] h-[230px] rounded-xl flex-grow flex-col b  dark:bg-zinc-900 flex p-2 justify-center max-sm:flex-grow-0 text-gray-200 border border-white/50 dark:border-none">
+      <div className="px-2 top-0 flex items-center justify-between">
+        <h1 className="font-semibold max-sm:mb-1 ">Today</h1>
+        <div className="w-[25px] h-full hover:w-[150px] duration-300 flex items-center  gap-1 overflow-hidde group">
+          <span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={1.5}
+              stroke="currentColor"
+              className="size-6"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M12 9v3.75m9-.75a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 3.75h.008v.008H12v-.008Z"
+              />
+            </svg>
+          </span>
+          <p className="w-[200px] h-full flex-shrink-0 text-[10px] flex items-center opacity-0   group-hover:opacity-100 duration-100 group-hover:delay-200 group-hover:duration-300">
+            사정으로 인한 임시 값 입니다.
+          </p>
         </div>
+      </div>
+      <div className="w-full overflow-scroll flex flex-col gap-[6px] mt-5 ">
         <ul className="flex gap-[10px] h-[90px] w-full pl-2">
-          {WeathersToday.map((item, idx) => {
+          {filteredTimeData.map((item: any, idx: number) => {
             return (
               <li
                 key={idx}
                 className="bg-zinc-700/80  w-[70px] rounded-lg flex flex-col justify-center items-center dark:bg-zinc-700 flex-shrink-0"
               >
                 <div className="flex gap-1 text-[10px] font-semibold">
-                  <span>{item.time}</span>
-                  <span> {item.time < 18 ? "AM" : "PM"}</span>
+                  <span>{+timeArr[idx] === 24 ? "00" : timeArr[idx]}</span>
+                  <span> {+timeArr[idx] < 18 ? "AM" : "PM"}</span>
                 </div>
                 <div className="scale-[0.7]">
-                  {/* <span
-                    dangerouslySetInnerHTML={{
-                      __html: WEATHERICON[0].icon,
-                    }}
-                  /> */}
+                  <Image
+                    className="w-[35px] h-[35px]"
+                    width="500"
+                    height="500"
+                    src={require(`@/public/assets/image/icon/${item.weather[0].icon}.png`)}
+                    alt={item.weather[0].description}
+                  />
                 </div>
                 <div className="flex text-[12px]">
-                  {item.temp}
+                  {Math.floor(item.main.temp)}
                   <span className="text-[8px] font-bold mt-[1px]">&#8451;</span>
                 </div>
               </li>

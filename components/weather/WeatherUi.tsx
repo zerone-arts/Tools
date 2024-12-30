@@ -1,4 +1,10 @@
-export default function WeatherUi() {
+"use client";
+
+export default function WeatherUi({
+  currentLocationHandle,
+}: {
+  currentLocationHandle: any;
+}) {
   return (
     <div
       className=" h-[60px]  flex items-center justify-between max-sm:flex-col
@@ -40,6 +46,7 @@ export default function WeatherUi() {
         transition-all
         max-sm:w-[30px]    max-sm:h-[30px] max-sm:p-1 
         "
+          onClick={() => currentLocationHandle()}
         >
           <span className="">
             <svg

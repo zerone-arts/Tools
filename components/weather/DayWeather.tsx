@@ -1,14 +1,13 @@
 "use client";
 
 import { getDate, weekDayNames } from "@/app/weather/page";
+
 import Image from "next/image";
 
-export default function DayWeather({
-  filteredForecast,
-}: {
-  filteredForecast: any;
-}) {
-  // console.log(filteredForecast[0]);
+export default function DayWeather({ forecast }: { forecast: any }) {
+  const filteredForecast = forecast.list?.filter(
+    (_: any, index: any) => index % 8 === 7
+  );
   return (
     <div className="w-[250px] h-[230px] rounded-xl dark:bg-zinc-900 p-4 flex flex-col text-gray-200 border border-white/40 dark:border-none">
       <h1 className="font-semibold">Day</h1>
@@ -17,6 +16,7 @@ export default function DayWeather({
           {filteredForecast.map((item: any, index: number) => {
             let date = new Date(item.dt * 1000);
             let weekDayName = weekDayNames[date.getDay()];
+            let dateText = getDate(item.dt);
             return (
               <li
                 key={item.dt}
@@ -41,7 +41,7 @@ export default function DayWeather({
                 </div>
 
                 <div className="text-[9px] m-7 text-gray-400 flex  justify-between w-[70px] ">
-                  <p>{getDate(item.dt).slice(0, length - 3)}</p>
+                  <p>{dateText.slice(0, dateText.length - 3)}</p>
                   <p>{weekDayName}</p>
                 </div>
               </li>
