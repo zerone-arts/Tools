@@ -2,9 +2,16 @@
 
 export default function WeatherUi({
   currentLocationHandle,
+  setSearchInput,
+  searchLocationHandle,
 }: {
   currentLocationHandle: any;
+  setSearchInput: any;
+  searchLocationHandle: any;
 }) {
+  const onChangeSearchInput = (e: any) => {
+    setSearchInput(e.target.value);
+  };
   return (
     <div
       className=" h-[60px]  flex items-center justify-between max-sm:flex-col
@@ -18,15 +25,27 @@ export default function WeatherUi({
        max-sm:items-center max-sm:justify-center max-sm:mt-10"
       >
         <div className=""></div>
-        <div className="border border-white/50 w-[300px] h-[40px] rounded-3xl flex items-center p-3 gap-2 dark:bg-zinc-900 dark:text-gray-200/85 max-sm:w-[200px] max-sm:h-[30px] ">
-          <span className="mt-[2px] text-gray-200/85 ">
+        <div className="border border-white/50 w-[300px] h-[40px] rounded-3xl flex items-center p-3 gap-2 justify-between dark:bg-zinc-900 dark:text-gray-200/85 max-sm:w-[200px] max-sm:h-[30px] ">
+          <input
+            type="text"
+            className=" w-[230px] max-sm:w-[150px] bg-white/0 focus:outline-none placeholder:text-sm text-gray-200 pl-2"
+            placeholder="지역을 입력해주세요."
+            onChange={onChangeSearchInput}
+            onKeyPress={(e) =>
+              e.key === "Enter" ? searchLocationHandle() : undefined
+            }
+          />
+          <button
+            className=" text-gray-200/85 pr-2"
+            onClick={() => searchLocationHandle()}
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
               viewBox="0 0 24 24"
               strokeWidth={2.5}
               stroke="currentColor"
-              className="size-4"
+              className="size-5"
             >
               <path
                 strokeLinecap="round"
@@ -34,12 +53,7 @@ export default function WeatherUi({
                 d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z"
               />
             </svg>
-          </span>
-          <input
-            type="text"
-            className="bg-white/0 focus:outline-none placeholder:text-sm text-gray-200 "
-            placeholder="지역을 입력해주세요."
-          />
+          </button>
         </div>
         <button
           className=" w-[110px] h-[40px]  rounded-3xl  flex items-center justify-between p-4 border-2  border-indigo-500 text-indigo-400 

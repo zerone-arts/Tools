@@ -3,8 +3,14 @@
 import { getDate } from "@/app/weather/page";
 import Image from "next/image";
 
-export default function PresentWeather({ weathers }: { weathers: any }) {
-  const date = getDate(weathers.dt * 1000);
+export default function PresentWeather({
+  weathers,
+  currentLocation,
+}: {
+  weathers: any;
+  currentLocation: any;
+}) {
+  const date = getDate(weathers.dt);
   let icon = weathers.weather ? weathers.weather[0].icon : "01d";
   let temp = weathers.main ? weathers.main.temp : "?";
   let description = weathers.weather ? weathers.weather[0].description : "";
@@ -73,7 +79,7 @@ export default function PresentWeather({ weathers }: { weathers: any }) {
               />
             </svg>
           </span>
-          <p>제주특별자치도 제주시 이도2동</p>
+          <p>{currentLocation}</p>
         </div>
       </div>
     </div>

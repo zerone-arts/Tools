@@ -31,7 +31,11 @@ export const getDate = (dateUnix: number): string => {
 
   return `${monthName} ${date.getDate()}일 ${weekDayName}요일`;
 };
-
+declare global {
+  interface Window {
+    kakao: any;
+  }
+}
 export default function WeatherPage({ props }: { props: any }) {
   // const weathers = await getWeather();
   // const forecast = await getForecast();
@@ -40,6 +44,8 @@ export default function WeatherPage({ props }: { props: any }) {
   const [forecast, setForecast] = useState<any>(null);
   const [lat, setLat] = useState(0);
   const [lon, setLon] = useState(0);
+  const [currentLocation, setCurrentLocation] = useState("서울 강남구");
+  const [searchInput, setSearchInput] = useState("");
 
   const getWeather = async (
     // lat: number = 33.4996213,
@@ -75,13 +81,42 @@ export default function WeatherPage({ props }: { props: any }) {
   };
 
   const currentLocationHandle = () => {
+    setCurrentLocation("Loading ...");
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         (position) => {
           setLat(position.coords.latitude);
           setLon(position.coords.longitude);
+
           getWeather(position.coords.latitude, position.coords.longitude);
           getForecast(position.coords.latitude, position.coords.longitude);
+
+          if (typeof window !== "undefined") {
+            window.kakao.maps.load(() => {
+              let geocoder = new window.kakao.maps.services.Geocoder();
+              let coord = new window.kakao.maps.LatLng(
+                position.coords.latitude,
+                position.coords.longitude
+              );
+              let callback = function (result: any, status: any) {
+                if (status === window.kakao.maps.services.Status.OK) {
+                  const arr = { ...result };
+
+                  setCurrentLocation(
+                    `${arr[0].address.region_1depth_name} ${arr[0].address.region_2depth_name} ${arr[0].address.region_3depth_name}`
+                  );
+
+                  // console.log(arr);
+                  // setCurrentLocation(arr);
+                }
+              };
+              let location = geocoder.coord2Address(
+                coord.getLng(),
+                coord.getLat(),
+                callback
+              );
+            });
+          }
         },
         (error) => {
           if (error.code === error.PERMISSION_DENIED) {
@@ -96,6 +131,26 @@ export default function WeatherPage({ props }: { props: any }) {
     }
   };
 
+  const searchLocationHandle = () => {
+    if (typeof window !== "undefined") {
+      window.kakao.maps.load(() => {
+        let geocoder = new window.kakao.maps.services.Geocoder();
+
+        let callback = function (result: any, status: any) {
+          if (status === window.kakao.maps.services.Status.OK) {
+            console.log(result[0].address_name);
+            setLat(result[0].y);
+            setLon(result[0].x);
+            setCurrentLocation(result[0].address_name);
+            getWeather(result[0].y, result[0].x);
+            getForecast(result[0].y, result[0].x);
+          }
+        };
+        let location = geocoder.addressSearch(searchInput, callback);
+      });
+    }
+  };
+
   useEffect(() => {
     getWeather();
     getForecast();
@@ -103,11 +158,18 @@ export default function WeatherPage({ props }: { props: any }) {
 
   return (
     <div className="relative w-full dark:dark:bg-black/40 dark:text-gray-100 max-sm:h-screen max-sm:overflow-scroll">
-      <WeatherUi currentLocationHandle={currentLocationHandle} />
+      <WeatherUi
+        currentLocationHandle={currentLocationHandle}
+        setSearchInput={setSearchInput}
+        searchLocationHandle={searchLocationHandle}
+      />
       {weathers && forecast ? (
         <div className="h-full max-sm:mt-[40px]">
           <div className=" p-7  flex gap-7  max-sm:justify-center">
-            <PresentWeather weathers={weathers} />
+            <PresentWeather
+              weathers={weathers}
+              currentLocation={currentLocation}
+            />
           </div>
           <div className="p-7 pt-2 max-sm:h-[500px] flex max-sm:items-center gap-7 max-sm:flex-col max-sm:gap-7 max-sm:pt-0">
             <TimeWeather forecast={forecast} />
@@ -115,7 +177,11 @@ export default function WeatherPage({ props }: { props: any }) {
           </div>
         </div>
       ) : (
-        <div>Loading</div>
+        <div className="absolute top-0 left-0 w-full h-screen text-white flex items-center justify-center">
+          <div className="text-[50px] max-sm:text-[30px] font-thin opacity-80 tracking-[50px] max-sm:tracking-[20px]">
+            Loading
+          </div>
+        </div>
       )}
     </div>
   );
