@@ -131,7 +131,6 @@ export default function NotePage() {
     if (error) {
       return;
     }
-    console.log(new Date(data[2].created_at));
 
     let filter = data.sort((a: any, b: any) => {
       // return b.created_at.substring(5, 7) - a.created_at.substring(5, 7);
