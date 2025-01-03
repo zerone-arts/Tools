@@ -12,6 +12,9 @@ export default {
         background: "var(--background)",
         foreground: "var(--foreground)",
       },
+      boxShadow: {
+        "3xl": "2px 10px 40px -12px rgb(255 255 255 / 0.25)",
+      },
     },
   },
   darkMode: "class",
