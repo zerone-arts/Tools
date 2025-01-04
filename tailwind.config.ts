@@ -15,6 +15,14 @@ export default {
       boxShadow: {
         "3xl": "2px 10px 40px -12px rgb(255 255 255 / 0.25)",
       },
+      animation: {
+        copyAnimate: "copyAnimate 3s linear",
+      },
+      keyframes: {
+        copyAnimate: {
+          "50%": { opacity: "1" },
+        },
+      },
     },
   },
   darkMode: "class",
