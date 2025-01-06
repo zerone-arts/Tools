@@ -104,6 +104,7 @@ export default function AppEtc() {
               name="value1"
               value={values.value1}
               onChange={handleInputChange}
+              autoComplete="off"
             />
             <span className="mr-2"> 의</span>
             <input
@@ -112,6 +113,7 @@ export default function AppEtc() {
               name="percentage1"
               value={values.percentage1}
               onChange={handleInputChange}
+              autoComplete="off"
             />
             <span className="mr-2"> %는?</span>
           </li>
@@ -123,6 +125,7 @@ export default function AppEtc() {
               name="value2"
               value={values.value2}
               onChange={handleInputChange}
+              autoComplete="off"
             />
             <span className="mr-2"> 에서</span>
             <input
@@ -131,6 +134,7 @@ export default function AppEtc() {
               name="base2"
               value={values.base2}
               onChange={handleInputChange}
+              autoComplete="off"
             />
             <span className="mr-2"> 은(는) 몇%?</span>
           </li>
@@ -142,6 +146,7 @@ export default function AppEtc() {
               name="value3"
               value={values.value3}
               onChange={handleInputChange}
+              autoComplete="off"
             />
             <span className="mr-2"> 이/가</span>
             <input
@@ -150,6 +155,7 @@ export default function AppEtc() {
               name="changeValue3"
               value={values.changeValue3}
               onChange={handleInputChange}
+              autoComplete="off"
             />
             <span className="mr-2"> 으로 변하면?</span>
           </li>
@@ -161,6 +167,7 @@ export default function AppEtc() {
               name="value4"
               value={values.value4}
               onChange={handleInputChange}
+              autoComplete="off"
             />
             <span className="mr-2"> 이/가</span>
             <input
@@ -169,6 +176,7 @@ export default function AppEtc() {
               name="increment4"
               value={values.increment4}
               onChange={handleInputChange}
+              autoComplete="off"
             />
             <span className="mr-2"> % 증가하면?</span>
           </li>
