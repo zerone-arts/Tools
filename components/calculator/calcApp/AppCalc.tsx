@@ -193,7 +193,8 @@ export default function AppCalc({}) {
 
     try {
       let calc = evaluate(filteredValue);
-      setTypingValue(calc);
+      setTypingValue(calc.toString());
+
       setValue("");
     } catch {
       setTypingValue("error : AC 해주세요.");
