@@ -140,9 +140,9 @@ export default function AppCalc({}) {
     if (typingValue === "0") {
       setTypingValue("");
     }
-
-    setTypingValue((prev) => prev + e);
-
+    if (e !== "COPY") {
+      setTypingValue((prev) => prev + e);
+    }
     switch (e) {
       case "AC":
         setTypingValue("");
@@ -150,6 +150,7 @@ export default function AppCalc({}) {
         break;
       case "COPY":
         await navigator.clipboard.writeText(typingValue);
+
         break;
       case "C":
         setTypingValue(typingValue.slice(0, -1));
@@ -198,12 +199,16 @@ export default function AppCalc({}) {
     }
   };
 
+  const addMommas = (amount: any) => {
+    return amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  };
+
   return (
-    <div className="w-1/2 h-full pt-[90px] pb-7 px-4">
+    <div className="w-[300px] h-full pt-[90px] pb-7 px-4 ">
       <div className="w-full h-full flex flex-col items-center justify-center ">
         <div className="relative w-[225px] h-[50px] text-[10px] text-gray-500 ">
           <p className="absolute bottom-0 right-0 text-right w-[225px] break-words px-[17px]">
-            {value}
+            {addMommas(value)}
           </p>
         </div>
         <input
@@ -211,7 +216,7 @@ export default function AppCalc({}) {
             typingValue === "0" ? "text-gray-400" : "text-gray-100"
           }`}
           type="text"
-          value={typingValue}
+          value={addMommas(typingValue)}
           onChange={valueHandle}
           onKeyDown={checkType}
           onFocus={() => setTypingValue("")}
