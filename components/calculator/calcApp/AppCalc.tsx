@@ -113,10 +113,10 @@ export default function AppCalc({}) {
     if (valueCheck) {
       const { value } = e.target;
       // '/'를 '÷'로 변환
-      let modifiedValue = value.replace(/\//g, "÷").replace(/\*/g, "×");
-      setTypingValue(modifiedValue);
+      let rawValue = value.replace(/[^0-9+\-*/().]/g, "");
+      let modifiedValue = rawValue.replace(/\//g, "÷").replace(/\*/g, "×");
+      setTypingValue(addMommas(modifiedValue));
 
-      console.log(e.target.value);
       if (
         e.target.value.indexOf("(") == -1 ||
         e.target.value.indexOf(")") != -1
@@ -188,6 +188,8 @@ export default function AppCalc({}) {
   const calculateHandle = () => {
     let calcValue = value + typingValue;
     let filteredValue = calcValue.replace(/\÷/g, "/").replace(/\×/g, "*");
+
+    filteredValue = filteredValue.replace(/,/g, "");
 
     try {
       let calc = evaluate(filteredValue);
