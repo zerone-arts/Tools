@@ -51,12 +51,13 @@ export default function MonthGroup({
       relative
   w-[80px] sm:opacity-100 sm:w-[150px]
   rounded-lg flex items-center text-xs
-  justify-center bg-gray-200 text-gray-400 
+  justify-center  text-gray-400 
   duration-300
   group
   overflow-y-hidden
+ 
 
-  ${active ? "h-[250px] bg-gray-300 dark:bg-black/50" : "h-[40px] bg-gray-200"}
+  ${active ? "h-[250px] dark:bg-black/50" : "h-[40px] bg-gray-200/0"}
 
   dark:bg-gray-200/0 text-white border
 
@@ -67,13 +68,13 @@ export default function MonthGroup({
       ref={monthRef}
     >
       <div className="flex justify-center items-center absolute top-[0px] h-[40px] ">
-        <span className="opacity-0 w-0 sm:opacity-100 sm:w-[60px] text-gray-400 ">
+        <span className="opacity-0 w-0 sm:opacity-100 sm:w-[60px] text-gray-400  dark:text-gray-400">
           Group by:
         </span>
-        <span className="font-light text-black pl-1 text-[10px] sm:text-xs  dark:text-white">
+        <span className="bg-white/0 font-light text-white  pl-1 text-[10px] sm:text-xs bg-gray-100  dark:text-white">
           {month[selectMonth]}
         </span>
-        <span className="text-gray-600 pl-2 dark:text-gray-100">
+        <span className="text-gray-100 pl-2 ">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
@@ -91,16 +92,18 @@ export default function MonthGroup({
         </span>
       </div>
       <div
-        className={`w-[150px] h-full absolute top-[45px] overflow-y-scroll right-0  dark:bg-black/50`}
+        className={`w-[150px] h-full absolute top-[45px] overflow-y-scroll right-0 dark:bg-black/50 ${
+          active ? "bg-black/80" : "bg-black/0"
+        }`}
       >
-        <ul className="pr-4  font-light text-black  text-[10px] text-right flex flex-col gap-2  sm:text-xs  ">
+        <ul className="pr-4  font-light text-gray-100  text-[10px] text-right flex flex-col gap-2  sm:text-xs  ">
           {month.map((item, index) => {
             return (
               <li
                 key={item}
-                className={`hover:text-black ${
+                className={`hover:text-white ${
                   index === selectMonth
-                    ? "text-black dark:text-white"
+                    ? "text-white "
                     : "text-gray-400 dark:text-gray-400 dark:hover:text-white"
                 }`}
                 onClick={() => setSelectMonth(index)}

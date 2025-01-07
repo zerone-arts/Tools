@@ -72,6 +72,8 @@ export default function NoteContent({
     }
   }, [createBtn]);
 
+  console.log(upDate);
+
   return (
     <div className="flex flex-wrap justify-center w-full p-4 gap-9  ">
       {content
@@ -89,12 +91,12 @@ export default function NoteContent({
           return (
             <li
               key={item.id}
-              className="relative bg-white w-[270px] h-[200px] rounded-xl flex flex-col p-2 shadow-md dark:bg-zinc-900  dark:text-gray-200/85"
+              className="relative border w-[270px] h-[200px] rounded-xl flex flex-col p-2 shadow-md dark:bg-zinc-900  dark:text-gray-200/85 dark:border-0 text-gray-100 bg-black/30"
             >
               <div className="relative flex justify-between px-2 py-1">
                 {upDate && count === item.id ? (
                   <input
-                    className="font-bold outline-none rounded-md pl-1  placeholder:text-xs dark:text-gray-400 dark:bg-gray-700 "
+                    className="font-bold outline-none rounded-md pl-1  placeholder:text-xs bg-white/0 dark:text-gray-400 dark:bg-gray-700 "
                     placeholder={
                       item.title === "" ? "제목을 입력해주세요." : item.title
                     }
@@ -195,10 +197,16 @@ export default function NoteContent({
                   </button>
                 </div>
               </div>
-              <div className="mx-1  my-3 border-[1px] dark:border-gray-500" />
+              <div className="mx-1  my-3  h-1  dark:border-gray-500 flex gap-1">
+                <div className="w-1/2 bg-white h-[1px]"></div>
+                <div className="w-[2px] bg-white h-[2px]"></div>
+                <div className="w-1/2 bg-white h-[1px]"></div>
+              </div>
               {upDate && item.id === count ? (
                 <textarea
-                  className="mx-1 h-[90px] text-sm overflow-scroll bg-gray-100 outline-none resize-none rounded-md   dark:text-gray-400 dark:bg-gray-700"
+                  className={`mx-1 h-[90px] text-sm overflow-scroll bg-gray-100/0 outline-none resize-none rounded-md   dark:text-gray-400 dark:bg-gray-700 ${
+                    upDate ? "border" : "border-none"
+                  }`}
                   defaultValue={item.text}
                   onChange={(e) => {
                     setText(e.target.value);
@@ -213,7 +221,7 @@ export default function NoteContent({
                 {item.created_at.substr(0, 10)}
               </div>
               <button
-                className={` absolute left-3 text-xs text-right text-indigo-500 font-bold bottom-1 bg-gray-100 p-1 rounded-md   border-2 border-indigo-500 duration-300 dark:bg-gray-100/0 dark:text-indigo-300 dark:border-indigo-300
+                className={` absolute left-3 text-xs text-right  text-cyan-300  bottom-1  p-1 rounded-md   border-2 border-cyan-300 duration-300 bg-gray-100/0  
                   ${
                     upDate && item.id === count
                       ? "opaicty-50 hover:opacity-100 "
@@ -225,7 +233,7 @@ export default function NoteContent({
                 Save
               </button>
               <button
-                className={` absolute left-[60px] text-xs text-right text-indigo-500 font-bold bottom-1 bg-gray-100 p-1 rounded-md   border-2 border-indigo-500 duration-300 dark:bg-gray-100/0 dark:text-indigo-300 dark:border-indigo-300
+                className={` absolute left-[60px] text-xs text-right text-cyan-300  bottom-1 bg-gray-100 p-1 rounded-md   border-2 border-cyan-300 duration-300 bg-gray-100/0  
                   ${
                     upDate && item.id === count
                       ? "opaicty-50 hover:opacity-100 "

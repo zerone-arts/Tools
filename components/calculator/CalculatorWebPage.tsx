@@ -3,7 +3,7 @@ import AppEtc from "./calcApp/AppEtc";
 
 export default function CalculatorWebPage({}) {
   return (
-    <div className="flex max-lg:hidden border w-full h-full items-center justify-center p-10 ">
+    <div className="flex max-lg:hidden w-full h-full items-center justify-center p-10 ">
       <div className="w-3/4 h-[500px]  relative group overflow-hidden rounded-2xl shadow-2xl border dark:border-none bg-zinc-900/50 dark:bg-zinc-900 flex gap-2 px-10 justify-center items-center scale-125">
         <div
           className="absolute left-0 w-full h-full bg-black/0  z-1 

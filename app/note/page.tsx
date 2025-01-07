@@ -147,17 +147,15 @@ export default function NotePage() {
 
   return (
     <div className={`relative flex flex-col  h-screen rounded-xl w-full`}>
-      <div className=" w-full h-[170px] flex flex-col bg-gray-100 gap-2 z-10 dark:bg-black/40">
+      <div className=" w-full h-[170px] flex flex-col  gap-2 z-10 dark:bg-black/40">
         <div className="flex items-center justify-between p-1 pt-5 ">
-          <div className="pl-10 text-xl font-medium dark:text-gray-200">
-            Note
-          </div>
+          <div className="pl-10 text-xl font-medium text-white">Note</div>
           <div className="flex gap-4 pr-3  sm:w-[120px]">
             <button
               className="w-9 sm:w-[120px] h-[40px] border-2 
           rounded-lg text-sm flex items-center 
-          justify-center border-indigo-400
-          text-indigo-700
+          justify-center text-cyan-500
+         border-cyan-500
 
           dark:text-indigo-400
           duration-300
@@ -174,7 +172,7 @@ export default function NotePage() {
         </div>
         <div className="absolute right-0 flex justify-end h-[50px] gap-4 p-1 pr-4 top-20">
           <div className="w-[200px] h-[40px] ">
-            <span className="absolute flex items-center justify-center text-gray-400 w-9 h-9">
+            <span className="absolute flex items-center justify-center text-gray-100 w-9 h-9">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
@@ -191,7 +189,7 @@ export default function NotePage() {
               </svg>
             </span>
             <input
-              className="w-full h-[40px] bg-gray-200 rounded-lg pl-8 placeholder:text-gray-400 text-xs focus:outline-none dark:bg-gray-200/0  dark:dark:bg-zinc-900 dark:text-gray-400"
+              className="w-full h-[40px] border bg-white/0 rounded-lg pl-8 placeholder:text-gray-300 text-xs focus:outline-none text-gray-100 dark:bg-gray-200/0  dark:dark:bg-zinc-900 dark:text-gray-400 dark:border-none"
               type="text"
               placeholder="Search..."
               onChange={(e) => setSearch(e.target.value)}
@@ -206,7 +204,7 @@ export default function NotePage() {
         </div>
       </div>
       <div
-        className="relative z-8 w-full h-full overflow-scroll bg-gray-200 border-t-2 border-gray-500 border-opacity-10 
+        className="relative z-8 w-full h-full overflow-scroll border-t-2 border-gray-100 border-opacity-100 
       dark:bg-black/40 dark:border-opacity-80 
       "
       >
