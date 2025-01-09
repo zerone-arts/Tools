@@ -24,10 +24,17 @@ export default function CalendarPage() {
   const [month, setMonth] = useState(new Date().getMonth());
   const [year, setYear] = useState(new Date().getFullYear());
 
+  const calendarState = {
+    month,
+    setMonth,
+    year,
+    setYear,
+  };
+
   return (
     <div className="w-full text-gray-100 flex items-center justify-center">
       <div className="duration-300 border w-[1000px] h-[600px] max-[1100px]:w-[500px] max-sm:w-[300px] max-sm:h-[430px] flex rounded-xl overflow-hidden">
-        <CalendarLeftPage year={year} month={month} />
+        <CalendarLeftPage {...calendarState} />
         <CalendarRightPage />
       </div>
     </div>

@@ -157,7 +157,7 @@ export default function NotePage() {
           justify-center text-cyan-500
          border-cyan-500
 
-          dark:text-indigo-400
+          dark:text-cyan-400
           duration-300
         
           "
