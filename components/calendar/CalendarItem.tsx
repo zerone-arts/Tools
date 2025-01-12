@@ -1,5 +1,3 @@
-"use client";
-import { abs } from "mathjs";
 import { useEffect, useState } from "react";
 
 export default function CalendarItem({
@@ -7,17 +5,23 @@ export default function CalendarItem({
   year,
   setMonth,
   setYear,
+  selectDay,
+  setSelectDay,
+  anniversarys,
 }: {
   month: any;
   year: any;
   setMonth: any;
   setYear: any;
+  selectDay: any;
+  setSelectDay: any;
+  anniversarys: any;
 }) {
   const [count, setCount] = useState(1);
   const [transition, setTransition] = useState(true);
-
+  const [startY, setStartY] = useState<number | null>(null);
   const day = new Date().getDate();
-  const anniversary = [5, 10];
+
   const FrameArr = [11, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 0];
 
   const generateDays = (year: any, month: any) => {
@@ -42,18 +46,21 @@ export default function CalendarItem({
     return [...firstEmpty, ...days];
   };
 
-  // const days = generateDays(year, month);
-
   const dragHandle = (e: any) => {
     if (e === "-1") {
       setTransition(true),
         setCount((prev) => prev - 1),
         setMonth((prev: any) => prev - 1);
+
+      count === 1 ? setYear(year - 1) : null;
     }
+
     if (e === "+1") {
       setTransition(true),
         setCount((prev) => prev + 1),
         setMonth((prev: any) => prev + 1);
+
+      count === 12 ? setYear(year + 1) : null;
     }
   };
 
@@ -61,21 +68,18 @@ export default function CalendarItem({
     let timeoutId: any;
     if (count === 0) {
       setMonth(11);
-      setYear(year - 1);
       timeoutId = setTimeout(() => {
         setCount(FrameArr.length - 2);
 
         setTransition(false);
-      }, 500);
+      }, 300);
     }
-    if (count === FrameArr.length - 1) {
+    if (count === 13) {
       setMonth(0);
-      setYear(year + 1);
       timeoutId = setTimeout(() => {
         setCount(1);
-
         setTransition(false);
-      }, 500);
+      }, 300);
     }
 
     return () => {
@@ -83,22 +87,46 @@ export default function CalendarItem({
     };
   }, [count]);
 
+  // useEffect(() => {
+  //   const frameIndex = FrameArr.findIndex((frameMonth) => frameMonth === month);
+  //   if (frameIndex !== -1) {
+  //     setTransition(true);
+  //     setCount(frameIndex);
+  //   }
+  // }, [month]);
+
+  const handleMouseDown = (e: React.MouseEvent | React.TouchEvent) => {
+    const clientY =
+      "touches" in e
+        ? (e as React.TouchEvent).touches[0].clientY
+        : (e as React.MouseEvent).clientY;
+    setStartY(clientY);
+  };
+
+  const handleMouseUp = (e: React.MouseEvent | React.TouchEvent) => {
+    if (startY !== null) {
+      const clientY =
+        "touches" in e
+          ? (e as React.TouchEvent).changedTouches[0].clientY
+          : (e as React.MouseEvent).clientY;
+      const distance = clientY - startY;
+
+      if (distance <= -50) {
+        dragHandle("+1");
+      } else if (distance >= 50) {
+        dragHandle("-1");
+      }
+    }
+  };
+
   return (
-    <div className="h-[330px] max-sm:h-[240px]  text-xl max-sm:text-sm relative overflow-scroll">
-      <div className="absolute flex w-full justify-center z-[999]">
-        <button
-          className="w-10 h-10 border bg-white text-black"
-          onClick={() => dragHandle("-1")}
-        >
-          -
-        </button>
-        <button
-          className="w-10 h-10 border bg-white text-black"
-          onClick={() => dragHandle("+1")}
-        >
-          +
-        </button>
-      </div>
+    <div
+      className="h-[330px] max-sm:h-[240px] text-xl max-sm:text-sm relative overflow-hidden select-none"
+      onMouseDown={handleMouseDown}
+      onMouseUp={handleMouseUp}
+      onTouchStart={handleMouseDown}
+      onTouchEnd={handleMouseUp}
+    >
       <div
         className={`absolute w-full h-[330px] max-sm:h-[240px] ${
           transition && "transition-transform duration-300"
@@ -107,32 +135,36 @@ export default function CalendarItem({
           transform: `translateY(-${count * 100}%)`,
         }}
       >
-        {/* <ul className=" h-[330px] max-sm:h-[240px] grid grid-cols-7 justify-items-center">
-          {days.map((item: any, idx: any) => (
-            <li
-              key={idx}
-              className={`flex items-center justify-center rounded-full max-sm:w-[35px] max-sm:h-[35px]  w-[50px] h-[50px] ${
-                day === item ? "border-2" : ""
-              } ${anniversary.includes(item) ? "bg-cyan-800" : ""}`}
-            >
-              {item}
-            </li>
-          ))}
-        </ul> */}
         {FrameArr.map((item: any, idx: any) => {
           return (
             <ul
-              className=" h-[330px] max-sm:h-[240px] grid grid-cols-7 justify-items-center"
+              className="h-[330px] max-sm:h-[240px] grid grid-cols-7 justify-items-center"
               key={idx}
             >
               {generateDays(year, item).map((item: any, idx: any) => (
                 <li
                   key={idx}
-                  className={`flex items-center justify-center rounded-full max-sm:w-[35px] max-sm:h-[35px]  w-[50px] h-[50px] ${
-                    day === item ? "border-2" : ""
-                  } ${anniversary.includes(item) ? "bg-cyan-800" : ""}`}
+                  className={`flex items-center justify-center rounded-full max-sm:w-[35px] max-sm:h-[35px] w-[50px] h-[50px] duration-300 hover:bg-cyan-500 ${
+                    day === item && month === new Date().getMonth()
+                      ? "border-2 bg-white text-cyan-700 font-bold"
+                      : ""
+                  } ${
+                    anniversarys.some(
+                      (anniv: any) =>
+                        anniv.anniversaryDay === item &&
+                        anniv.anniversaryYear === year &&
+                        anniv.anniversaryMonth === month
+                    )
+                      ? "bg-cyan-800"
+                      : ""
+                  }`}
                 >
-                  {item}
+                  <button
+                    className="w-full h-full rounded-full"
+                    onClick={() => setSelectDay(item)}
+                  >
+                    {item}
+                  </button>
                 </li>
               ))}
             </ul>
