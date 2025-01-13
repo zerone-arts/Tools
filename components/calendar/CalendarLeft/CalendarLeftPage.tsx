@@ -1,8 +1,8 @@
 "use client";
 import { MONTHLIST } from "@/app/calendar/page";
-import CalendarItem from "../CalendarItem";
+import CalendarItem from "./CalendarItem";
 import { useEffect, useState } from "react";
-import Popup from "../PopUp";
+import Popup from "./PopUp";
 
 export default function CalendarLeftPage({
   month,
@@ -42,18 +42,14 @@ export default function CalendarLeftPage({
   };
 
   return (
-    <div className="relative w-[500px] h-full flex flex-col gap-5 dark:bg-black">
+    <div className="relative w-[450px] max-[1100px]:w-[450px] h-full flex flex-col gap-5 dark:bg-black">
       <div
-        className={`absolute w-full h-full  pointer-events-none  duration-300 ${
+        className={`absolute w-[450px] h-full  pointer-events-none  duration-300 z-[989]  ${
           toggle ? "bg-black/80 pointer-events-auto" : "bg-black/0"
-        }  ${
-          selectDay === null
-            ? "bg-black/0 z-[989]"
-            : "bg-black/80 z-[991]  pointer-events-auto"
-        }`}
+        } `}
         onClick={() => (selectDay !== null ? setSelectDay(null) : "")}
       ></div>
-      <div className="w-full h-[80px] flex flex-col justify-end px-5">
+      <div className="w-full h-[80px] flex flex-col justify-end max-sm:px-5  px-10 ">
         <div className="font-bold  text-[20px] text-cyan-400 dark:text-cyan-600 w-[200px] h-[30px] flex items-center gap-2">
           <button
             className={` absolute top-0 z-[990] flex items-center  ${
@@ -64,11 +60,11 @@ export default function CalendarLeftPage({
             onClick={() => (toggle ? setToggle(false) : setToggle(true))}
           >
             <div
-              className={` flex flex-wrap  justify-center items-center px-[2px]
-          ml-1 ${
+              className={` flex flex-wrap  justify-center items-center px-[2px] 
+          max-sm:ml-2 ${
             toggle
-              ? "w-[300px] h-[300px] gap-2 "
-              : "w-[20px] h-[20px] gap-[0.5px]     "
+              ? "w-[300px] h-[300px] gap-2 max-sm:-ml-2 "
+              : "w-[20px] h-[20px] gap-[0.5px]    ml-7 "
           }
             `}
             >
@@ -131,7 +127,7 @@ export default function CalendarLeftPage({
       </div>
       <div className=" w-full h-[450px] flex  justify-center  max-sm:h-[300px] overflow-scroll">
         <div className="flex flex-col w-full py-2 px-6 gap-1 max-sm:px-2">
-          <ul className="h-[55px] max-sm:h-[35px] grid grid-cols-7 justify-items-center">
+          <ul className="h-[45px] max-sm:h-[35px] grid grid-cols-7 justify-items-center">
             {["S", "M", "T", "W", "T", "F", "S"].map((item, idx) => (
               <li
                 key={idx}
@@ -144,7 +140,7 @@ export default function CalendarLeftPage({
           <CalendarItem {...calendarState} />
         </div>
       </div>
-      <Popup {...calendarState} />
+      <Popup {...calendarState} monthTitleHandle={monthTitleHandle} />
     </div>
   );
 }

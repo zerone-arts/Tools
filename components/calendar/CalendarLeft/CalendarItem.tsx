@@ -121,14 +121,14 @@ export default function CalendarItem({
 
   return (
     <div
-      className="h-[330px] max-sm:h-[240px] text-xl max-sm:text-sm relative overflow-hidden select-none"
+      className="h-[250px] max-sm:h-[240px]  text-[15px] max-sm:text-sm relative overflow-hidden select-none"
       onMouseDown={handleMouseDown}
       onMouseUp={handleMouseUp}
       onTouchStart={handleMouseDown}
       onTouchEnd={handleMouseUp}
     >
       <div
-        className={`absolute w-full h-[330px] max-sm:h-[240px] ${
+        className={`absolute w-full h-[250px] max-sm:h-[240px] ${
           transition && "transition-transform duration-300"
         } `}
         style={{
@@ -138,15 +138,17 @@ export default function CalendarItem({
         {FrameArr.map((item: any, idx: any) => {
           return (
             <ul
-              className="h-[330px] max-sm:h-[240px] grid grid-cols-7 justify-items-center"
+              className="h-[250px] max-sm:h-[240px] grid grid-cols-7 justify-items-center"
               key={idx}
             >
               {generateDays(year, item).map((item: any, idx: any) => (
                 <li
                   key={idx}
-                  className={`flex items-center justify-center rounded-full max-sm:w-[35px] max-sm:h-[35px] w-[50px] h-[50px] duration-300 hover:bg-cyan-500 ${
-                    day === item && month === new Date().getMonth()
-                      ? "border-2 bg-white text-cyan-700 font-bold"
+                  className={`flex items-center justify-center rounded-full max-sm:w-[35px] max-sm:h-[35px] w-[40px] h-[40px] duration-300 hover:bg-cyan-500  ${
+                    day === item &&
+                    month === new Date().getMonth() &&
+                    year === new Date().getFullYear()
+                      ? "border-2 font-bold"
                       : ""
                   } ${
                     anniversarys.some(
