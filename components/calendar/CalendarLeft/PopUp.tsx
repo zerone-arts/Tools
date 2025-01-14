@@ -1,3 +1,4 @@
+import { supabase } from "@/utils/supabase";
 import { useEffect, useRef, useState } from "react";
 
 export default function Popup({
@@ -10,6 +11,7 @@ export default function Popup({
   anniversarys,
   setAnniversarys,
   monthTitleHandle,
+  fetchList,
 }: {
   month: any;
   year: any;
@@ -20,6 +22,7 @@ export default function Popup({
   anniversarys: any;
   setAnniversarys: any;
   monthTitleHandle: any;
+  fetchList: any;
 }) {
   const [inputToggle, setInputToggle] = useState(false);
   const [content, setContent] = useState("");
@@ -43,33 +46,51 @@ export default function Popup({
     return weekArr[weekArrIdx];
   };
 
-  const saveHandle = () => {
+  const saveHandle = async () => {
     if (content.trim() === "") return;
 
-    setAnniversarys((prev: any) => {
-      const updatedAnniversaries = [...prev];
+    const existingAnniversary = anniversarys.find(
+      (anniv: any) =>
+        anniv.anniversaryYear === year &&
+        anniv.anniversaryMonth === month &&
+        anniv.anniversaryDay === selectDay
+    );
 
-      const existingIndex = updatedAnniversaries.findIndex(
-        (anniv: any) =>
-          anniv.anniversaryYear === year &&
-          anniv.anniversaryMonth === month &&
-          anniv.anniversaryDay === selectDay
-      );
+    if (existingAnniversary) {
+      const updatedContent = [
+        ...existingAnniversary.anniversaryContent,
+        content,
+      ];
 
-      if (existingIndex !== -1) {
-        updatedAnniversaries[existingIndex].anniversaryContent.push(content);
-      } else {
-        const newAnniversary = {
+      const { error } = await supabase
+        .from("rotionCalendarTable")
+        .update({
           anniversaryYear: year,
           anniversaryMonth: month,
           anniversaryDay: selectDay,
-          anniversaryContent: [content],
-        };
-        updatedAnniversaries.push(newAnniversary);
-      }
+          anniversaryContent: updatedContent,
+        })
+        .eq("id", existingAnniversary.id);
 
-      return updatedAnniversaries;
-    });
+      if (error) {
+        console.error("Error updating anniversary:", error);
+        return;
+      }
+      fetchList();
+    } else {
+      const { error } = await supabase.from("rotionCalendarTable").insert({
+        anniversaryYear: year,
+        anniversaryMonth: month,
+        anniversaryDay: selectDay,
+        anniversaryContent: [content],
+      });
+
+      if (error) {
+        console.error("Error inserting new anniversary:", error);
+        return;
+      }
+      fetchList();
+    }
 
     setInputToggle(false);
     inputRef.current?.blur();
@@ -80,25 +101,47 @@ export default function Popup({
     setContent(e.target.value);
   };
 
-  const deleteHandle = (idx: any) => {
-    setAnniversarys((prev: any) =>
-      prev
-        .map((anniv: any) => {
-          if (
-            anniv.anniversaryYear === year &&
-            anniv.anniversaryMonth === month &&
-            anniv.anniversaryDay === selectDay
-          ) {
-            const adjustedIdx = anniv.anniversaryContent.length - 1 - idx;
-            const updatedContent = anniv.anniversaryContent.filter(
-              (_: any, contentIdx: any) => contentIdx !== adjustedIdx
-            );
-            return { ...anniv, anniversaryContent: updatedContent };
-          }
-          return anniv;
-        })
-        .filter((anniv: any) => anniv.anniversaryContent.length > 0)
+  const deleteHandle = async (idx: any) => {
+    const targetAnniversary = anniversarys.find(
+      (anniv: any) =>
+        anniv.anniversaryYear === year &&
+        anniv.anniversaryMonth === month &&
+        anniv.anniversaryDay === selectDay
     );
+
+    if (!targetAnniversary) return;
+
+    const adjustedIdx = targetAnniversary.anniversaryContent.length - 1 - idx;
+    const updatedContent = targetAnniversary.anniversaryContent.filter(
+      (_: any, contentIdx: any) => contentIdx !== adjustedIdx
+    );
+
+    if (updatedContent.length > 0) {
+      const { error } = await supabase
+        .from("rotionCalendarTable")
+        .update({
+          anniversaryYear: year,
+          anniversaryMonth: month,
+          anniversaryDay: selectDay,
+          anniversaryContent: updatedContent,
+        })
+        .eq("id", targetAnniversary.id);
+      fetchList();
+      if (error) {
+        console.error("Error updating anniversary:", error);
+        return;
+      }
+    } else {
+      const { error } = await supabase
+        .from("rotionCalendarTable")
+        .delete()
+        .eq("id", targetAnniversary.id);
+      fetchList();
+      if (error) {
+        console.error("Error deleting anniversary:", error);
+        return;
+      }
+    }
   };
 
   useEffect(() => {

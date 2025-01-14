@@ -144,11 +144,11 @@ export default function CalendarItem({
               {generateDays(year, item).map((item: any, idx: any) => (
                 <li
                   key={idx}
-                  className={`flex items-center justify-center rounded-full max-sm:w-[35px] max-sm:h-[35px] w-[40px] h-[40px] duration-300 hover:bg-cyan-500  ${
+                  className={`flex items-center justify-center border-2 border-white/0 rounded-full max-sm:w-[35px] max-sm:h-[35px] w-[40px] h-[40px] duration-300 hover:border-white/100 ${
                     day === item &&
                     month === new Date().getMonth() &&
                     year === new Date().getFullYear()
-                      ? "border-2 font-bold"
+                      ? "font-bold bg-white text-cyan-600"
                       : ""
                   } ${
                     anniversarys.some(
@@ -158,6 +158,12 @@ export default function CalendarItem({
                         anniv.anniversaryMonth === month
                     )
                       ? "bg-cyan-800"
+                      : ""
+                  } ${
+                    selectDay !== null
+                      ? selectDay === item
+                        ? "border-white/100"
+                        : ""
                       : ""
                   }`}
                 >

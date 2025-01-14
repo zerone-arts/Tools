@@ -13,6 +13,7 @@ export default function CalendarLeftPage({
   setSelectDay,
   anniversarys,
   setAnniversarys,
+  fetchList,
 }: {
   month: any;
   year: any;
@@ -22,6 +23,7 @@ export default function CalendarLeftPage({
   setSelectDay: any;
   anniversarys: any;
   setAnniversarys: any;
+  fetchList: any;
 }) {
   const [toggle, setToggle] = useState(false);
   const [yearToggle, setYearToggle] = useState(false);
@@ -140,7 +142,11 @@ export default function CalendarLeftPage({
           <CalendarItem {...calendarState} />
         </div>
       </div>
-      <Popup {...calendarState} monthTitleHandle={monthTitleHandle} />
+      <Popup
+        {...calendarState}
+        monthTitleHandle={monthTitleHandle}
+        fetchList={fetchList}
+      />
     </div>
   );
 }
