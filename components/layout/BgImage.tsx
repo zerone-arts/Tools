@@ -1,14 +1,53 @@
+"use client";
+
 import Image from "next/image";
 import img from "@/public/assets/image/bg/spider2.png";
+import { useEffect, useState } from "react";
+import { useImageStore } from "../../utils/zustand";
+import { supabase } from "@/utils/supabase";
 export default function BgImage() {
+  const [image, setImage] = useState<string | null>(null);
+  const imageName = useImageStore((state: any) => state.image);
+
+  const getImageFile = async () => {
+    if (imageName) {
+      const { data } = await supabase.storage
+        .from("RotionBackground/bg") // 버킷 이름
+        .getPublicUrl(imageName);
+
+      setImage(data.publicUrl);
+    } else {
+      const { data } = await supabase.storage
+        .from("RotionBackground") // 버킷 이름
+        .list("bg");
+      let arr: any = data?.map((item) => item.name);
+
+      const imgUrl = supabase.storage
+        .from("RotionBackground/bg")
+        .getPublicUrl(arr[0]);
+
+      setImage(imgUrl.data.publicUrl);
+    }
+  };
+
+  useEffect(() => {
+    getImageFile();
+  }, [imageName]);
+  getImageFile();
   return (
-    <Image
-      src={img}
-      alt="test"
-      sizes="100vw"
-      fill
-      className="absolute w-full h-screen -z-10 opacity-20 duration-500 ease-out object-cover dark:opacity-5"
-      priority
-    />
+    <div className="absolute w-full h-screen top-0 left-0 pointer-events-none">
+      {image ? (
+        <Image
+          src={image}
+          alt="bg"
+          sizes="100vw"
+          fill
+          className="absolute -z-10 opacity-20 duration-500 ease-out object-cover dark:opacity-5 "
+          priority
+        />
+      ) : (
+        <div></div>
+      )}
+    </div>
   );
 }

@@ -223,7 +223,7 @@ export default function Ui() {
             onMouseOver={() => setHover("/setting")}
             onMouseLeave={() => setHover("")}
           >
-            <Link href="/setting">
+            <Link href="/setting/mypage">
               <span>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -313,7 +313,7 @@ export default function Ui() {
             onMouseOver={() => setHover("/setting")}
             onMouseLeave={() => setHover("")}
           >
-            <Link href="setting">Setting</Link>
+            <Link href="setting/mypage">Setting</Link>
           </div>
 
           <ThemeButtonText
