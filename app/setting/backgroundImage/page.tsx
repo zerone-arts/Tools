@@ -20,7 +20,7 @@ export default function BackGroundImagePage({}) {
     }
   };
   return (
-    <div className="w-full h-full flex flex-col items-center justify-center gap-5 ">
+    <div className="w-full h-full flex flex-col items-center justify-center gap-5">
       <div className="relative mb-[150px] w-[300px]">
         <p
           className={`absolute left-0 w-full text-center opacity-100 dark:opacity-0 duration-300`}
@@ -36,7 +36,7 @@ export default function BackGroundImagePage({}) {
       <div className="absolute w-full h-full flex items-center justify-center">
         <label
           htmlFor="file"
-          className="border w-[50px] h-[50px] flex items-center justify-center rounded-full cursor-pointer text-[20px] group hover:bg-gray-400/50 duration-300"
+          className="border w-[50px] h-[50px] flex items-center justify-center rounded-full cursor-pointer text-[20px] group hover:bg-white/10 duration-300"
         >
           <input
             type="file"
@@ -46,7 +46,7 @@ export default function BackGroundImagePage({}) {
             multiple
             hidden
           />
-          <span className="mb-1 group-hover:scale-[1.5] duration-300">+</span>
+          <span className="mb-1  duration-300">+</span>
         </label>
       </div>
     </div>

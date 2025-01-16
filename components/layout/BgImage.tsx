@@ -12,21 +12,27 @@ export default function BgImage() {
   const getImageFile = async () => {
     if (imageName) {
       const { data } = await supabase.storage
-        .from("RotionBackground/bg") // 버킷 이름
+        .from("RotionBackground/bg")
         .getPublicUrl(imageName);
 
       setImage(data.publicUrl);
     } else {
       const { data } = await supabase.storage
-        .from("RotionBackground") // 버킷 이름
+        .from("RotionBackground")
         .list("bg");
-      let arr: any = data?.map((item) => item.name);
+      let arr: any = data
+        ?.filter((item) => item.name !== ".emptyFolderPlaceholder")
+        .map((item) => item.name);
 
-      const imgUrl = supabase.storage
-        .from("RotionBackground/bg")
-        .getPublicUrl(arr[0]);
+      if (arr.length === 0) {
+        setImage(null);
+      } else {
+        const imgUrl = supabase.storage
+          .from("RotionBackground/bg")
+          .getPublicUrl(arr[0]);
 
-      setImage(imgUrl.data.publicUrl);
+        setImage(imgUrl.data.publicUrl);
+      }
     }
   };
 
@@ -34,9 +40,10 @@ export default function BgImage() {
     getImageFile();
   }, [imageName]);
   getImageFile();
+
   return (
     <div className="absolute w-full h-screen top-0 left-0 pointer-events-none">
-      {image ? (
+      {image !== null ? (
         <Image
           src={image}
           alt="bg"

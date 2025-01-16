@@ -4,8 +4,7 @@ import { ReactNode } from "react";
 export default function Layout({ children }: { children: ReactNode }) {
   return (
     <div className="text-white w-full h-screen flex flex-col items-center">
-      <SettingUi />
-      {children}
+      {children} <SettingUi />
     </div>
   );
 }
