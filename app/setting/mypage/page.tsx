@@ -4,10 +4,10 @@ import { supabase } from "@/utils/supabase";
 import { useEffect, useState } from "react";
 
 export default function MyPage() {
-  const [login, setLogin] = useState<boolean | null>(null); // 초기 상태를 null로 설정
+  const [login, setLogin] = useState<boolean | null>(null);
   const [deleteAccountBtn, setDeleteAccountBtn] = useState(false);
   const [deleteAccountCheck, setDeleteAccountCheck] = useState(false);
-
+  const [userId, setUserId] = useState("");
   const signInHandle = async () => {
     const { data, error } = await supabase.auth.signInWithOAuth({
       provider: "google",
@@ -18,29 +18,60 @@ export default function MyPage() {
         },
       },
     });
-    if (data) {
-      console.log(data);
+
+    if (!error) {
+      const { data } = await supabase.auth.getSession();
+      const session = data?.session;
+      if (session?.user?.email) {
+        localStorage.setItem("isLoggedIn", "true");
+        setUserId(session.user.id);
+
+        setLogin(true);
+      }
+    } else {
+      console.error("Login error:", error);
     }
-    if (error) console.log(error);
   };
 
   const signOutHandle = async () => {
     const { error } = await supabase.auth.signOut();
-    setLogin(false);
+    if (!error) {
+      localStorage.setItem("isLoggedIn", "false");
+
+      setLogin(false);
+    } else {
+      console.error("Error during sign-out:", error);
+    }
   };
 
-  const deleteAccountHandle = () => {
+  const deleteAccountHandle = async () => {
+    console.log(userId);
+    if (userId !== "") {
+      const { data, error } = await supabase.auth.admin.deleteUser(
+        "25ea2dd2-fa19-4bb7-865b-c0868496db77"
+      );
+      console.log("삭제");
+    }
     setDeleteAccountCheck(true);
+    localStorage.setItem("isLoggedIn", "false");
+
+    setUserId("");
+    setLogin(false);
   };
 
   useEffect(() => {
     const checkSign = async () => {
-      const authInfo = await supabase.auth.getSession();
-      const session = authInfo.data.session;
-      console.log(session);
-      if (session) {
+      const { data } = await supabase.auth.getSession();
+      const session = data?.session;
+
+      if (session?.user?.email) {
+        localStorage.setItem("isLoggedIn", "true");
+        setUserId(session.user.id);
+
         setLogin(true);
       } else {
+        localStorage.setItem("isLoggedIn", "false");
+
         setLogin(false);
       }
     };
@@ -49,9 +80,7 @@ export default function MyPage() {
 
   if (login === null) {
     return (
-      <div className="w-full h-full flex items-center justify-center">
-        <p>Loading...</p>
-      </div>
+      <div className="w-full h-full flex items-center justify-center"></div>
     );
   }
 
@@ -93,7 +122,7 @@ export default function MyPage() {
           </button>
         </div>
       )}
-      {/* Delete Account Modal */}
+
       <div
         className={`border absolute w-full h-full top-0 left-0 bg-black/90 flex items-center justify-center ${
           deleteAccountBtn

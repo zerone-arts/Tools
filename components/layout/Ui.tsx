@@ -1,12 +1,14 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import profileImg from "@/public/assets/image/bg/Spiderman.jpeg";
-import Image from "next/image";
+
 import { useParams, usePathname, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import ThemeButton from "./ThemeButton";
 import ThemeButtonText from "./ThemeButtonText";
+
+import UiProfileName from "./UiProfileName";
+import UiProfileImage from "./UiProfileImage";
 
 const category = [
   "/",
@@ -21,6 +23,7 @@ const category = [
 export default function Ui() {
   const [hover, setHover] = useState("");
   const [themeMode, setThemeMode] = useState("");
+
   const path = usePathname();
 
   useEffect(() => {}, [path]);
@@ -255,13 +258,7 @@ export default function Ui() {
           />
 
           <div className="w-8 h-8 flex justify-center items-center rounded-full duration-300 text-white overflow-hidden">
-            <Image
-              src={profileImg}
-              alt="임시"
-              width={36}
-              height={36}
-              priority
-            />
+            <UiProfileImage />
           </div>
         </div>
       </div>
@@ -323,7 +320,7 @@ export default function Ui() {
           />
 
           <div className="w-[100px] h-9 flex  items-center  duration-300 text-gray-200">
-            ZERONE
+            <UiProfileName />
           </div>
         </div>
       </div>
