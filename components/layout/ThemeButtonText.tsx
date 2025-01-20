@@ -14,7 +14,7 @@ export default function ThemeButtonText({
       onMouseLeave={() => setHover("")}
       onClick={() => setThemeMode(themeMode === "" ? "dark" : "")}
     >
-      {themeMode === "" ? <div>Dark</div> : <div>Light</div>}
+      {themeMode === "" ? <div>Light</div> : <div>Dark</div>}
     </button>
   );
 }

@@ -1,9 +1,11 @@
 "use client";
 import { useEffect, useState } from "react";
 import { supabase } from "@/utils/supabase";
+import Web from "@/components/home/Web";
+import App from "@/components/home/App";
 
 export default function Home() {
-  const [user, setUser] = useState<any>(null);
+  const [user, setUser] = useState<any>("");
 
   useEffect(() => {
     const fetchSession = async () => {
@@ -12,7 +14,7 @@ export default function Home() {
       if (session?.user?.email) {
         setUser(session?.user.email);
       } else {
-        setUser("");
+        setUser(null);
       }
     };
 
@@ -20,16 +22,12 @@ export default function Home() {
   }, []);
 
   return (
-    <div className="absolute w-full h-screen flex flex-col items-center justify-center overflow-hidden">
-      <div className="text-white w-10 h-10">
-        {user === null ? (
-          <div></div>
-        ) : user ? (
-          <div>{user}</div>
-        ) : (
-          <div>Not logged in</div>
-        )}
-      </div>
+    <div className="w-full h-screen flex items-center justify-center overflow-hidden text-gray-100">
+      <Web user={user} />
+      <App user={user} />
+      {/* <div className="text-white w-10 h-10">
+        {user ? <div>{user}</div> : <div>Login</div>}
+      </div> */}
     </div>
   );
 }
