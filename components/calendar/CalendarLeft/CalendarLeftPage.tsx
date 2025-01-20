@@ -14,6 +14,7 @@ export default function CalendarLeftPage({
   anniversarys,
   setAnniversarys,
   fetchList,
+  user,
 }: {
   month: any;
   year: any;
@@ -24,6 +25,7 @@ export default function CalendarLeftPage({
   anniversarys: any;
   setAnniversarys: any;
   fetchList: any;
+  user: any;
 }) {
   const [toggle, setToggle] = useState(false);
   const [yearToggle, setYearToggle] = useState(false);
@@ -37,6 +39,7 @@ export default function CalendarLeftPage({
     setSelectDay,
     anniversarys,
     setAnniversarys,
+    user,
   };
 
   const monthTitleHandle = (month: any) => {

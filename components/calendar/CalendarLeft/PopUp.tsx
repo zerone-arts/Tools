@@ -12,6 +12,7 @@ export default function Popup({
   setAnniversarys,
   monthTitleHandle,
   fetchList,
+  user,
 }: {
   month: any;
   year: any;
@@ -23,6 +24,7 @@ export default function Popup({
   setAnniversarys: any;
   monthTitleHandle: any;
   fetchList: any;
+  user: any;
 }) {
   const [inputToggle, setInputToggle] = useState(false);
   const [content, setContent] = useState("");
@@ -69,6 +71,7 @@ export default function Popup({
           anniversaryMonth: month,
           anniversaryDay: selectDay,
           anniversaryContent: updatedContent,
+          user_id: user,
         })
         .eq("id", existingAnniversary.id);
 
@@ -83,6 +86,7 @@ export default function Popup({
         anniversaryMonth: month,
         anniversaryDay: selectDay,
         anniversaryContent: [content],
+        user_id: user,
       });
 
       if (error) {
@@ -124,6 +128,7 @@ export default function Popup({
           anniversaryMonth: month,
           anniversaryDay: selectDay,
           anniversaryContent: updatedContent,
+          user_id: user,
         })
         .eq("id", targetAnniversary.id);
       fetchList();
@@ -135,7 +140,8 @@ export default function Popup({
       const { error } = await supabase
         .from("rotionCalendarTable")
         .delete()
-        .eq("id", targetAnniversary.id);
+        .eq("id", targetAnniversary.id)
+        .eq("user_id", user);
       fetchList();
       if (error) {
         console.error("Error deleting anniversary:", error);

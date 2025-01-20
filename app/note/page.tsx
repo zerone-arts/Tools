@@ -8,44 +8,44 @@ import { supabase } from "@/utils/supabase";
 
 import { useEffect, useState } from "react";
 
-let TestList = [
-  {
-    id: 0,
-    title: "Hellow black  1",
-    text: "dummyData text !!",
-    date: "2024-12-5",
-  },
-  {
-    id: 1,
-    title: "hellow white  2",
-    text: "dummyData text !!",
-    date: "2024-12-4",
-  },
-  {
-    id: 2,
-    title: "Hellow yellow  3",
-    text: "dummyData text !!",
-    date: "2024-12-3",
-  },
-  {
-    id: 3,
-    title: "Hellow Green  4",
-    text: "dummyData text !!",
-    date: "2024-12-5",
-  },
-  {
-    id: 4,
-    title: "Hellow Pupple  5",
-    text: "dummyData text !!",
-    date: "2024-12-4",
-  },
-  {
-    id: 5,
-    title: "Hellow Grat  6",
-    text: "dummyData text !!",
-    date: "2024-12-3",
-  },
-];
+// let TestList = [
+//   {
+//     id: 0,
+//     title: "Hellow black  1",
+//     text: "dummyData text !!",
+//     date: "2024-12-5",
+//   },
+//   {
+//     id: 1,
+//     title: "hellow white  2",
+//     text: "dummyData text !!",
+//     date: "2024-12-4",
+//   },
+//   {
+//     id: 2,
+//     title: "Hellow yellow  3",
+//     text: "dummyData text !!",
+//     date: "2024-12-3",
+//   },
+//   {
+//     id: 3,
+//     title: "Hellow Green  4",
+//     text: "dummyData text !!",
+//     date: "2024-12-5",
+//   },
+//   {
+//     id: 4,
+//     title: "Hellow Pupple  5",
+//     text: "dummyData text !!",
+//     date: "2024-12-4",
+//   },
+//   {
+//     id: 5,
+//     title: "Hellow Grat  6",
+//     text: "dummyData text !!",
+//     date: "2024-12-3",
+//   },
+// ];
 
 export default function NotePage() {
   const [search, setSearch] = useState("");
@@ -56,6 +56,7 @@ export default function NotePage() {
   >([]);
   const [createBtn, setCreateBtn] = useState(false);
   const [selectMonth, setSelectMonth] = useState(0);
+  const [user, setUser] = useState<any>(null);
 
   const deleteHandle = async () => {
     setDeletePopUp(false);
@@ -69,9 +70,13 @@ export default function NotePage() {
       const { data, error } = await supabase
         .from("rotionNoteTable")
         .delete()
-        .eq("id", count);
+        .eq("id", count)
+        .eq("user_id", user);
+
       if (error) {
-        console.log(error);
+        console.log("Error deleting note:", error);
+      } else {
+        console.log("Note deleted:", data);
       }
       fetchList();
     }
@@ -84,6 +89,7 @@ export default function NotePage() {
         const { data, error } = await supabase.from("rotionNoteTable").insert({
           title: titleValue,
           text: textValue,
+          user_id: user,
         });
 
         if (error) {
@@ -98,6 +104,7 @@ export default function NotePage() {
           .update({
             title: titleValue,
             text: textValue,
+            user_id: user,
           })
           .eq("id", count);
         if (error) {
@@ -126,23 +133,46 @@ export default function NotePage() {
     setCount(null);
   };
 
+  const userIdFetch = async () => {
+    const { data } = await supabase.auth.getSession();
+    const session = data?.session;
+    console.log(session?.user?.email);
+
+    if (session?.user?.email) {
+      setUser(session.user.email);
+    } else {
+      setUser(null);
+    }
+  };
+
+  useEffect(() => {
+    if (user) {
+      fetchList();
+    }
+  }, [user]);
+
   const fetchList = async () => {
-    const { data, error } = await supabase.from("rotionNoteTable").select("*");
+    const { data, error } = await supabase
+      .from("rotionNoteTable")
+      .select("*")
+      .eq("user_id", user);
+
     if (error) {
+      console.error("Error fetching data:", error);
       return;
     }
 
     let filter = data.sort((a: any, b: any) => {
-      // return b.created_at.substring(5, 7) - a.created_at.substring(5, 7);
       let aDate: any = new Date(a.created_at);
       let bDate: any = new Date(b.created_at);
       return bDate - aDate;
     });
+
     setList(filter);
   };
 
   useEffect(() => {
-    fetchList();
+    userIdFetch();
   }, []);
 
   return (

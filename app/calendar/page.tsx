@@ -26,34 +26,7 @@ export default function CalendarPage() {
   const [month, setMonth] = useState(new Date().getMonth());
   const [year, setYear] = useState(new Date().getFullYear());
   const [selectDay, setSelectDay] = useState<number | null>(null);
-
-  // const [anniversarys, setAnniversarys] = useState<any[]>([
-  //   {
-  //     anniversaryYear: 2024,
-  //     anniversaryMonth: 11,
-  //     anniversaryDay: 10,
-  //     anniversaryContent: ["day 5", "hello world", "test"],
-  //   },
-  //   {
-  //     anniversaryYear: 2025,
-  //     anniversaryMonth: 0,
-  //     anniversaryDay: 5,
-  //     anniversaryContent: [
-  //       "day 5",
-  //       "hello world",
-  //       "test",
-  //       "day 5",
-  //       "hello world",
-  //       "test",
-  //     ],
-  //   },
-  //   {
-  //     anniversaryYear: 2025,
-  //     anniversaryMonth: 0,
-  //     anniversaryDay: 15,
-  //     anniversaryContent: ["day 15", "hello world"],
-  //   },
-  // ]);
+  const [user, setUser] = useState<any>(null);
 
   const [anniversarys, setAnniversarys] = useState<
     Database["public"]["Tables"]["rotionCalendarTable"]["Row"][]
@@ -68,6 +41,7 @@ export default function CalendarPage() {
     setSelectDay,
     anniversarys,
     setAnniversarys,
+    user,
   };
   const calendarRightState = {
     month,
@@ -82,19 +56,38 @@ export default function CalendarPage() {
     setSelectDay(null);
   }, [month]);
 
+  const userIdFetch = async () => {
+    const { data } = await supabase.auth.getSession();
+    const session = data?.session;
+    console.log(session?.user?.email);
+
+    if (session?.user?.email) {
+      setUser(session.user.email);
+    } else {
+      setUser(null);
+    }
+  };
+
+  useEffect(() => {
+    if (user) {
+      fetchList();
+    }
+  }, [user]);
+
   const fetchList = async () => {
     const { data, error } = await supabase
       .from("rotionCalendarTable")
-      .select("*");
+      .select("*")
+      .eq("user_id", user);
     if (error) {
       return;
     }
-
+    console.log(data);
     setAnniversarys(data);
   };
 
   useEffect(() => {
-    fetchList();
+    userIdFetch();
   }, []);
 
   return (

@@ -10,6 +10,7 @@
     "generate-types": "npx supabase gen types typescript --project-id btidjhgsbleithdavklx --schema public > types_db.ts"
   },
   "dependencies": {
+    "@supabase/ssr": "^0.5.2",
     "@supabase/supabase-js": "^2.47.3",
     "axios": "^1.7.9",
     "mathjs": "^14.0.1",

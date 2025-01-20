@@ -8,6 +8,8 @@ export default function MyPage() {
   const [deleteAccountBtn, setDeleteAccountBtn] = useState(false);
   const [deleteAccountCheck, setDeleteAccountCheck] = useState(false);
   const [userId, setUserId] = useState("");
+  const [user, setUser] = useState("");
+
   const signInHandle = async () => {
     const { data, error } = await supabase.auth.signInWithOAuth({
       provider: "google",
@@ -45,18 +47,34 @@ export default function MyPage() {
   };
 
   const deleteAccountHandle = async () => {
-    console.log(userId);
-    if (userId !== "") {
-      const { data, error } = await supabase.auth.admin.deleteUser(
-        "25ea2dd2-fa19-4bb7-865b-c0868496db77"
-      );
-      console.log("삭제");
-    }
-    setDeleteAccountCheck(true);
-    localStorage.setItem("isLoggedIn", "false");
+    try {
+      const response = await fetch("/api/auth/delete-user", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ userId, user }),
+      });
 
-    setUserId("");
-    setLogin(false);
+      const result = await response.json();
+      if (!response.ok) {
+        throw new Error(result.error || "계정 삭제 실패");
+      }
+
+      console.log("계정이 성공적으로 삭제되었습니다.");
+
+      const { error } = await supabase.auth.signOut();
+      if (error) {
+        console.error("세션 무효화 중 오류:", error);
+      }
+
+      setDeleteAccountCheck(true);
+      localStorage.setItem("isLoggedIn", "false");
+      setUserId("");
+      setLogin(false);
+    } catch (error) {
+      console.error("회원 탈퇴 처리 중 오류:", error);
+    }
   };
 
   useEffect(() => {
@@ -67,7 +85,7 @@ export default function MyPage() {
       if (session?.user?.email) {
         localStorage.setItem("isLoggedIn", "true");
         setUserId(session.user.id);
-
+        setUser(session.user.email);
         setLogin(true);
       } else {
         localStorage.setItem("isLoggedIn", "false");
