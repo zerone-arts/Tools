@@ -13,6 +13,7 @@ export default function Home() {
       const session = data?.session;
       if (session?.user?.email) {
         setUser(session?.user.email);
+        console.log(session?.user);
       } else {
         setUser(null);
       }
@@ -22,12 +23,9 @@ export default function Home() {
   }, []);
 
   return (
-    <div className="w-full h-screen flex items-center justify-center overflow-hidden text-gray-100">
+    <div className="w-full h-screen flex items-center justify-center overflow-hidden text-gray-100  absolute">
       <Web user={user} />
       <App user={user} />
-      {/* <div className="text-white w-10 h-10">
-        {user ? <div>{user}</div> : <div>Login</div>}
-      </div> */}
     </div>
   );
 }

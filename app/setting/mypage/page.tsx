@@ -103,7 +103,7 @@ export default function MyPage() {
   }
 
   return (
-    <div className="w-full h-full relative">
+    <div className="w-full h-full absolute left-0">
       {login ? (
         <div className="w-full h-full flex flex-col gap-5 items-center justify-center">
           <button

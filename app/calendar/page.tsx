@@ -91,7 +91,7 @@ export default function CalendarPage() {
   }, []);
 
   return (
-    <div className="w-full text-gray-100 flex items-center justify-center ">
+    <div className="w-full h-screen text-gray-100 flex items-center justify-center absolute">
       <div className="duration-300  w-[900px] h-[600px] max-[1100px]:w-[450px] max-sm:w-[300px] max-sm:h-[580px] flex justify-between rounded-xl overflow-hidden border dark:border-none">
         <CalendarLeftPage {...calendarLeftState} fetchList={fetchList} />
         <CalendarRightPage {...calendarRightState} />

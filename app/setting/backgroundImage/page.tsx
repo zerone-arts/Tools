@@ -20,7 +20,7 @@ export default function BackGroundImagePage({}) {
     }
   };
   return (
-    <div className="w-full h-full flex flex-col items-center justify-center gap-5">
+    <div className="w-full h-full flex flex-col items-center justify-center gap-5 absolute left-0">
       <div className="relative mb-[150px] w-[300px]">
         <p
           className={`absolute left-0 w-full text-center opacity-100 dark:opacity-0 duration-300`}

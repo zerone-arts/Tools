@@ -56,7 +56,7 @@ export default function WeatherUi({
           </button>
         </div>
         <button
-          className=" w-[110px] h-[40px]  rounded-3xl  flex items-center justify-between p-4 border-2  border-indigo-500 text-indigo-400 
+          className=" w-[110px] h-[40px]  rounded-3xl  flex items-center justify-between p-4 border-2  border-cyan-500 text-cyan-500
         transition-all
         max-sm:w-[30px]    max-sm:h-[30px] max-sm:p-1 
         "

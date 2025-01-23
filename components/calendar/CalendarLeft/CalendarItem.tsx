@@ -20,6 +20,7 @@ export default function CalendarItem({
   const [count, setCount] = useState(1);
   const [transition, setTransition] = useState(true);
   const [startY, setStartY] = useState<number | null>(null);
+  const [dragDistance, setDragDistance] = useState(0);
   const day = new Date().getDate();
 
   const FrameArr = [11, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 0];
@@ -46,21 +47,25 @@ export default function CalendarItem({
     return [...firstEmpty, ...days];
   };
 
-  const dragHandle = (e: any) => {
-    if (e === "-1") {
-      setTransition(true),
-        setCount((prev) => prev - 1),
-        setMonth((prev: any) => prev - 1);
+  const dragHandle = (direction: string) => {
+    if (direction === "-1") {
+      setTransition(true);
+      setCount((prev) => prev - 1);
+      setMonth((prev: any) => prev - 1);
 
-      count === 1 ? setYear(year - 1) : null;
+      if (count === 1) {
+        setYear(year - 1);
+      }
     }
 
-    if (e === "+1") {
-      setTransition(true),
-        setCount((prev) => prev + 1),
-        setMonth((prev: any) => prev + 1);
+    if (direction === "+1") {
+      setTransition(true);
+      setCount((prev) => prev + 1);
+      setMonth((prev: any) => prev + 1);
 
-      count === 12 ? setYear(year + 1) : null;
+      if (count === 12) {
+        setYear(year + 1);
+      }
     }
   };
 
@@ -70,7 +75,6 @@ export default function CalendarItem({
       setMonth(11);
       timeoutId = setTimeout(() => {
         setCount(FrameArr.length - 2);
-
         setTransition(false);
       }, 300);
     }
@@ -87,52 +91,55 @@ export default function CalendarItem({
     };
   }, [count]);
 
-  // useEffect(() => {
-  //   const frameIndex = FrameArr.findIndex((frameMonth) => frameMonth === month);
-  //   if (frameIndex !== -1) {
-  //     setTransition(true);
-  //     setCount(frameIndex);
-  //   }
-  // }, [month]);
-
   const handleMouseDown = (e: React.MouseEvent | React.TouchEvent) => {
     const clientY =
       "touches" in e
         ? (e as React.TouchEvent).touches[0].clientY
         : (e as React.MouseEvent).clientY;
     setStartY(clientY);
+    setTransition(false); // 드래그 시작 시 애니메이션 비활성화
   };
 
-  const handleMouseUp = (e: React.MouseEvent | React.TouchEvent) => {
+  const handleMouseMove = (e: React.MouseEvent | React.TouchEvent) => {
     if (startY !== null) {
       const clientY =
         "touches" in e
-          ? (e as React.TouchEvent).changedTouches[0].clientY
+          ? (e as React.TouchEvent).touches[0].clientY
           : (e as React.MouseEvent).clientY;
-      const distance = clientY - startY;
+      setDragDistance(clientY - startY); // 드래그 거리를 계산하여 상태 업데이트
+    }
+  };
 
-      if (distance <= -50) {
+  const handleMouseUp = () => {
+    if (startY !== null) {
+      if (dragDistance <= -50) {
         dragHandle("+1");
-      } else if (distance >= 50) {
+      } else if (dragDistance >= 50) {
         dragHandle("-1");
+      } else {
+        setTransition(true); // 드래그 거리가 적으면 제자리로 돌아가도록 애니메이션 활성화
       }
     }
+    setStartY(null);
+    setDragDistance(0); // 드래그 상태 초기화
   };
 
   return (
     <div
-      className="h-[250px] max-sm:h-[240px]  text-[15px] max-sm:text-sm relative overflow-hidden select-none"
+      className="h-[250px] max-sm:h-[240px] text-[15px] max-sm:text-sm relative overflow-hidden select-none"
       onMouseDown={handleMouseDown}
+      onMouseMove={handleMouseMove}
       onMouseUp={handleMouseUp}
       onTouchStart={handleMouseDown}
+      onTouchMove={handleMouseMove}
       onTouchEnd={handleMouseUp}
     >
       <div
         className={`absolute w-full h-[250px] max-sm:h-[240px] ${
           transition && "transition-transform duration-300"
-        } `}
+        }`}
         style={{
-          transform: `translateY(-${count * 100}%)`,
+          transform: `translateY(calc(-${count * 100}% + ${dragDistance}px))`,
         }}
       >
         {FrameArr.map((item: any, idx: any) => {
