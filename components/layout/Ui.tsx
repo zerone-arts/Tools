@@ -87,7 +87,7 @@ export default function Ui() {
       <div className="h-screen">
         <div className="mt-3 flex ml-[14px] ">
           <div
-            className={`w-9 h-9 flex justify-center items-center rounded-sm font-bold duration-300  ${
+            className={`w-9 h-9 flex justify-center items-center rounded-sm font-bold duration-300 text-[25px]  ${
               path === "/" || hover === "/"
                 ? "text-black bg-white "
                 : "text-white"
@@ -95,7 +95,7 @@ export default function Ui() {
             onMouseOver={() => setHover("/")}
             onMouseLeave={() => setHover("")}
           >
-            <Link href="/">R</Link>
+            <Link href="/">T</Link>
           </div>
         </div>
 
@@ -269,7 +269,7 @@ export default function Ui() {
             onMouseOver={() => setHover("/")}
             onMouseLeave={() => setHover("")}
           >
-            <Link href="/">Rotion</Link>
+            <Link href="/">Tools</Link>
           </div>
         </div>
 

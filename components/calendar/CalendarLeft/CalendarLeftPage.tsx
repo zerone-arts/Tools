@@ -1,5 +1,5 @@
 "use client";
-import { MONTHLIST } from "@/app/calendar/page";
+import { MONTHLIST } from "@/components/calendar/CalendarPage";
 import CalendarItem from "./CalendarItem";
 import { useEffect, useState } from "react";
 import Popup from "./PopUp";

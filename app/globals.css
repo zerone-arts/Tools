@@ -7,3 +7,107 @@ body {
   color: black;
   min-width: 400px;
 }
+
+.cube {
+  position: relative;
+  transform-style: preserve-3d;
+  transform: rotateX(-35deg) rotateY(45deg);
+}
+
+.face {
+  position: absolute;
+  width: inherit;
+  height: inherit;
+  background: rgb(125, 125, 125, 0);
+  border: 0.5px solid rgba(255, 255, 255, 0);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* 정육면체의 면 배치 */
+.front {
+  transform: translateZ(40px);
+}
+
+.left {
+  transform: rotateY(-90deg) translateZ(40px);
+}
+
+.top {
+  transform: rotateX(90deg) translateZ(40px);
+}
+
+.cubeApp {
+  position: relative;
+  transform-style: preserve-3d;
+  transform: rotateX(-35deg) rotateY(45deg);
+}
+.frontApp {
+  transform: translateZ(30px);
+}
+
+.leftApp {
+  transform: rotateY(-90deg) translateZ(30px);
+}
+
+.topApp {
+  transform: rotateX(90deg) translateZ(30px);
+}
+
+.cubeNotFound {
+  position: relative;
+  transform-style: preserve-3d;
+  transform: rotateX(-35deg) rotateY(45deg);
+}
+.frontNotFound {
+  transform: translateZ(80px);
+}
+
+.leftNotFound {
+  transform: rotateY(-90deg) translateZ(80px);
+}
+
+.topNotFound {
+  transform: rotateX(90deg) translateZ(80px);
+}
+.arrowCss {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%) rotate(90deg);
+}
+.arrowCss span {
+  display: block;
+  width: 7px;
+  height: 7px;
+  border-top: 1px solid white;
+  border-left: 1px solid white;
+  transform: rotate(45deg);
+  margin: -2px;
+  animation: animateArrow 1.5s infinite;
+}
+.arrowCss span:nth-child(2) {
+  animation-delay: -0.2s;
+}
+
+.arrowCss span:nth-child(3) {
+  animation-delay: -0.2s;
+}
+.arrowBox {
+  animation: animateArrowBox 7s;
+}
+
+@keyframes animateArrow {
+  0% {
+    opacity: 0;
+    transform: rotate(45deg) translate(-5px, -5px);
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: rotate(45deg) translate(-5px, -5px);
+  }
+}

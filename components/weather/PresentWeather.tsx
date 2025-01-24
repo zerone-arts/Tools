@@ -1,6 +1,6 @@
 "use client";
 
-import { getDate } from "@/app/weather/page";
+import { getDate } from "@/components/weather/WeatherPage";
 import Image from "next/image";
 
 export default function PresentWeather({

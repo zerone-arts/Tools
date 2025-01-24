@@ -8,8 +8,9 @@ export default function App({ user }: { user: string | null }) {
   const [startX, setStartX] = useState<number | null>(null);
   const [dragDistance, setDragDistance] = useState(0);
   const [isDragging, setIsDragging] = useState(false);
+  const [drag, setDrag] = useState(true);
   const List = [
-    "Rotion",
+    "Tools",
     "Note",
     "Calendar",
     "Weather",
@@ -18,6 +19,7 @@ export default function App({ user }: { user: string | null }) {
   ];
 
   const handleMouseDown = (e: React.MouseEvent | React.TouchEvent) => {
+    setDrag(false);
     const clientX =
       "touches" in e
         ? (e as React.TouchEvent).touches[0].clientX
@@ -56,7 +58,7 @@ export default function App({ user }: { user: string | null }) {
     <div className="w-full h-full hidden max-md:flex justify-center items-center flex-col gap-2 ">
       <div className="w-[250px] h-[500px] rounded-lg flex flex-col gap-3 items-center  justify-center">
         <div
-          className="w-[250px] h-[260px] rounded-lg overflow-hidden flex flex-col justify-between text-gray-200 relative"
+          className="w-[250px] h-[260px] rounded-lg overflow-hidden flex flex-col justify-between text-gray-200 relative "
           onMouseDown={handleMouseDown}
           onMouseMove={handleMouseMove} // 드래그 중
           onMouseUp={handleMouseUp}
@@ -65,6 +67,22 @@ export default function App({ user }: { user: string | null }) {
           onTouchEnd={handleMouseUp}
           onMouseLeave={handleMouseUp}
         >
+          <div className="absolute w-[250px] h-[200px]  flex items-center justify-end ">
+            <div
+              className={` w-[50px] h-[50px] relative  ${
+                drag ? "opacity-1" : "opacity-0"
+              } pointer-events-none `}
+            >
+              <div className="arrowCss">
+                <span></span>
+                <span></span>
+                <span></span>
+              </div>
+              <div className="text-[5px] absolute bottom-0 right-0">
+                Click Drag
+              </div>
+            </div>
+          </div>
           <ul
             className={`w-[1500px] h-[230px] absolute left-0 flex `}
             style={{
@@ -75,19 +93,35 @@ export default function App({ user }: { user: string | null }) {
             }}
           >
             <li className="w-[250px] h-[250px] flex flex-col items-center justify-center gap-5 ">
-              <div className="w-[150px] h-[150px] text-[80px] font-bold bg-white flex items-center justify-center text-black rounded-lg shadow-3xl shadow-black dark:border dark:bg-white/0 dark:text-white duration-300">
-                R
+              <div className="w-[150px] h-[150px] text-[80px] font-bold flex items-center justify-center text-black rounded-lg shadow-3xl shadow-black border dark:bg-white/0 dark:text-white duration-300">
+                <div className="w-[80px] h-[80px]  flex items-center justify-center ">
+                  <div className="cubeApp w-[70px] h-[70px] text-white   ">
+                    <div className="face frontApp">
+                      <div className="w-[50px] h-[50px] bg-zinc-400 rounded-lg dark:bg-white"></div>
+                    </div>
+
+                    <div className="face leftApp">
+                      <div className="w-[50px] h-[50px] border-[3px] rounded-lg flex items-center justify-center text-[8px]">
+                        TOOLS
+                      </div>
+                    </div>
+
+                    <div className="face topApp">
+                      <div className="w-[50px] h-[50px] bg-black rounded-lg dark:bg-cyan-500"></div>
+                    </div>
+                  </div>
+                </div>
               </div>
               <div className="w-[250px] h-[30px] bottom-5 border-black text-[10px] flex flex-col justify-center items-center">
                 <p>
-                  <span className="text-white mr-[1px] font-bold">Rotion</span>
-                  은 일상에서 활용도가 높은 다양한 도구를
+                  <span className="text-white mr-[1px] font-bold">Tools</span>은
+                  일상에서 활용도가 높은 다양한 도구를
                 </p>
                 <p>통합한 스마트 플랫폼입니다.</p>
               </div>
             </li>
             <li className="w-[250px] h-[250px] flex flex-col items-center justify-center gap-5">
-              <div className="w-[150px] h-[150px] text-[80px] font-bold bg-white flex items-center justify-center text-black rounded-lg shadow-3xl shadow-black dark:border dark:bg-white/0 dark:text-white duration-300">
+              <div className="w-[150px] h-[150px] text-[80px] font-bold border flex items-center justify-center text-white rounded-lg shadow-3xl shadow-black dark:border dark:bg-white/0 dark:text-white duration-300 ">
                 <span className="scale-[1.8]">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -114,7 +148,7 @@ export default function App({ user }: { user: string | null }) {
               </div>
             </li>
             <li className="w-[250px] h-[250px] flex flex-col items-center justify-center gap-5">
-              <div className="w-[150px] h-[150px] text-[80px] font-bold bg-white flex items-center justify-center text-black rounded-lg shadow-3xl shadow-black dark:border dark:bg-white/0 dark:text-white duration-300">
+              <div className="w-[150px] h-[150px] text-[80px] font-bold border flex items-center justify-center text-white rounded-lg shadow-3xl shadow-black dark:border dark:bg-white/0 dark:text-white duration-300">
                 <span className="scale-[1.8]">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -143,7 +177,7 @@ export default function App({ user }: { user: string | null }) {
               </div>
             </li>
             <li className="w-[250px] h-[250px] flex flex-col items-center justify-center gap-5">
-              <div className="w-[150px] h-[150px] text-[80px] font-bold bg-white flex items-center justify-center text-black rounded-lg shadow-3xl shadow-black dark:border dark:bg-white/0 dark:text-white duration-300">
+              <div className="w-[150px] h-[150px] text-[80px] font-bold border flex items-center justify-center text-white rounded-lg shadow-3xl shadow-black dark:border dark:bg-white/0 dark:text-white duration-300">
                 <span className="scale-[1.8]">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -170,7 +204,7 @@ export default function App({ user }: { user: string | null }) {
               </div>
             </li>
             <li className="w-[250px] h-[250px] flex flex-col items-center justify-center gap-5">
-              <div className="w-[150px] h-[150px] text-[80px] font-bold bg-white flex items-center justify-center text-black rounded-lg shadow-3xl shadow-black dark:border dark:bg-white/0 dark:text-white duration-300">
+              <div className="w-[150px] h-[150px] text-[80px] font-bold border flex items-center justify-center text-white rounded-lg shadow-3xl shadow-black dark:border dark:bg-white/0 dark:text-white duration-300">
                 <span className="scale-[1.8]">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -199,7 +233,7 @@ export default function App({ user }: { user: string | null }) {
               </div>
             </li>
             <li className="w-[250px] h-[250px] flex flex-col items-center justify-center gap-5">
-              <div className="w-[150px] h-[150px] text-[80px] font-bold bg-white flex items-center justify-center text-black rounded-lg shadow-3xl shadow-black dark:border dark:bg-white/0 dark:text-white duration-300">
+              <div className="w-[150px] h-[150px] text-[80px] font-bold border flex items-center justify-center text-white rounded-lg shadow-3xl shadow-black dark:border dark:bg-white/0 dark:text-white duration-300">
                 <span className="scale-[1.8]">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"

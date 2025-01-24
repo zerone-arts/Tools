@@ -1,5 +1,10 @@
 import CalculatorAppPage from "@/components/calculator/CalculatorAppPage";
 import CalculatorWebPage from "@/components/calculator/CalculatorWebPage";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Calculator",
+};
 
 export default function CalculatorPage() {
   return (

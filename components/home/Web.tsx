@@ -7,7 +7,7 @@ export default function Web({ user }: { user: string | null }) {
   const [count, setCount] = useState(0);
 
   const List = [
-    "Rotion",
+    "Tools",
     "Note",
     "Calendar",
     "Weather",
@@ -16,7 +16,23 @@ export default function Web({ user }: { user: string | null }) {
   ];
   return (
     <div className="w-full h-full  max-md:hidden flex flex-col justify-center items-center gap-0 p-[100px]">
-      <div className="w-[100px] h-[100px] border"></div>
+      <div className="w-[100px] h-[100px]  flex items-center justify-center">
+        <div className="cube w-[80px] h-[80px] text-white top-2">
+          <div className="face front">
+            <div className="w-[70px] h-[70px] bg-zinc-400 rounded-lg dark:bg-white"></div>
+          </div>
+
+          <div className="face left">
+            <div className="w-[70px] h-[70px] border-[3px] rounded-lg flex items-center justify-center text-[10px]">
+              TOOLS
+            </div>
+          </div>
+
+          <div className="face top">
+            <div className="w-[70px] h-[70px] bg-black rounded-lg dark:bg-cyan-600 "></div>
+          </div>
+        </div>
+      </div>
       <div className="w-full h-[200px] flex flex-col justify-center items-center gap-5  ">
         <div className="w-full h-[130px]  relative overflow-hidden ">
           <div
@@ -29,7 +45,8 @@ export default function Web({ user }: { user: string | null }) {
               return (
                 <div
                   key={item}
-                  className={`text-[100px] tracking-widest w-full h-[130px] flex items-center justify-center`}
+                  className={`text-[100px] tracking-widest w-full h-[130px] flex items-center justify-center 
+                   duration-300 ${count === idx ? "opacity-1" : "opacity-0"}`}
                   style={{
                     textShadow:
                       "0px 4px 3px rgba(0,0,0,0.4)  ,0px 8px 13px rgba(0,0,0,0.1), 0px 18px 23px rgba(0,0,0,0.1)",
@@ -47,7 +64,7 @@ export default function Web({ user }: { user: string | null }) {
               count === 0 ? "opacity-1 delay-300" : "opacity-0 delay-0"
             }`}
           >
-            <span className=" text-white">Rotion</span>은 일상에서 활용도가 높은
+            <span className=" text-white">Tools</span>은 일상에서 활용도가 높은
             <br />
             <span className=" text-white">다양한 도구</span>를 통합한 스마트
             플랫폼입니다.
@@ -93,13 +110,13 @@ export default function Web({ user }: { user: string | null }) {
               count === 5 ? "opacity-1 delay-300" : "opacity-0 delay-0"
             }`}
           >
-            Rotion은 사용자만의 배경 이미지를 설정할 수 있는 <br />
+            Tools은 사용자만의 배경 이미지를 설정할 수 있는 <br />
             <span className="text-white">Light Mode</span>와 어두운 배경의
             <span className="ml-1 text-zinc-500">Dark Mode</span>가 있습니다.
           </li>
         </ul>
       </div>
-      <div className="top-[100px] relative">
+      <div className="top-[70px] relative">
         <ul className=" w-[450px] h-[80px]  flex items-center justify-between relative mb-5">
           <li
             className={`w-[50px] h-[50px] border-2 rounded-md  duration-300 hover:mb-5 shadow-3xl shadow-black 
@@ -107,8 +124,10 @@ export default function Web({ user }: { user: string | null }) {
             ${count === 0 ? "mb-5" : "mb-0"}`}
             onClick={() => setCount(0)}
           >
-            <button className="w-full h-full">
-              <div className="font-bold text-[20px]">R</div>
+            <button className="w-full h-full flex items-center justify-center">
+              <div className="flex itmes-center justify-center text-[20px] font-semibold   relative">
+                T
+              </div>
             </button>
           </li>
           <li
@@ -269,7 +288,7 @@ export default function Web({ user }: { user: string | null }) {
               <div className="">
                 Hello!
                 <span className="text-white px-2">{user?.split("@")[0]}</span>
-                Welcome to Rotion :&#41;
+                Welcome to Tools :&#41;
               </div>
               <div></div>
             </div>

@@ -72,8 +72,6 @@ export default function NoteContent({
     }
   }, [createBtn]);
 
-  console.log(upDate);
-
   return (
     <div className="flex flex-wrap justify-center w-full p-4 gap-9  ">
       {content

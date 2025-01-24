@@ -1,6 +1,6 @@
 "use client";
 
-import { getDate, weekDayNames } from "@/app/weather/page";
+import { getDate, weekDayNames } from "@/components/weather/WeatherPage";
 
 import Image from "next/image";
 
