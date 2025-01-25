@@ -14,6 +14,9 @@ export const metadata: Metadata = {
   },
   description:
     "Tools은 일상에서 활용도가 높은 다양한 도구를 통합한 스마트 플랫폼입니다.",
+  icons: {
+    icon: "/assets/image/icon/logo.png",
+  },
 };
 
 export default function RootLayout({
