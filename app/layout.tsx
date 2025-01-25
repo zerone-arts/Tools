@@ -1,7 +1,5 @@
 import type { Metadata } from "next";
-
 import "./globals.css";
-
 import BgImage from "@/components/layout/BgImage";
 import Ui from "@/components/layout/Ui";
 import { ThemeProvider } from "@/components/layout/ThemeProvider";
