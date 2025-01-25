@@ -9,11 +9,15 @@ export default function MyPage() {
   const [deleteAccountCheck, setDeleteAccountCheck] = useState(false);
   const [userId, setUserId] = useState("");
   const [user, setUser] = useState("");
-
+  const redirectUrl =
+    process.env.NODE_ENV === "production"
+      ? "https://tools-peach-one.vercel.app"
+      : "http://localhost:3000";
   const signInHandle = async () => {
     const { data, error } = await supabase.auth.signInWithOAuth({
       provider: "google",
       options: {
+        redirectTo: redirectUrl,
         queryParams: {
           access_type: "offline",
           prompt: "consent",
