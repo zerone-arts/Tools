@@ -84,6 +84,7 @@ export default function MyPage() {
   useEffect(() => {
     const checkSign = async () => {
       const { data } = await supabase.auth.getSession();
+
       const session = data?.session;
       console.log(data);
       if (session?.user?.email) {
