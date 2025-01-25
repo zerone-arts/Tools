@@ -20,7 +20,7 @@ export default function MyPage() {
         },
       },
     });
-
+    console.log(data);
     if (!error) {
       const { data } = await supabase.auth.getSession();
       const session = data?.session;
