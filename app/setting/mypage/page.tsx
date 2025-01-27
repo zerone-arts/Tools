@@ -4,7 +4,7 @@ import { supabase } from "@/utils/supabase";
 import { useEffect, useState } from "react";
 
 export default function MyPage() {
-  const [login, setLogin] = useState<boolean | null>(false);
+  const [login, setLogin] = useState<boolean | null>(null);
   const [deleteAccountBtn, setDeleteAccountBtn] = useState(false);
   const [deleteAccountCheck, setDeleteAccountCheck] = useState(false);
   const [userId, setUserId] = useState("");
