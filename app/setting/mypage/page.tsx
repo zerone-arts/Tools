@@ -13,7 +13,7 @@ export default function MyPage() {
     process.env.NODE_ENV === "production"
       ? "https://tools-peach-one.vercel.app"
       : "http://localhost:3000";
-  console.log(redirectUrl);
+
   const signInHandle = async () => {
     const { data, error } = await supabase.auth.signInWithOAuth({
       provider: "google",
