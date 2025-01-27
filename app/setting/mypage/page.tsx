@@ -85,15 +85,17 @@ export default function MyPage() {
     const checkSign = async () => {
       try {
         console.log("Calling getSession...");
-        const { data, error } = await supabase.auth.getSession();
+        const response = await supabase.auth.getSession();
+        console.log("Full Response:", response);
+
+        const { data, error } = response;
         console.log("Session data:", data);
         console.error("Session error:", error);
 
-        const session = data?.session;
-        if (session?.user?.email) {
+        if (data?.session?.user?.email) {
           localStorage.setItem("isLoggedIn", "true");
-          setUserId(session.user.id);
-          setUser(session.user.email);
+          setUserId(data.session.user.id);
+          setUser(data.session.user.email);
           setLogin(true);
         } else {
           localStorage.setItem("isLoggedIn", "false");
