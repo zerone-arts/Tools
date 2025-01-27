@@ -116,8 +116,8 @@ export default function NotePage() {
     const { data, error } = await supabase
       .from("rotionNoteTable")
       .select("*")
-      .eq("user_id", user);
-
+      .eq("user_id", "zerone5105@gmail.com");
+    console.log(data);
     if (error) {
       console.error("Error fetching data:", error);
       return;
