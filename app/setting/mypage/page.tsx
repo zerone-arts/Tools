@@ -11,7 +11,7 @@ export default function MyPage() {
   const [user, setUser] = useState("");
   const redirectUrl =
     process.env.NODE_ENV === "production"
-      ? "https://tools-peach-one.vercel.app"
+      ? "https://tools-peach-one.vercel.app/auth/callback"
       : "http://localhost:3000";
 
   const signInHandle = async () => {
