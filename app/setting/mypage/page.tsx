@@ -83,7 +83,9 @@ export default function MyPage() {
   };
 
   useEffect(() => {
+    console.log("useEffect 실행됨");
     const checkSign = async () => {
+      console.log("checkSign 함수 호출됨");
       const { data, error } = await supabase.auth.getSession();
       console.log("Session Data:", data);
       console.error("Session Error:", error);
