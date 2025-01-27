@@ -11,7 +11,7 @@ export default function MyPage() {
   const [user, setUser] = useState("");
   const redirectUrl =
     process.env.NODE_ENV === "production"
-      ? "https://tools-peach-one.vercel.app/auth/callback"
+      ? "https://tools-peach-one.vercel.app"
       : "http://localhost:3000";
 
   const signInHandle = async () => {
@@ -90,7 +90,6 @@ export default function MyPage() {
 
         const { data, error } = response;
         console.log("Session data:", data);
-        console.error("Session error:", error);
 
         if (data?.session?.user?.email) {
           localStorage.setItem("isLoggedIn", "true");
