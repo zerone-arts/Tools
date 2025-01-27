@@ -15,7 +15,6 @@ export default function Web({ user }: { user: string | null }) {
     "Setting",
   ];
 
-  console.log(user);
   return (
     <div className="w-full h-full  max-md:hidden flex flex-col justify-center items-center gap-0 p-[100px]">
       <div className="w-[100px] h-[100px]  flex items-center justify-center">
