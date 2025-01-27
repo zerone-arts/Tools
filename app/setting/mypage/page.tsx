@@ -82,25 +82,30 @@ export default function MyPage() {
     }
   };
   useEffect(() => {
-    const { data: listener } = supabase.auth.onAuthStateChange(
-      async (event, session) => {
-        console.log("Auth state changed:", event, session);
-        if (session?.user.email) {
-          setUserId(session.user.id);
-          setUser(session.user.email);
-          console.log(session.user.email);
-          setLogin(true);
-          localStorage.setItem("isLoggedIn", "true");
-        } else {
-          setLogin(false);
-          localStorage.setItem("isLoggedIn", "false");
-        }
-      }
-    );
+    const checkSign = async () => {
+      try {
+        console.log("Calling getSession...");
+        const response = await supabase.auth.getSession();
+        console.log("Full Response:", response);
 
-    return () => {
-      listener?.subscription.unsubscribe();
+        const { data, error } = response;
+        console.log("Session data:", data);
+
+        if (data?.session?.user?.email) {
+          localStorage.setItem("isLoggedIn", "true");
+          setUserId(data.session.user.id);
+          setUser(data.session.user.email);
+          setLogin(true);
+        } else {
+          localStorage.setItem("isLoggedIn", "false");
+          setLogin(false);
+        }
+      } catch (err) {
+        console.error("Unexpected error:", err);
+      }
     };
+
+    checkSign();
   }, []);
 
   if (login === null) {
