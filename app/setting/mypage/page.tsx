@@ -86,8 +86,10 @@ export default function MyPage() {
     const checkSign = async () => {
       const { data, error } = await supabase.auth.getSession();
 
+      console.log("Session data:", data);
+      console.error("Session error:", error);
       const session = data?.session;
-      console.log(data);
+
       if (session?.user?.email) {
         localStorage.setItem("isLoggedIn", "true");
         setUserId(session.user.id);
