@@ -4,7 +4,7 @@ import { supabase } from "@/utils/supabase";
 import { useEffect, useState } from "react";
 
 export default function MyPage() {
-  const [login, setLogin] = useState<boolean | null>(null);
+  const [login, setLogin] = useState<boolean | null>(false);
   const [deleteAccountBtn, setDeleteAccountBtn] = useState(false);
   const [deleteAccountCheck, setDeleteAccountCheck] = useState(false);
   const [userId, setUserId] = useState("");
@@ -83,9 +83,6 @@ export default function MyPage() {
   };
 
   useEffect(() => {
-    console.log("Supabase URL:", process.env.NEXT_PUBLIC_SUPABASE_URL);
-    console.log("Supabase Key:", process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY);
-    console.log("Supabase Client:", supabase);
     const checkSign = async () => {
       const { data, error } = await supabase.auth.getSession();
 
