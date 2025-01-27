@@ -81,27 +81,29 @@ export default function MyPage() {
       console.error("회원 탈퇴 처리 중 오류:", error);
     }
   };
-
   useEffect(() => {
     const checkSign = async () => {
-      console.log("test");
-      const { data, error } = await supabase.auth.getSession();
+      try {
+        console.log("Calling getSession...");
+        const { data, error } = await supabase.auth.getSession();
+        console.log("Session data:", data);
+        console.error("Session error:", error);
 
-      console.log("Session data:", data);
-      console.error("Session error:", error);
-      const session = data?.session;
-
-      if (session?.user?.email) {
-        localStorage.setItem("isLoggedIn", "true");
-        setUserId(session.user.id);
-        setUser(session.user.email);
-        setLogin(true);
-      } else {
-        localStorage.setItem("isLoggedIn", "false");
-
-        setLogin(false);
+        const session = data?.session;
+        if (session?.user?.email) {
+          localStorage.setItem("isLoggedIn", "true");
+          setUserId(session.user.id);
+          setUser(session.user.email);
+          setLogin(true);
+        } else {
+          localStorage.setItem("isLoggedIn", "false");
+          setLogin(false);
+        }
+      } catch (err) {
+        console.error("Unexpected error:", err);
       }
     };
+
     checkSign();
   }, []);
 
