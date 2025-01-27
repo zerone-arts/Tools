@@ -13,11 +13,11 @@ export default function MyPage() {
     process.env.NODE_ENV === "production"
       ? "https://tools-peach-one.vercel.app"
       : "http://localhost:3000";
+
   const signInHandle = async () => {
     const { data, error } = await supabase.auth.signInWithOAuth({
       provider: "google",
       options: {
-        redirectTo: redirectUrl,
         queryParams: {
           access_type: "offline",
           prompt: "consent",
