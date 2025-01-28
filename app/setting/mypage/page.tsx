@@ -8,7 +8,7 @@ export default function MyPage() {
   const [login, setLogin] = useState<boolean | null>(null);
   const [deleteAccountBtn, setDeleteAccountBtn] = useState(false);
   const [deleteAccountCheck, setDeleteAccountCheck] = useState(false);
-  const { user } = useAuth();
+  const { user, isAuthInitialized } = useAuth();
   const redirectUrl =
     process.env.NODE_ENV === "production"
       ? "https://tools-lime-eight.vercel.app"
@@ -74,8 +74,10 @@ export default function MyPage() {
     }
   };
   useEffect(() => {
-    setLogin(user ? true : false);
-  }, [user]);
+    if (isAuthInitialized) {
+      setLogin(user ? true : false);
+    }
+  }, [user, isAuthInitialized]);
 
   if (login === null) {
     return (

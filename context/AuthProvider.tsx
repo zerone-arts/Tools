@@ -6,18 +6,21 @@ import { supabase } from "@/utils/supabase";
 type AuthContextType = {
   user: any;
   setUser: React.Dispatch<React.SetStateAction<any>>;
+  isAuthInitialized: boolean;
 };
 
 export const AuthContext = createContext<AuthContextType | null>(null);
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<any>(null);
+  const [isAuthInitialized, setAuthInitialized] = useState(false);
 
   useEffect(() => {
     const fetchSession = async () => {
       const { data } = await supabase.auth.getSession();
       setUser(data?.session?.user || null);
       localStorage.setItem("isLoggedIn", data?.session ? "true" : "false");
+      setAuthInitialized(true);
     };
 
     fetchSession();
@@ -26,6 +29,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       (_event, session) => {
         setUser(session?.user || null);
         localStorage.setItem("isLoggedIn", session ? "true" : "false");
+        setAuthInitialized(true);
       }
     );
 
@@ -35,7 +39,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ user, setUser }}>
+    <AuthContext.Provider value={{ user, setUser, isAuthInitialized }}>
       {children}
     </AuthContext.Provider>
   );
