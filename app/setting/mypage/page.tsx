@@ -26,14 +26,24 @@ export default function MyPage() {
       },
     });
 
-    if (error) {
+    if (!error) {
+      const { data } = await supabase.auth.getSession();
+      const session = data?.session;
+      if (session?.user?.email) {
+        localStorage.setItem("isLoggedIn", "true");
+        setLogin(true);
+      }
+    } else {
       console.error("Login error:", error);
     }
   };
 
   const signOutHandle = async () => {
     const { error } = await supabase.auth.signOut();
-    if (error) {
+    if (!error) {
+      localStorage.setItem("isLoggedIn", "false");
+      setLogin(false);
+    } else {
       console.error("Error during sign-out:", error);
     }
   };
@@ -53,22 +63,28 @@ export default function MyPage() {
       }
 
       console.log("계정이 성공적으로 삭제되었습니다.");
-      setDeleteAccountCheck(true);
+
       await supabase.auth.signOut();
+      setDeleteAccountCheck(true);
+      localStorage.setItem("isLoggedIn", "false");
+      setLogin(false);
     } catch (error) {
       console.error("회원 탈퇴 처리 중 오류:", error);
     }
   };
+  useEffect(() => {
+    setLogin(user ? true : false);
+  }, [user]);
 
-  // if (user === null) {
-  //   return (
-  //     <div className="w-full h-full flex items-center justify-center"></div>
-  //   );
-  // }
-  console.log(user);
+  if (login === null) {
+    return (
+      <div className="w-full h-full flex items-center justify-center"></div>
+    );
+  }
+
   return (
     <div className="w-full h-full absolute left-0">
-      {user ? (
+      {login ? (
         <div className="w-full h-full flex flex-col gap-5 items-center justify-center">
           <button
             className="flex gap-3 border w-[150px] p-4 h-8 items-center justify-center rounded-full dark:border-none dark:bg-zinc-800  duration-200 hover:border-cyan-600 hover:text-cyan-600"
