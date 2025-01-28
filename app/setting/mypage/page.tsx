@@ -8,7 +8,7 @@ export default function MyPage() {
   const [login, setLogin] = useState<boolean | null>(null);
   const [deleteAccountBtn, setDeleteAccountBtn] = useState(false);
   const [deleteAccountCheck, setDeleteAccountCheck] = useState(false);
-  const { user, isAuthInitialized } = useAuth();
+  const { user, setUser, isAuthInitialized } = useAuth();
   const redirectUrl =
     process.env.NODE_ENV === "production"
       ? "https://tools-lime-eight.vercel.app"
@@ -39,9 +39,12 @@ export default function MyPage() {
   };
 
   const signOutHandle = async () => {
+    console.log("로그아웃 클릭됌 ");
     const { error } = await supabase.auth.signOut();
     if (!error) {
+      console.log("로그아웃 tjdrhd ");
       localStorage.setItem("isLoggedIn", "false");
+      setUser(null);
       setLogin(false);
       console.log("계정이 로그아웃되었습니다..");
     } else {
