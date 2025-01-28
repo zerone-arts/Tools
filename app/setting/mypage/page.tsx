@@ -1,5 +1,6 @@
 "use client";
 
+import { useAuth } from "@/context/AuthProvider";
 import { supabase } from "@/utils/supabase";
 import { useEffect, useState } from "react";
 
@@ -7,13 +8,11 @@ export default function MyPage() {
   const [login, setLogin] = useState<boolean | null>(null);
   const [deleteAccountBtn, setDeleteAccountBtn] = useState(false);
   const [deleteAccountCheck, setDeleteAccountCheck] = useState(false);
-  const [userId, setUserId] = useState("");
-  const [user, setUser] = useState<string | undefined>("");
-
+  const { user } = useAuth();
   const redirectUrl =
     process.env.NODE_ENV === "production"
-      ? "https://tools-lime-eight.vercel.app/setting/mypage"
-      : "http://localhost:3000/setting/mypage";
+      ? "https://tools-lime-eight.vercel.app"
+      : "http://localhost:3000";
 
   const signInHandle = async () => {
     const { error } = await supabase.auth.signInWithOAuth({
@@ -27,7 +26,14 @@ export default function MyPage() {
       },
     });
 
-    if (error) {
+    if (!error) {
+      const { data } = await supabase.auth.getSession();
+      const session = data?.session;
+      if (session?.user?.email) {
+        localStorage.setItem("isLoggedIn", "true");
+        setLogin(true);
+      }
+    } else {
       console.error("Login error:", error);
     }
   };
@@ -37,14 +43,11 @@ export default function MyPage() {
     if (!error) {
       localStorage.setItem("isLoggedIn", "false");
       setLogin(false);
-      setUserId("");
-      setUser("");
     } else {
       console.error("Error during sign-out:", error);
     }
   };
 
-  // ✅ 회원 탈퇴 처리
   const deleteAccountHandle = async () => {
     try {
       const response = await fetch("/api/auth/delete-user", {
@@ -52,68 +55,26 @@ export default function MyPage() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ userId, user }),
+        body: JSON.stringify({ userId: user?.id, user: user?.email }),
       });
 
-      const result = await response.json();
       if (!response.ok) {
-        throw new Error(result.error || "계정 삭제 실패");
+        throw new Error("계정 삭제 실패");
       }
 
       console.log("계정이 성공적으로 삭제되었습니다.");
-      await supabase.auth.signOut();
 
+      await supabase.auth.signOut();
       setDeleteAccountCheck(true);
       localStorage.setItem("isLoggedIn", "false");
-      setUserId("");
-      setUser("");
       setLogin(false);
     } catch (error) {
       console.error("회원 탈퇴 처리 중 오류:", error);
     }
   };
-
-  // ✅ 로그인 상태 확인
   useEffect(() => {
-    const checkSign = async () => {
-      try {
-        console.log("Calling getSession...");
-        const { data, error } = await supabase.auth.getSession();
-        console.log("Session data:", data);
-
-        if (data?.session?.user?.email) {
-          localStorage.setItem("isLoggedIn", "true");
-          setUserId(data.session.user.id);
-          setUser(data.session.user.email);
-          setLogin(true);
-        } else {
-          localStorage.setItem("isLoggedIn", "false");
-          setLogin(false);
-        }
-      } catch (err) {
-        console.error("Unexpected error:", err);
-      }
-    };
-
-    checkSign();
-
-    const { data: listener } = supabase.auth.onAuthStateChange(
-      async (event, session) => {
-        if (session?.user?.email) {
-          localStorage.setItem("isLoggedIn", "true");
-          setUserId(session.user.id);
-          setUser(session.user.email);
-          setLogin(true);
-        } else {
-          localStorage.setItem("isLoggedIn", "false");
-          setLogin(false);
-        }
-      }
-    );
-    return () => {
-      listener.subscription.unsubscribe();
-    };
-  }, []);
+    setLogin(user ? true : false);
+  }, [user]);
 
   if (login === null) {
     return (
@@ -126,13 +87,13 @@ export default function MyPage() {
       {login ? (
         <div className="w-full h-full flex flex-col gap-5 items-center justify-center">
           <button
-            className="flex gap-3 border w-[150px] p-4 h-8 items-center justify-center rounded-full dark:border-none dark:bg-zinc-800 duration-200 hover:border-cyan-600 hover:text-cyan-600"
+            className="flex gap-3 border w-[150px] p-4 h-8 items-center justify-center rounded-full dark:border-none dark:bg-zinc-800  duration-200 hover:border-cyan-600 hover:text-cyan-600"
             onClick={signOutHandle}
           >
             <p>Sign Out</p>
           </button>
           <button
-            className="flex gap-3 border w-[150px] p-4 h-8 items-center justify-between rounded-full dark:border-none dark:bg-zinc-800 duration-200 hover:border-cyan-600 hover:text-cyan-600"
+            className="flex gap-3 border w-[150px] p-4 h-8 items-center justify-between rounded-full dark:border-none dark:bg-zinc-800  duration-200 hover:border-cyan-600 hover:text-cyan-600"
             onClick={() => setDeleteAccountBtn(true)}
           >
             <p>Delete Account</p>
@@ -141,7 +102,7 @@ export default function MyPage() {
       ) : (
         <div className="w-full h-full flex items-center justify-center">
           <button
-            className="relative w-[220px] flex gap-3 border p-5 h-10 items-center justify-between rounded-full dark:border-none dark:bg-zinc-800 duration-200 border-white hover:border-cyan-600 hover:text-cyan-600 group"
+            className="relative w-[220px] flex gap-3 border p-5 h-10 items-center justify-between rounded-full dark:border-none dark:bg-zinc-800  duration-200 border-white hover:border-cyan-600 hover:text-cyan-600 group"
             onClick={signInHandle}
           >
             <span>
@@ -160,53 +121,56 @@ export default function MyPage() {
         </div>
       )}
 
-      {/* ✅ 회원 탈퇴 모달 */}
-      {deleteAccountBtn && (
-        <div className="absolute w-full h-full top-0 left-0 bg-black/90 flex items-center justify-center">
-          <div className="w-[300px] h-[130px] border rounded-2xl flex flex-col">
-            {!deleteAccountCheck ? (
-              <div className="h-[80px] flex flex-col items-center justify-center gap-1">
-                <p>정말 계정을 탈퇴 하시겠습니까?</p>
-                <p className="text-[10px] text-gray-300">
-                  탈퇴시 저장된 정보는 삭제됩니다.
-                </p>
-              </div>
-            ) : (
-              <div className="h-[90px] flex flex-col items-center justify-center gap-1">
-                <p>계정이 탈퇴 되었습니다.</p>
-              </div>
-            )}
-            <div className="flex justify-between h-[30px] items-center px-10">
-              {!deleteAccountCheck ? (
-                <>
-                  <button
-                    className="w-[100px] h-full hover:text-cyan-500 duration-300"
-                    onClick={deleteAccountHandle}
-                  >
-                    예
-                  </button>
-                  <button
-                    className="w-[100px] h-full hover:text-cyan-500 duration-300"
-                    onClick={() => setDeleteAccountBtn(false)}
-                  >
-                    아니요
-                  </button>
-                </>
-              ) : (
-                <button
-                  className="w-[100px] h-full hover:text-cyan-500 duration-300"
-                  onClick={() => {
-                    setDeleteAccountBtn(false);
-                    setDeleteAccountCheck(false);
-                  }}
-                >
-                  나가기
-                </button>
-              )}
+      <div
+        className={`border absolute w-full h-full top-0 left-0 bg-black/90 flex items-center justify-center ${
+          deleteAccountBtn
+            ? "opacity-1 pointer-events-auto"
+            : "opacity-0 pointer-events-none"
+        }`}
+      >
+        <div className="w-[300px] h-[130px] border rounded-2xl flex flex-col">
+          {!deleteAccountCheck ? (
+            <div className="h-[80px] flex flex-col items-center justify-center gap-1">
+              <p>정말 계정을 탈퇴 하시겠습니까?</p>
+              <p className="text-[10px] text-gray-300">
+                탈퇴시 저장된 정보는 삭제됩니다.
+              </p>
             </div>
-          </div>
+          ) : (
+            <div className="h-[90px] flex flex-col items-center justify-center gap-1">
+              <p>계정이 탈퇴 되었습니다.</p>
+            </div>
+          )}
+          {!deleteAccountCheck ? (
+            <div className="flex justify-between h-[30px] items-center px-10">
+              <button
+                className="w-[100px] h-full hover:text-cyan-500 duration-300"
+                onClick={deleteAccountHandle}
+              >
+                예
+              </button>
+              <button
+                className="w-[100px] h-full hover:text-cyan-500 duration-300"
+                onClick={() => setDeleteAccountBtn(false)}
+              >
+                아니요
+              </button>
+            </div>
+          ) : (
+            <div className="flex justify-center h-[30px] items-center px-10">
+              <button
+                className="w-[100px] h-full hover:text-cyan-500 duration-300"
+                onClick={() => {
+                  setDeleteAccountBtn(false);
+                  setDeleteAccountCheck(false);
+                }}
+              >
+                나가기
+              </button>
+            </div>
+          )}
         </div>
-      )}
+      </div>
     </div>
   );
 }

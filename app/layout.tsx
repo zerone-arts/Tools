@@ -4,6 +4,7 @@ import BgImage from "@/components/layout/BgImage";
 import Ui from "@/components/layout/Ui";
 import { ThemeProvider } from "@/components/layout/ThemeProvider";
 import Script from "next/script";
+import { AuthProvider } from "@/context/AuthProvider";
 
 export const metadata: Metadata = {
   title: {
@@ -29,13 +30,15 @@ export default function RootLayout({
         src={`//dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.NEXT_PUBLIC_KAKAO_API}&autoload=false&libraries=services`}
       ></Script>
       <body className=" bg-black relative w-full h-screen overflow-hidden">
-        <ThemeProvider attribute="class">
-          <div className="relative flex">
-            <Ui />
-            {children}
-          </div>
-          <BgImage />
-        </ThemeProvider>
+        <AuthProvider>
+          <ThemeProvider attribute="class">
+            <div className="relative flex">
+              <Ui />
+              {children}
+            </div>
+            <BgImage />
+          </ThemeProvider>
+        </AuthProvider>
       </body>
     </html>
   );
