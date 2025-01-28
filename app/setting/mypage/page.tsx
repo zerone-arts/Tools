@@ -37,7 +37,6 @@ export default function MyPage() {
       console.error("Login error:", error);
     }
   };
-
   const signOutHandle = async () => {
     console.log("로그아웃 클릭됌 ");
     const { error } = await supabase.auth.signOut();
