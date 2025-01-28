@@ -286,7 +286,7 @@ export default function App({ user }: { user: string | null }) {
         <div className="w-full flex items-center justify-center">
           {user === "" ? (
             <div></div>
-          ) : user === null ? (
+          ) : user === undefined ? (
             <Link href="/setting/mypage" className="relative group">
               Go to Login
               <div className="absolute w-[0%] h-[1px] bg-white group-hover:w-[100%] duration-300"></div>
