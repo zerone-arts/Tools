@@ -127,13 +127,13 @@ export default function MyPage() {
       )}
 
       <div
-        className={`border absolute w-full h-full top-0 left-0 bg-black/90 flex items-center justify-center ${
+        className={` absolute w-full h-full top-0 left-0 bg-black/50 flex items-center justify-center ${
           deleteAccountBtn
             ? "opacity-1 pointer-events-auto"
             : "opacity-0 pointer-events-none"
         }`}
       >
-        <div className="w-[300px] h-[130px] border rounded-2xl flex flex-col">
+        <div className="w-[300px] h-[130px] border rounded-2xl flex flex-col bg-black/90">
           {!deleteAccountCheck ? (
             <div className="h-[80px] flex flex-col items-center justify-center gap-1">
               <p>정말 계정을 탈퇴 하시겠습니까?</p>
