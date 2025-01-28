@@ -5,10 +5,11 @@ import img from "@/public/assets/image/bg/spider2.png";
 import { useEffect, useState } from "react";
 import { useImageStore } from "../../utils/zustand";
 import { supabase } from "@/utils/supabase";
+import { useAuth } from "@/context/AuthProvider";
 export default function BgImage() {
   const [image, setImage] = useState<string | null>(null);
   const imageName = useImageStore((state: any) => state.image);
-
+  const { user } = useAuth();
   const getImageFile = async () => {
     if (imageName) {
       const { data } = await supabase.storage

@@ -1,18 +1,17 @@
 "use client";
+import { useAuth } from "@/context/AuthProvider";
 import { supabase } from "@/utils/supabase";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 
 export default function UiProfileImage() {
   const [userImg, setUserImg] = useState<string | null>(null);
+  const { user } = useAuth();
 
   useEffect(() => {
     const fetchSession = async () => {
-      const { data } = await supabase.auth.getSession();
-      const session = data?.session;
-
-      if (session?.user?.user_metadata?.avatar_url) {
-        setUserImg(session.user.user_metadata.avatar_url);
+      if (user?.user_metadata?.avatar_url) {
+        setUserImg(user.user_metadata.avatar_url);
       } else {
         setUserImg(null);
       }
