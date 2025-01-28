@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 export default function UiProfileImage() {
   const [userImg, setUserImg] = useState<string | null>(null);
   const { user } = useAuth();
-
+  console.log("Avatar URL:", user?.user_metadata?.avatar_url);
   useEffect(() => {
     const fetchSession = async () => {
       if (user?.user_metadata?.avatar_url) {
@@ -37,6 +37,18 @@ export default function UiProfileImage() {
       authListener?.subscription.unsubscribe();
     };
   }, []);
+
+  useEffect(() => {
+    const fetchSession = async () => {
+      if (user?.user_metadata?.avatar_url) {
+        setUserImg(user.user_metadata.avatar_url);
+      } else {
+        setUserImg(null);
+      }
+    };
+
+    fetchSession();
+  }, [user]);
 
   return (
     <div>
