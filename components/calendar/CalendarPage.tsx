@@ -29,7 +29,6 @@ export default function CalendarPageCSR() {
   const [selectDay, setSelectDay] = useState<number | null>(null);
   const { user: userInfo } = useAuth();
   const user = userInfo?.email;
-
   const [anniversarys, setAnniversarys] = useState<
     Database["public"]["Tables"]["rotionCalendarTable"]["Row"][]
   >([]);
@@ -63,6 +62,8 @@ export default function CalendarPageCSR() {
       fetchList();
     }
   }, [user]);
+
+  console.log(user);
 
   const fetchList = async () => {
     const { data, error } = await supabase

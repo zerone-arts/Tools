@@ -13,7 +13,7 @@ export default function MyPage() {
     process.env.NODE_ENV === "production"
       ? "https://tools-lime-eight.vercel.app"
       : "http://localhost:3000";
-
+  console.log(user);
   const signInHandle = async () => {
     const { error } = await supabase.auth.signInWithOAuth({
       provider: "google",

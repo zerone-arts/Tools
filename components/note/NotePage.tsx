@@ -95,7 +95,7 @@ export default function NotePage() {
     setCreateBtn(false);
     setCount(null);
   };
-
+  console.log(user);
   useEffect(() => {
     if (user) {
       fetchList();
