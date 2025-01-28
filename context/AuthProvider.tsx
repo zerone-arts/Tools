@@ -30,6 +30,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         setUser(session?.user || null);
         localStorage.setItem("isLoggedIn", session ? "true" : "false");
         setAuthInitialized(true);
+
+        console.log(user);
+        console.log(_event);
       }
     );
 

@@ -8,7 +8,7 @@ import { useAuth } from "@/context/AuthProvider";
 export default function HomePage() {
   // const [user, setUser] = useState<any>("");
   const { user } = useAuth();
-  console.log(user);
+
   // useEffect(() => {
   //   const fetchSession = async () => {
   //     const { data } = await supabase.auth.getSession();
