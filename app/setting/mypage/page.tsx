@@ -43,6 +43,7 @@ export default function MyPage() {
     if (!error) {
       localStorage.setItem("isLoggedIn", "false");
       setLogin(false);
+      console.log("계정이 로그아웃되었습니다..");
     } else {
       console.error("Error during sign-out:", error);
     }
@@ -64,10 +65,10 @@ export default function MyPage() {
 
       console.log("계정이 성공적으로 삭제되었습니다.");
 
-      await supabase.auth.signOut();
       setDeleteAccountCheck(true);
       localStorage.setItem("isLoggedIn", "false");
       setLogin(false);
+      await supabase.auth.signOut();
     } catch (error) {
       console.error("회원 탈퇴 처리 중 오류:", error);
     }
