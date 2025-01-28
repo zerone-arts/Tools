@@ -3,6 +3,7 @@
 import NoteContent from "@/components/note/NoteContent";
 
 import MonthGroup from "@/components/note/ui/MonthGroup";
+import { useAuth } from "@/context/AuthProvider";
 import { Database } from "@/types_db";
 import { supabase } from "@/utils/supabase";
 
@@ -17,8 +18,9 @@ export default function NotePage() {
   >([]);
   const [createBtn, setCreateBtn] = useState(false);
   const [selectMonth, setSelectMonth] = useState(0);
-  const [user, setUser] = useState<any>(null);
 
+  const { user: userInfo } = useAuth();
+  const user = userInfo?.email;
   const deleteHandle = async () => {
     setDeletePopUp(false);
 
@@ -94,18 +96,6 @@ export default function NotePage() {
     setCount(null);
   };
 
-  const userIdFetch = async () => {
-    const { data } = await supabase.auth.getSession();
-    const session = data?.session;
-    console.log(session?.user?.email);
-
-    if (session?.user?.email) {
-      setUser(session.user.email);
-    } else {
-      setUser(null);
-    }
-  };
-
   useEffect(() => {
     if (user) {
       fetchList();
@@ -131,10 +121,6 @@ export default function NotePage() {
 
     setList(filter);
   };
-
-  useEffect(() => {
-    userIdFetch();
-  }, []);
 
   return (
     <div className={`relative flex flex-col  h-screen rounded-xl w-full`}>

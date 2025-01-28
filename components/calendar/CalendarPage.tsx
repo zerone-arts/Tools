@@ -6,6 +6,7 @@ import CalendarRightPage from "@/components/calendar/CalendarRight/CalendarRight
 import { useEffect, useState } from "react";
 import { Database } from "@/types_db";
 import { supabase } from "@/utils/supabase";
+import { useAuth } from "@/context/AuthProvider";
 
 export const MONTHLIST = [
   "January",
@@ -26,7 +27,8 @@ export default function CalendarPageCSR() {
   const [month, setMonth] = useState(new Date().getMonth());
   const [year, setYear] = useState(new Date().getFullYear());
   const [selectDay, setSelectDay] = useState<number | null>(null);
-  const [user, setUser] = useState<any>(null);
+  const { user: userInfo } = useAuth();
+  const user = userInfo?.email;
 
   const [anniversarys, setAnniversarys] = useState<
     Database["public"]["Tables"]["rotionCalendarTable"]["Row"][]
@@ -56,18 +58,6 @@ export default function CalendarPageCSR() {
     setSelectDay(null);
   }, [month]);
 
-  const userIdFetch = async () => {
-    const { data } = await supabase.auth.getSession();
-    const session = data?.session;
-    console.log(session?.user?.email);
-
-    if (session?.user?.email) {
-      setUser(session.user.email);
-    } else {
-      setUser(null);
-    }
-  };
-
   useEffect(() => {
     if (user) {
       fetchList();
@@ -85,10 +75,6 @@ export default function CalendarPageCSR() {
     console.log(data);
     setAnniversarys(data);
   };
-
-  useEffect(() => {
-    userIdFetch();
-  }, []);
 
   return (
     <div className="w-full h-screen text-gray-100 flex items-center justify-center absolute">
