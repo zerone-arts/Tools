@@ -20,6 +20,22 @@ export default function HomePage() {
     };
 
     fetchSession();
+
+    // ✅ 로그인 상태 변경 감지
+    const { data: listener } = supabase.auth.onAuthStateChange(
+      (event, session) => {
+        console.log("Auth Event:", event);
+        if (session?.user) {
+          setUser(session?.user.email);
+        } else {
+          setUser(null);
+        }
+      }
+    );
+
+    return () => {
+      listener.subscription.unsubscribe();
+    };
   }, []);
 
   return (
