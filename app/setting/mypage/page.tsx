@@ -15,7 +15,6 @@ export default function MyPage() {
       ? "https://tools-lime-eight.vercel.app/setting/mypage"
       : "http://localhost:3000/setting/mypage";
 
-  // ✅ 로그인 처리
   const signInHandle = async () => {
     const { error } = await supabase.auth.signInWithOAuth({
       provider: "google",
@@ -33,7 +32,6 @@ export default function MyPage() {
     }
   };
 
-  // ✅ 로그아웃 처리
   const signOutHandle = async () => {
     const { error } = await supabase.auth.signOut();
     if (!error) {
@@ -99,20 +97,19 @@ export default function MyPage() {
 
     checkSign();
 
-    // ✅ 로그인 상태 변경 감지
     const { data: listener } = supabase.auth.onAuthStateChange(
-      (event, session) => {
-        console.log("Auth Event:", event);
-        if (session?.user) {
+      async (event, session) => {
+        if (session?.user?.email) {
+          localStorage.setItem("isLoggedIn", "true");
           setUserId(session.user.id);
           setUser(session.user.email);
           setLogin(true);
         } else {
+          localStorage.setItem("isLoggedIn", "false");
           setLogin(false);
         }
       }
     );
-
     return () => {
       listener.subscription.unsubscribe();
     };
