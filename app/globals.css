@@ -111,3 +111,6 @@ body {
     transform: rotate(45deg) translate(-5px, -5px);
   }
 }
+::-webkit-scrollbar {
+  display: none;
+}
