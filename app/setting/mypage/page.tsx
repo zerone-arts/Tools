@@ -11,7 +11,7 @@ export default function MyPage() {
   const { user, setUser, isAuthInitialized } = useAuth();
   const redirectUrl =
     process.env.NODE_ENV === "production"
-      ? "https://tools-lime-eight.vercel.app"
+      ? "https://zerone-tools.vercel.app"
       : "http://localhost:3000";
   console.log(user);
   const signInHandle = async () => {
