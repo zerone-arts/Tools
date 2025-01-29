@@ -157,7 +157,7 @@ export default function WeatherPage({}) {
   }, []);
 
   return (
-    <div className="relative w-full dark:dark:bg-black/40 dark:text-gray-100 max-sm:h-screen max-sm:overflow-scroll">
+    <div className="relative w-full h-screen dark:text-gray-100 max-sm:h-screen max-sm:overflow-scroll">
       <WeatherUi
         currentLocationHandle={currentLocationHandle}
         setSearchInput={setSearchInput}
