@@ -7,12 +7,12 @@ export default function BackGroundImagePage({}) {
 
   const fileHandle = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
-
+    if (!file) return;
     if (file) {
       setImage(file.name);
 
       const { data, error } = await supabase.storage
-        .from("RotionBackground/bg")
+        .from("ToolsBackGround/bg")
         .upload(file.name, file, {
           cacheControl: "3600",
           upsert: false,

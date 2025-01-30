@@ -29,31 +29,29 @@ export async function POST(req: Request) {
       );
     }
 
-    // rotionNoteTable 데이터 삭제
     const { error: noteError } = await supabaseAdmin
-      .from("rotionNoteTable")
+      .from("ToolsNoteTable")
       .delete()
       .eq("user_id", user);
 
     if (noteError) {
       return NextResponse.json(
         {
-          error: `rotionNoteTable에서 데이터 삭제 중 오류 발생: ${noteError.message}`,
+          error: `ToolsNoteTable에서 데이터 삭제 중 오류 발생: ${noteError.message}`,
         },
         { status: 500 }
       );
     }
 
-    // rotionCalendarTable 데이터 삭제
     const { error: calendarError } = await supabaseAdmin
-      .from("rotionCalendarTable")
+      .from("ToolsCalendarTable")
       .delete()
       .eq("user_id", user);
 
     if (calendarError) {
       return NextResponse.json(
         {
-          error: `rotionCalendarTable에서 데이터 삭제 중 오류 발생: ${calendarError.message}`,
+          error: `ToolsCalendarTable에서 데이터 삭제 중 오류 발생: ${calendarError.message}`,
         },
         { status: 500 }
       );

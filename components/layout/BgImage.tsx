@@ -13,13 +13,13 @@ export default function BgImage() {
   const getImageFile = async () => {
     if (imageName) {
       const { data } = await supabase.storage
-        .from("RotionBackground/bg")
+        .from("ToolsBackGround/bg")
         .getPublicUrl(imageName);
 
       setImage(data.publicUrl);
     } else {
       const { data } = await supabase.storage
-        .from("RotionBackground")
+        .from("ToolsBackGround")
         .list("bg");
       let arr: any = data
         ?.filter((item) => item.name !== ".emptyFolderPlaceholder")
@@ -29,7 +29,7 @@ export default function BgImage() {
         setImage(null);
       } else {
         const imgUrl = supabase.storage
-          .from("RotionBackground/bg")
+          .from("ToolsBackGround/bg")
           .getPublicUrl(arr[0]);
 
         setImage(imgUrl.data.publicUrl);

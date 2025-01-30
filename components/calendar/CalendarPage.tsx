@@ -30,7 +30,7 @@ export default function CalendarPageCSR() {
   const { user: userInfo } = useAuth();
   const user = userInfo?.email;
   const [anniversarys, setAnniversarys] = useState<
-    Database["public"]["Tables"]["rotionCalendarTable"]["Row"][]
+    Database["public"]["Tables"]["ToolsCalendarTable"]["Row"][]
   >([]);
 
   const calendarLeftState = {
@@ -67,7 +67,7 @@ export default function CalendarPageCSR() {
 
   const fetchList = async () => {
     const { data, error } = await supabase
-      .from("rotionCalendarTable")
+      .from("ToolsCalendarTable")
       .select("*")
       .eq("user_id", user);
     if (error) {

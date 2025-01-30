@@ -9,7 +9,7 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
-      rotionNoteTable: {
+      ToolsNoteTable: {
         Row: {
           created_at: string;
           id: number;
@@ -30,7 +30,7 @@ export type Database = {
         };
         Relationships: [];
       };
-      rotionCalendarTable: {
+      ToolsCalendarTable: {
         Row: {
           id?: number;
           anniversaryYear: number;

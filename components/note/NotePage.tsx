@@ -14,7 +14,7 @@ export default function NotePage() {
   const [deletePopUp, setDeletePopUp] = useState(false);
   const [count, setCount] = useState(null);
   const [list, setList] = useState<
-    Database["public"]["Tables"]["rotionNoteTable"]["Row"][]
+    Database["public"]["Tables"]["ToolsNoteTable"]["Row"][]
   >([]);
   const [createBtn, setCreateBtn] = useState(false);
   const [selectMonth, setSelectMonth] = useState(0);
@@ -31,7 +31,7 @@ export default function NotePage() {
       // setList(list.filter((item, index) => index !== count));
 
       const { data, error } = await supabase
-        .from("rotionNoteTable")
+        .from("ToolsNoteTable")
         .delete()
         .eq("id", count)
         .eq("user_id", user);
@@ -49,7 +49,7 @@ export default function NotePage() {
   const updateHandle = async (titleValue: string, textValue: string) => {
     if (count !== null) {
       if (createBtn) {
-        const { data, error } = await supabase.from("rotionNoteTable").insert({
+        const { data, error } = await supabase.from("ToolsNoteTable").insert({
           title: titleValue,
           text: textValue,
           user_id: user,
@@ -63,7 +63,7 @@ export default function NotePage() {
         fetchList();
       } else {
         const { data, error } = await supabase
-          .from("rotionNoteTable")
+          .from("ToolsNoteTable")
           .update({
             title: titleValue,
             text: textValue,
@@ -104,7 +104,7 @@ export default function NotePage() {
 
   const fetchList = async () => {
     const { data, error } = await supabase
-      .from("rotionNoteTable")
+      .from("ToolsNoteTable")
       .select("*")
       .eq("user_id", user);
 

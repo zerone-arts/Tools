@@ -65,7 +65,7 @@ export default function Popup({
       ];
 
       const { error } = await supabase
-        .from("rotionCalendarTable")
+        .from("ToolsCalendarTable")
         .update({
           anniversaryYear: year,
           anniversaryMonth: month,
@@ -81,7 +81,7 @@ export default function Popup({
       }
       fetchList();
     } else {
-      const { error } = await supabase.from("rotionCalendarTable").insert({
+      const { error } = await supabase.from("ToolsCalendarTable").insert({
         anniversaryYear: year,
         anniversaryMonth: month,
         anniversaryDay: selectDay,
@@ -122,7 +122,7 @@ export default function Popup({
 
     if (updatedContent.length > 0) {
       const { error } = await supabase
-        .from("rotionCalendarTable")
+        .from("ToolsCalendarTable")
         .update({
           anniversaryYear: year,
           anniversaryMonth: month,
@@ -138,7 +138,7 @@ export default function Popup({
       }
     } else {
       const { error } = await supabase
-        .from("rotionCalendarTable")
+        .from("ToolsCalendarTable")
         .delete()
         .eq("id", targetAnniversary.id)
         .eq("user_id", user);
