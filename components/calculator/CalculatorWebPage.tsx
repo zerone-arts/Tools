@@ -1,12 +1,12 @@
 import AppCalc from "./calcApp/AppCalc";
 import AppEtc from "./calcApp/AppEtc";
 
-export default function CalculatorWebPage({}) {
+export default function CalculatorWebPage() {
   return (
     <div className="flex max-lg:hidden w-full h-full items-center justify-center p-10 ">
       <div className="w-3/4 h-[500px]  relative group overflow-hidden rounded-2xl shadow-2xl border dark:border-none bg-zinc-900/50 dark:bg-zinc-900 flex gap-2 px-10 justify-center items-center scale-125">
         <div
-          className="absolute left-0 w-full h-full bg-black/0  z-1 
+          className="absolute left-0 w-full h-full bg-black/0  z-[1] 
   dark:bg-gradient-to-tr from-zinc-900 via-zinc-700 to-zinc-900 opacity-60 pointer-events-none"
         ></div>
         <div className="h-[450px]  z-50 relative text-gray-100">

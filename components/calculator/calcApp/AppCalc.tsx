@@ -207,7 +207,7 @@ export default function AppCalc({}) {
   };
 
   return (
-    <div className="w-[300px] h-full pt-[90px] pb-7 px-4 ">
+    <div className="w-[280px] h-full pt-[90px] pb-7 px-4 ">
       <div className="w-full h-full flex flex-col items-center justify-center ">
         <div className="relative w-[225px] h-[50px] text-[10px] text-gray-500 ">
           <p className="absolute bottom-0 right-0 text-right w-[225px] break-words px-[17px]">

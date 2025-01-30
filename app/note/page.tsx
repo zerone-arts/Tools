@@ -5,7 +5,7 @@ export const metadata: Metadata = {
 };
 export default function Page() {
   return (
-    <div className="w-full h-screen relative">
+    <div className="w-full h-screen relative max-sm:absolute left-0">
       <NotePage />
     </div>
   );

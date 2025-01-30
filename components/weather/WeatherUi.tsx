@@ -14,8 +14,8 @@ export default function WeatherUi({
   };
   return (
     <div
-      className=" h-[60px]  flex items-center justify-between max-sm:flex-col
-     gap-2 mx-8 pt-[20px] max-sm:h-[120px] max-sm:mt-10 max-sm:gap-3"
+      className=" h-[60px]  w-full flex items-center justify-between max-sm:flex-col
+     gap-2  pt-[20px] max-sm:h-[120px] max-sm:mt-10 max-sm:gap-3"
     >
       <h1 className=" text-xl font-medium text-gray-200 dark:text-gray-200 max-sm:text-5xl">
         Weather

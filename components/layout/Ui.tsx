@@ -30,7 +30,7 @@ export default function Ui() {
 
   return (
     <div
-      className={`z-10 relative  group p-1 w-[80px] sm:hover:w-[200px] h-screen  duration-500 ease-out flex  item-center flex-shrink-0 `}
+      className={`z-[999] relative  group p-1 w-[80px] sm:hover:w-[200px] h-screen  duration-500 ease-out flex  item-center flex-shrink-0 ovflow-y-scroll`}
     >
       <div className="absolute h-screen -ml-3">
         <div className="mt-3 flex ml-[14px] ">

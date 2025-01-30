@@ -123,10 +123,12 @@ export default function NotePage() {
   };
 
   return (
-    <div className={`relative flex flex-col  h-screen rounded-xl w-full`}>
-      <div className=" w-full h-[170px] flex flex-col  gap-2 z-10 dark:bg-black/40">
+    <div className={`relative flex flex-col  h-screen rounded-xl w-full `}>
+      <div className=" w-full h-[170px] flex flex-col  gap-2 z-10 mt-7 dark:bg-black/40  relative">
         <div className="flex items-center justify-between p-1 pt-5 ">
-          <div className="pl-10 text-xl font-medium text-white">Note</div>
+          <div className="pl-10 text-xl font-medium text-white max-sm:pl-[80px]">
+            Note
+          </div>
           <div className="flex gap-4 pr-3  sm:w-[120px]">
             <button
               className="w-9 sm:w-[120px] h-[40px] border-2 

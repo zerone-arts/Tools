@@ -202,9 +202,7 @@ export default function NoteContent({
               </div>
               {upDate && item.id === count ? (
                 <textarea
-                  className={`mx-1 h-[90px] text-sm overflow-scroll bg-gray-100/0 outline-none resize-none rounded-md   dark:text-gray-400 dark:bg-gray-700 ${
-                    upDate ? "border" : "border-none"
-                  }`}
+                  className={`mx-1 h-[90px] text-sm overflow-scroll bg-gray-100/0 outline-none resize-none rounded-md   dark:text-gray-400 dark:bg-gray-700 p-2`}
                   defaultValue={item.text}
                   onChange={(e) => {
                     setText(e.target.value);
