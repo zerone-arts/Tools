@@ -7,7 +7,7 @@ export default function BackGroundImagePage({}) {
 
   const fileHandle = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
-    if (!file) return;
+
     if (file) {
       setImage(file.name);
 
