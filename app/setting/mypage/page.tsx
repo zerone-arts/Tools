@@ -13,7 +13,7 @@ export default function MyPage() {
     process.env.NODE_ENV === "production"
       ? "https://zerone-tools.vercel.app"
       : "http://localhost:3000";
-  console.log(user);
+
   const signInHandle = async () => {
     const { error } = await supabase.auth.signInWithOAuth({
       provider: "google",
@@ -38,14 +38,11 @@ export default function MyPage() {
     }
   };
   const signOutHandle = async () => {
-    console.log("로그아웃 클릭됌 ");
     const { error } = await supabase.auth.signOut();
     if (!error) {
-      console.log("로그아웃 tjdrhd ");
       localStorage.setItem("isLoggedIn", "false");
       setUser(null);
       setLogin(false);
-      console.log("계정이 로그아웃되었습니다..");
     } else {
       console.error("Error during sign-out:", error);
     }
@@ -64,8 +61,6 @@ export default function MyPage() {
       if (!response.ok) {
         throw new Error("계정 삭제 실패");
       }
-
-      console.log("계정이 성공적으로 삭제되었습니다.");
 
       setDeleteAccountCheck(true);
       localStorage.setItem("isLoggedIn", "false");

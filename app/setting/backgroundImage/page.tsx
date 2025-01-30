@@ -1,20 +1,28 @@
 "use client";
+
 import { supabase } from "@/utils/supabase";
 import { useImageStore } from "../../../utils/zustand";
+import { useAuth } from "@/context/AuthProvider";
 
 export default function BackGroundImagePage({}) {
+  const { user: userInfo } = useAuth();
+  const user = userInfo?.email;
   const setImage = useImageStore((state: any) => state.setImage);
 
   const fileHandle = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (!user) {
+      console.error("로그인이 필요합니다.");
+      return;
+    }
+
     const file = e.target.files?.[0];
     if (!file) return;
 
     const fileName = file.name;
     const bucketName = "ToolsBackGround";
-    const folderPath = "bg"; // 저장할 폴더 경로
+    const folderPath = `bg/${user}`;
 
     try {
-      // 기존 파일 삭제
       const { data: listData, error: listError } = await supabase.storage
         .from(bucketName)
         .list(folderPath);
@@ -35,7 +43,6 @@ export default function BackGroundImagePage({}) {
         }
       }
 
-      // 새로운 이미지 업로드
       const { data, error } = await supabase.storage
         .from(bucketName)
         .upload(`${folderPath}/${fileName}`, file, {
@@ -47,7 +54,7 @@ export default function BackGroundImagePage({}) {
         console.error("이미지 업로드 실패:", error.message);
       } else {
         console.log("이미지 업로드 성공:", data);
-        setImage(fileName);
+        setImage(`${folderPath}/${fileName}`);
       }
     } catch (err) {
       console.error("파일 업로드 중 오류 발생:", err);

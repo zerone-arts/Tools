@@ -21,7 +21,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         const { data } = await supabase.auth.getSession();
         const sessionUser = data?.session?.user || null;
         setUser(sessionUser);
-        console.log("Fetched session user:", sessionUser);
+
         localStorage.setItem("isLoggedIn", data?.session ? "true" : "false");
         setAuthInitialized(true);
       } catch (error) {
@@ -36,7 +36,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         try {
           const sessionUser = session?.user || null;
           setUser(sessionUser);
-          console.log("Auth state updated:", event, sessionUser);
+
           localStorage.setItem("isLoggedIn", session ? "true" : "false");
           setAuthInitialized(true);
         } catch (error) {
