@@ -25,11 +25,6 @@ export default function NotePage() {
     setDeletePopUp(false);
 
     if (count !== null) {
-      // console.log(`${count}가 삭제 되었습니다.`);
-      // list.splice(count, 1);
-
-      // setList(list.filter((item, index) => index !== count));
-
       const { data, error } = await supabase
         .from("ToolsNoteTable")
         .delete()
@@ -95,7 +90,7 @@ export default function NotePage() {
     setCreateBtn(false);
     setCount(null);
   };
-  console.log(user);
+
   useEffect(() => {
     if (user) {
       fetchList();

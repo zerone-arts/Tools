@@ -63,8 +63,6 @@ export default function CalendarPageCSR() {
     }
   }, [user]);
 
-  console.log(user);
-
   const fetchList = async () => {
     const { data, error } = await supabase
       .from("ToolsCalendarTable")
@@ -73,7 +71,7 @@ export default function CalendarPageCSR() {
     if (error) {
       return;
     }
-    console.log(data);
+
     setAnniversarys(data);
   };
 

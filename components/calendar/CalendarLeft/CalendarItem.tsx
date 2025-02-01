@@ -17,7 +17,7 @@ export default function CalendarItem({
   setSelectDay: any;
   anniversarys: any;
 }) {
-  const [count, setCount] = useState(1);
+  const [count, setCount] = useState(month + 1);
   const [transition, setTransition] = useState(true);
   const [startY, setStartY] = useState<number | null>(null);
   const [dragDistance, setDragDistance] = useState(0);
@@ -50,7 +50,7 @@ export default function CalendarItem({
   const dragHandle = (direction: string) => {
     if (direction === "-1") {
       setTransition(true);
-      setCount((prev) => prev - 1);
+      setCount((prev: any) => prev - 1);
       setMonth((prev: any) => prev - 1);
 
       if (count === 1) {
@@ -60,7 +60,7 @@ export default function CalendarItem({
 
     if (direction === "+1") {
       setTransition(true);
-      setCount((prev) => prev + 1);
+      setCount((prev: any) => prev + 1);
       setMonth((prev: any) => prev + 1);
 
       if (count === 12) {
@@ -126,13 +126,14 @@ export default function CalendarItem({
 
   return (
     <div
-      className="h-[250px] max-sm:h-[240px] text-[15px] max-sm:text-sm relative overflow-hidden select-none"
+      className="h-[250px] max-sm:h-[240px] text-[15px] max-sm:text-sm relative overflow-hidden select-none "
       onMouseDown={handleMouseDown}
       onMouseMove={handleMouseMove}
       onMouseUp={handleMouseUp}
       onTouchStart={handleMouseDown}
       onTouchMove={handleMouseMove}
       onTouchEnd={handleMouseUp}
+      onMouseLeave={handleMouseUp}
     >
       <div
         className={`absolute w-full h-[250px] max-sm:h-[240px] ${
@@ -145,7 +146,7 @@ export default function CalendarItem({
         {FrameArr.map((item: any, idx: any) => {
           return (
             <ul
-              className="h-[250px] max-sm:h-[240px] grid grid-cols-7 justify-items-center"
+              className="h-[250px] max-sm:h-[240px] grid grid-cols-7 justify-items-center "
               key={idx}
             >
               {generateDays(year, item).map((item: any, idx: any) => (
