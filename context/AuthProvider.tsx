@@ -21,7 +21,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         const { data } = await supabase.auth.getSession();
         const sessionUser = data?.session?.user || null;
         setUser(sessionUser);
-
         localStorage.setItem("isLoggedIn", data?.session ? "true" : "false");
         setAuthInitialized(true);
       } catch (error) {

@@ -27,14 +27,11 @@ export default function BgImage() {
           ? imageName
           : `bg/${user}/${imageName}`;
 
-        console.log("이미지 경로:", filePath);
-
         const { data } = await supabase.storage
           .from("ToolsBackGround")
           .getPublicUrl(filePath);
 
         setImage(data?.publicUrl ?? null);
-        console.log(data?.publicUrl ?? null);
       } else {
         const { data, error } = await supabase.storage
           .from("ToolsBackGround")
@@ -52,14 +49,12 @@ export default function BgImage() {
           setImage(null);
         } else {
           filePath = `bg/${user}/${arr[0]}`; // ✅ 중복 방지 적용
-          console.log("이미지 경로:", filePath);
 
           const imgUrl = supabase.storage
             .from("ToolsBackGround")
             .getPublicUrl(filePath);
 
           setImage(imgUrl.data?.publicUrl ?? null);
-          console.log(imgUrl.data?.publicUrl ?? null);
         }
       }
     } catch (error: any) {
